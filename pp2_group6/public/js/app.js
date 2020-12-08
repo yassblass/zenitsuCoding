@@ -1951,6 +1951,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     deleteAppointment: function deleteAppointment(appointment) {
       this.$store.dispatch('deleteAppointment', appointment);
+      window.location.reload();
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['appointments']))

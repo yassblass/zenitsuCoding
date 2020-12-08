@@ -36,6 +36,7 @@
         methods: {
             deleteAppointment(appointment) {
                 this.$store.dispatch('deleteAppointment', appointment)
+                window.location.reload();
             }
         },
         computed: {
