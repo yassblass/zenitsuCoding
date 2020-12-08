@@ -1,15 +1,12 @@
 require('./bootstrap');
-
-
-// Declaration
 window.Vue = require('vue');
 
-// New component
-Vue.component('face', require('./components/Face.vue').default);
+import store from './store/index.js'
 
-// Instantiation
-window.onload = function(e) {
-    const app = new Vue({
-        el: '#app'
-    });
-}
+Vue.component('appointments', require('./components/Appointments.vue').default);
+Vue.component('createAppointments', require('./components/CreateAppointments.vue').default);
+
+const app = new Vue({
+    el: '#app',
+    store
+});

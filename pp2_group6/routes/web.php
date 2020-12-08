@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
+Route::get('/', \App\Http\Controllers\AppointmentController::class . '@getIndex');
+
+Route::post('appointments', \App\Http\Controllers\AppointmentController::class . '@store');
+
+Route::get('appointments', \App\Http\Controllers\AppointmentController::class . '@get');
+
+Route::delete('appointments/{id}', \App\Http\Controllers\AppointmentController::class . '@delete');
