@@ -1,15 +1,37 @@
+'use strict'
+
+
+
+
+
 require('./bootstrap');
 
-
-// Declaration
 window.Vue = require('vue');
 
-// New component
-Vue.component('face', require('./components/Face.vue').default);
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
 
-// Instantiation
-window.onload = function(e) {
+import Dashboard from './components/Dashboard.vue';
+
+
+//Vue.component('dashboard', require('./components/Dashboard.vue').default);
+
+const routes = [
+    {
+        path:"/jaa",
+        component:Dashboard
+    }
+
+];
+
+const router = new VueRouter({routes});
+
+window.onload = function () {
     const app = new Vue({
-        el: '#app'
+        el: '#app',
+        router:router,
+        
     });
 }
+
+
