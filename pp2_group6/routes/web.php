@@ -20,3 +20,8 @@ Route::get('/', function () {
 Route::get('/appointment', function () {
     return view('secretary/appointment');
 });
+
+Route::get('/appointmentList', [App\Http\Controllers\AppointmentController::class,'index']);
+Route::delete('/appointment/{id}', [App\Http\Controllers\AppointmentController::class,'destroy']);
+
+
