@@ -24,4 +24,4 @@ Route::get('/appointment', function () {
 Route::get('/appointmentList', [App\Http\Controllers\AppointmentController::class,'index']);
 Route::delete('/appointment/{id}', [App\Http\Controllers\AppointmentController::class,'destroy']);
 
-
+Route::post('/formSubmit', [App\Http\Controllers\MailController::class,'formSubmit']);

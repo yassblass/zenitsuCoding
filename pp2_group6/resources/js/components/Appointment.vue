@@ -52,12 +52,15 @@
 
 <div> 
   <b-button squared variant="outline-danger">Back</b-button>
+  <alert></alert>
 </div>
 </div>
 </template>
 
 <script>
+import alert from './alert.vue';
 export default {
+  components: { alert },
 
  props: ['id'],
  data(){
