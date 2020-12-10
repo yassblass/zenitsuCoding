@@ -28,7 +28,7 @@
       <th scope="col">STUDENT</th>
       <th scope="col">SUBJECT</th>
      
-     
+    
 
     </tr>
 
@@ -36,39 +36,41 @@
  </thead>
    <tbody>
 
-  <tr v-for="appointment in appointments.data" :key="appointment.id">
-     <th >{{ appointment.date }} {{ appointment.time }}</th>
-     <th >{{ appointment.userid }}</th>
+  <tr v-for="appointment in appointments" :key="appointment.appointmentId">
+     <th >{{ appointment.startsAt }}</th>
+     <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>
      <th >{{ appointment.subject }}</th>
-     <th><cancelappointment v-bind:id="appointment.id"></cancelappointment></th>
+     <th><cancelappointment v-bind:id="appointment.appointmentId"></cancelappointment></th>
 
      
     
       </tr>
       </tbody>
-      <pagination :data="appointments" @pagination-change-page="getResults"></pagination>
+     <!--<pagination :data="appointments" @pagination-change-page="getResults"></pagination> -->
+
 </table>
 </div>
 
 <div> 
   <b-button squared variant="outline-danger">Back</b-button>
   <alert></alert>
+
 </div>
 </div>
+
 </template>
 
 <script>
-import alert from './alert.vue';
-export default {
-  components: { alert },
 
- props: ['id'],
+export default {
+
+
+ props: ['id', 'data'],
  data(){
-  
 
     return{
       title : "Manage Appointments",
-      appointments: {},
+      appointments: '',
       
     }
   },
@@ -81,10 +83,13 @@ export default {
 
 
       deleteAppointment(id){
+        window.location.reload();
         axios.delete('/appointment/' + id)
         .then(response => this.nou = response.data)
         .catch(error => console.log(error));
       },
+
+
      getResults(page = 1) {
 			  axios.get('/appointmentList?page=' + page)
 				.then(response => {

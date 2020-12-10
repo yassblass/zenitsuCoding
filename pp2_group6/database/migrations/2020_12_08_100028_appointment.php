@@ -13,13 +13,15 @@ class Appointment extends Migration
      */
     public function up()
     {
-        Schema::create('appointment', function (Blueprint $table) {
+        Schema::create('appointments', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('studentId');
+            $table->bigInteger('secretaryId');
             $table->string('date');
             $table->string('time');
-            $table->bigInteger('secretaryid');
-            $table->bigInteger('userid');
-            $table->boolean('token');
+            $table->string('subject');
+            $table->string('cancelToken');
+
             
             
      

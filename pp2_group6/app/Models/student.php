@@ -6,9 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class student extends Model
-{
-    use HasFactory;
+{use HasFactory;
 
-    protected $table = 'appointment';
-    protected $fillable = ['id','lastname','firstname','email','hasRight','flagged'];
+    //protected $primaryKey = 'my_string_key';
+
+    public function appointments(){
+
+        return $this->hasMany(Appointment::class);
+    }
+
+    protected $fillable = ['firstName','lastName','email','flagCounter','isFlagged','hasRight'];
+
 }

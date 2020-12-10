@@ -9,7 +9,19 @@ class Appointment extends Model
 {
     use HasFactory;
 
-    protected $table = 'appointment';
-    protected $fillable = ['id','date','time','subject','userid','token'];
+
+    public function students(){
+
+        return $this->belongsTo(Student::class);
+    }
+
+    public function users(){
+
+        return $this->belongsTo(Student::class);
+    }
+
+
+
+    protected $fillable = ['student_id','user_id','date','startsAt','subject','status','cancelToken','hasRight'];
 
 }

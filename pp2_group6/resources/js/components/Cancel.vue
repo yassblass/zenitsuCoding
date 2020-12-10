@@ -55,10 +55,13 @@
 
 
       deleteAppointment(id){
+        window.location.reload();
+
         axios.delete('/appointment/' + id)
         .then(response => this.appointments = response.data)
         .catch(error => console.log(error));
       },
+      
      getResults(page = 1) {
 			  axios.get('/appointmentList?page=' + page)
 				.then(response => {

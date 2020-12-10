@@ -15,11 +15,13 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('lastname');
-            $table->string('firstname');
+            $table->string('firstName');
+            $table->string('lastName');
             $table->string('email');
-            $table->boolean('hasRight')->default(1);
-            $table->boolean('flagged')->default(0);
+            $table->boolean('flagCounter')->default(1);
+            $table->boolean('isFlagged')->default(0);
+            $table->boolean('hasRight')->default(0);
+
             $table->timestamps();
         });
     }

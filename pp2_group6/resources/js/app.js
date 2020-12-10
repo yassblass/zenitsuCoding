@@ -17,7 +17,7 @@ window.Vue = require('vue');
 // New component
 Vue.component('appointment', require('./components/Appointment.vue').default);
 Vue.component('cancelappointment', require('./components/Cancel.vue').default);
-Vue.component('alert', require('./components/alert.vue').default);
+Vue.component('alert', require('./components/Alert.vue').default);
 
 
 
