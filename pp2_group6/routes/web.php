@@ -1,5 +1,5 @@
 <?php
-
+use \App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +25,21 @@ Route::post('appointments', \App\Http\Controllers\AppointmentController::class .
 Route::get('appointments', \App\Http\Controllers\AppointmentController::class . '@get');
 
 Route::delete('appointments/{id}', \App\Http\Controllers\AppointmentController::class . '@delete');
+
+
+//
+
+Route::get('appointment/accept/{token}', \App\Http\Controllers\AppointmentController::class . '@encrypt');
+
+
+Route::get('appointment/token/{token}', \App\Http\Controllers\AppointmentController::class . '@showCancelPage');
+
+Route::delete('appointment/token/appointments/{id}', \App\Http\Controllers\AppointmentController::class . '@delete');
+
+
+//Route::post('appointments/{id}', \App\Http\Controllers\AppointmentController::class . '@delete');
+
+
+//Delete Item
+Route::delete('appointment/delete/{id}', \App\Http\Controllers\AppointmentController::class . '@delete');
+

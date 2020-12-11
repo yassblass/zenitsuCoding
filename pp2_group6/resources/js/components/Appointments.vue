@@ -4,19 +4,26 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th scope="col">First name</th>
-                    <th scope="col">Last name</th>
-                    <th scope="col">Secretary</th>
+                    <th scope="col">App_id</th>
+                    <th scope="col">Student_id</th>
+                    <th scope="col">Secretary_id</th>
                     <th scope="col">Day</th>
+                    <th scope="col">startsAt</th>
+                    <th scope="col">subject</th>
+                    <th scope="col">status</th>
+                    
 
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="appointment in appointments" :key=appointment.id>
-                    <td>{{appointment.firstName}}</td>
-                    <td>{{appointment.lastName}}</td>
-                    <td>{{appointment.secretary}}</td>
-                    <td>{{appointment.day}}</td>
+                <tr v-for="appointment in appointments" :key="appointment.appointmentId">
+                    <td>{{appointment.appointmentId}}</td>
+                    <td>{{appointment.student_id}}</td>
+                    <td>{{appointment.user_id}}</td>
+                    <td>{{appointment.date}}</td>
+                    <td>{{appointment.startsAt}}</td>
+                    <td>{{appointment.subject}}</td>
+                    <td>{{appointment.status}}</td>
                     <td>
                         <button class="btn btn-danger" @click="deleteAppointment(appointment)"><i style="color:grey" class="fa fa-trash"></i></button>
                     </td>
@@ -36,7 +43,7 @@
         methods: {
             deleteAppointment(appointment) {
                 this.$store.dispatch('deleteAppointment', appointment)
-                window.location.reload();
+                 window.location.reload();
             }
         },
         computed: {

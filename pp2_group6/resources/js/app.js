@@ -5,6 +5,7 @@ import store from './store/index.js'
 
 Vue.component('appointments', require('./components/Appointments.vue').default);
 Vue.component('createAppointments', require('./components/CreateAppointments.vue').default);
+Vue.component('cancelPage', require('./components/cancelPage.vue').default);
 
 const app = new Vue({
     el: '#app',
