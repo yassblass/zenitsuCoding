@@ -4,6 +4,9 @@ let getters = {
     },
     users: state => {
         return state.users
+    },
+    subjects: state => {
+        return state.subjects
     }
 }
 

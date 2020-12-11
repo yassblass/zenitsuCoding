@@ -50,7 +50,7 @@ class AppointmentController extends Controller
                 'startsAt' => $request->input('startsAt'),
                 'subject' => $request->input('subject'),
                 'status' => 'pending',
-                'cancelToken' => '231541321qsdfssqdfsdfgsdfdfsdfdfsqsdf3sdsqsdfqsdfdfs2136546'
+                'cancelToken' => 'lkcjwsldkjf'
             ));
         }
 

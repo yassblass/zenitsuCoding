@@ -30,6 +30,7 @@ Route::delete('appointments/{id}', \App\Http\Controllers\AppointmentController::
 //
 Route::get('users', \App\Http\Controllers\UserController::class . '@get');
 
+Route::get('subjects', \App\Http\Controllers\SubjectController::class . '@get');
 
 //
 

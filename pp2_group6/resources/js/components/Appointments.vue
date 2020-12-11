@@ -48,6 +48,25 @@
                 </tr>
                 </tbody>
             </table>
+
+
+            <h4 class="text-center font-weight-bold">Subjects</h4>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">subjectId</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Duration(in minutes)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="subject in subjects" :key="subject.subjectId">
+                    <td>{{subject.subjectId}}</td>
+                    <td>{{subject.name}}</td>
+                    <td>{{subject.duration}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 </template>
 <script>
@@ -58,6 +77,7 @@
         mounted() {
             this.$store.dispatch('fetchAppointments')
             this.$store.dispatch('fetchUsers')
+            this.$store.dispatch('fetchSubjects')
         },
         methods: {
             deleteAppointment(appointment) {
@@ -68,7 +88,8 @@
         computed: {
             ...mapGetters([
                 'appointments',
-                'users'
+                'users',
+                'subjects'
             ])
         }
     }

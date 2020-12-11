@@ -9,10 +9,7 @@
         <title>Laravel Vue.js app</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-              integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
+     
         <!--<link rel="stylesheet" href="{{mix('css/app.css')}}">
 
         <!-- Styles -->
@@ -76,14 +73,11 @@
     <div id="app">
 
         <div class="container">
-            <div class="row">
-                <div class="col-md-5">
+            
                     <create-appointments></create-appointments>
-                </div>
-                <div class="col-md-7">
+                
                     <appointments></appointments>
-                </div>
-            </div>
+              
         </div>
     </div>
 

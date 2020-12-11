@@ -26,12 +26,19 @@ let actions = {
                 }).catch(err => {
                 console.log(err)
             })
-        }
-        ,
+        },
         fetchUsers({commit}) {
             axios.get('users')
                 .then(res => {
                     commit('FETCH_USERS', res.data)
+                }).catch(err => {
+                console.log(err)
+            })
+        },
+        fetchSubjects({commit}) {
+            axios.get('subjects')
+                .then(res => {
+                    commit('FETCH_SUBJECTS', res.data)
                 }).catch(err => {
                 console.log(err)
             })

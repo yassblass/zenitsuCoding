@@ -2,41 +2,47 @@
         
     <div>
         <form action="" @submit="createAppointment(appointment)">
-            <h4 class="text-center font-weight-bold">Create an appointment</h4>
-            <div class="form-group">
-                <input type="text" placeholder="firstName" v-model="appointment.firstName" class="form-control">
+            <h2>Create an appointment</h2>
+            <div>
+                <input type="text" placeholder="firstName" v-model="appointment.firstName">
             </div>
-            <div class="form-group">
-                <input type="text" placeholder="lastName" v-model="appointment.lastName" class="form-control">
+            <div>
+                <input type="text" placeholder="lastName" v-model="appointment.lastName">
             </div>
 
-            <div class="form-group">
-                <label v-for="user in users" :key="user.user_id"> {{user.firstName + ' ' + user.lastName}}
+            <div class="input-div">
+                <label class="input-label" v-for="user in users" :key="user.user_id"> {{user.firstName + ' ' + user.lastName}}
                     <input  :value="user.user_id"  
                             :key="user.user_id" 
                             v-model="appointment.user_id"
-                            type="radio" 
-                            class="form-control"> 
+                            type="radio" class="input-radio"> 
                 </label>
             </div>
             
-            <div class="form-group">
-                <input type="date" placeholder="date" v-model="appointment.date" class="form-control">
+            <div>
+                <input type="date" placeholder="date" v-model="appointment.date">
             </div>
-            <div class="form-group">
-                <input type="datetime-local" placeholder="startsAt" v-model="appointment.startsAt" class="form-control">
+
+            <div>
+                <input type="datetime-local" placeholder="startsAt" v-model="appointment.startsAt">
             </div>
-            <div class="form-group">
-                <input type="text" placeholder="subject" v-model="appointment.subject" class="form-control">
+            
+            <div class="input-div">
+                <label class="input-label" v-for="subject in subjects" :key="subject.subjectId"> {{subject.name + ' (' + subject.duration + 'min.)' }}
+                    <input  :value="subject.name"  
+                            :key="subject.subjectId" 
+                            v-model="appointment.subject"
+                            type="radio" class="input-radio"> 
+                </label>
             </div>
         
-            <div class="form-group">
-                <button :disabled="!isValid" class="btn btn-block btn-primary" @click.prevent="createAppointment(appointment)">Submit</button>
+            <div>
+                <button :disabled="!isValid" @click.prevent="createAppointment(appointment)">Submit</button>
             </div>
         </form>
 
         <div>
-                <button  class="btn btn-block btn-primary" @click="GenerateRandomString">Send Token</button>
+                <button @click="GenerateRandomString">Send Token</button>
                 <pre> {{ output }} </pre>
         </div>
 
@@ -53,13 +59,17 @@ import { mapGetters } from "vuex";
                         //user_id: '',
                         date: '',
                         startsAt: '',
-                        subject: '',
+                        //subject: '',
                         //status: '',
                         //cancelToken: '',
                     },
                     user: {
                         firstName: "",
                         lastName:""
+                    },
+                    subject: {
+                        name: "",
+                        duration: ""
                     },
                     output: '',
                 }
@@ -87,8 +97,42 @@ import { mapGetters } from "vuex";
                 return this.appointment.firstName !== '' && this.appointment.lastName !== ''
             },
             ...mapGetters([
-                'users'
+                'users',
+                'subjects'
             ])
         }
     }
 </script>
+<style>
+.input-div {
+    margin: 10px;
+}
+
+.input-div .input-radio{
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+
+.input-div .input-label  {
+    display: inline-block;
+    background-color: rgb(184, 0, 0);
+    padding: 10px 20px;
+    font-family: sans-serif, Arial;
+    font-size: 16px;
+    color: white;
+    border: 2px solid rgb(95, 0, 0);
+    border-radius: 4px; 
+    margin-right: 10px;
+} 
+
+.input-div .input-label:hover {
+  border-color: red;
+  background-color: rgb(221, 136, 136)
+}
+
+.input-div .input-label:checked{
+    background-color: rgb(20, 4, 255);
+    color: rgb(0, 255, 21);
+}
+</style>
