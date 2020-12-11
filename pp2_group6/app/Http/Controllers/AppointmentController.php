@@ -34,6 +34,7 @@ class AppointmentController extends Controller
 
       // $appointment = Appointment::where('status', 'confirmed')->
 
+    
        return response()->json($users);
     }
 

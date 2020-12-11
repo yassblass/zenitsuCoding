@@ -10,28 +10,28 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Cancel Appointment</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form >
+        <form @submit="formSubmit">
                 <label for="reason">Are you sure you want to cancel this appointment?</label>
-        
-                <textarea name="reason" id="reason" cols="30" rows="4"></textarea>
-
+                <textarea name="reason" id="reason" cols="30" rows="4" value="description" v-model="description"></textarea>
+                    <div class="modal-footer">
+                    
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-success" @click="deleteAppointment(id)">Yes</button>
+                    </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" class="btn btn-success"  @click="deleteAppointment(id)">Yes</button>
-
-      </div>
+     
     </div>
   </div>
 </div>
     </div>
+
 </template>
 
 <script>
@@ -42,20 +42,40 @@
 
  data(){
     return{
-      appointments: {}
+      appointments: {},
+      description: '',
+      
 
     }
   },
-  created(){
-      axios.get('/appointmentList')
-      .then(response => this.appointments = response.data)
-      .catch(error => console.log(error))
-    },
+
+
     methods : {
 
 
+
+                formSubmit() {
+                let currentObj = this;
+                
+                axios.post('cancelSubmit', {
+                    description: this.description
+                })
+                .then(function (response) {
+                    currentObj.output = response.data;
+                })
+                .catch(function (error) {
+                    currentObj.output = error;
+                });
+
+
+
+
+
+    },
+
       deleteAppointment(id){
-        window.location.reload();
+    
+        //window.location.reload();
 
         axios.delete('/appointment/' + id)
         .then(response => this.appointments = response.data)
@@ -67,10 +87,10 @@
 				.then(response => {
 			  		this.appointments = response.data;
 			  	});
-	  	}
-
-    }
+      },
+      
+      
  
   }
-
+    }
 </script>

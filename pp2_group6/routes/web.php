@@ -25,3 +25,4 @@ Route::get('/appointmentList', [App\Http\Controllers\AppointmentController::clas
 Route::delete('/appointment/{id}', [App\Http\Controllers\AppointmentController::class,'delete']);
 
 Route::post('/formSubmit', [App\Http\Controllers\MailController::class,'formSubmit']);
+Route::post('/cancelSubmit', [App\Http\Controllers\MailController::class,'cancelSubmit']);

@@ -65,8 +65,6 @@
                     currentObj.output = error;
                 });
 
-                console.log(description);
-
                 
             }
         },
