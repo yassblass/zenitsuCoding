@@ -22,6 +22,9 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "bootstrap-vue": "^2.20.1"
+        "bootstrap-vue": "^2.20.1",
+        "moment": "^2.29.1",
+        "qs": "^6.9.4",
+        "vue-bootstrap-datetimepicker": "^5.0.1"
     }
 }

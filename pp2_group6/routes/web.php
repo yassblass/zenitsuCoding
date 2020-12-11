@@ -21,3 +21,9 @@ Route::get('/request', function () {
     return view('secretary/request');
 });
 
+Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getAppointmentsInPending');
+
+
+Route::post('/editAccept/{id}', \App\Http\Controllers\AppointmentController::class .'@updateAccepted');
+
+Route::post('/editRefuse/{id}', \App\Http\Controllers\AppointmentController::class .'@updateRefused');

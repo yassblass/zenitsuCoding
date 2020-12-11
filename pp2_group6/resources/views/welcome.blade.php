@@ -13,6 +13,7 @@
     </head>
     <body>
         <div id="app" style="text-align:center;margin-top:2%;margin-bottom:2%;">
+        <calendar></calendar>
         </div>
     </body>
 </html>
