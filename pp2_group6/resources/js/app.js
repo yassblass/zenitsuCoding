@@ -23,6 +23,12 @@ window.onload = function () {
         router:new VueRouter(routes)
         
     });
+
+    const app1 = new Vue({
+        el: '#app1',
+        router:new VueRouter(routes)
+        
+    });
 }
 
 
