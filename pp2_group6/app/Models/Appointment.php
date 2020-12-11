@@ -9,6 +9,7 @@ class Appointment extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'appointmentId';
 
     public function students(){
 

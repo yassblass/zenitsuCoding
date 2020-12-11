@@ -16,13 +16,17 @@
         </button>
       </div>
       <div class="modal-body">
-        <form @submit="formSubmit">
+        <form>
+
+          
+          <input type="hidden" value= v-bind:id>
+
                 <label for="reason">Are you sure you want to cancel this appointment?</label>
                 <textarea name="reason" id="reason" cols="30" rows="4" value="description" v-model="description"></textarea>
                     <div class="modal-footer">
                     
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-success" @click="deleteAppointment(id)">Yes</button>
+                    <button type="button" class="btn btn-success" @click='cancelSubmit' >Yes</button>
                     </div>
         </form>
       </div>
@@ -44,6 +48,7 @@
     return{
       appointments: {},
       description: '',
+      output : '',
       
 
     }
@@ -51,17 +56,20 @@
 
 
     methods : {
+       
 
 
-
-                formSubmit() {
+                cancelSubmit() {
                 let currentObj = this;
                 
                 axios.post('cancelSubmit', {
+                    id: this.$props.id,
                     description: this.description
                 })
                 .then(function (response) {
                     currentObj.output = response.data;
+                    
+
                 })
                 .catch(function (error) {
                     currentObj.output = error;
@@ -73,15 +81,7 @@
 
     },
 
-      deleteAppointment(id){
     
-        //window.location.reload();
-
-        axios.delete('/appointment/' + id)
-        .then(response => this.appointments = response.data)
-        .catch(error => console.log(error));
-      },
-      
      getResults(page = 1) {
 			  axios.get('/appointmentList?page=' + page)
 				.then(response => {

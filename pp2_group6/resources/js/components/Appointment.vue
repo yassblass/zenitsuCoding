@@ -85,7 +85,7 @@ export default {
       deleteAppointment(id){
         //window.location.reload();
         axios.delete('/appointment/' + id)
-        .then(response => this.nou = response.data)
+        .then(response => this.id = response.data)
         .catch(error => console.log(error));
       },
 
