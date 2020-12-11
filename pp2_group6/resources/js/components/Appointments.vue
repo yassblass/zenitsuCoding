@@ -6,13 +6,11 @@
                 <tr>
                     <th scope="col">App_id</th>
                     <th scope="col">Student_id</th>
-                    <th scope="col">Secretary_id</th>
+                    <th scope="col">User_id</th>
                     <th scope="col">Day</th>
                     <th scope="col">startsAt</th>
                     <th scope="col">subject</th>
                     <th scope="col">status</th>
-                    
-
                 </tr>
                 </thead>
                 <tbody>
@@ -30,6 +28,26 @@
                 </tr>
                 </tbody>
             </table>
+
+            <h4 class="text-center font-weight-bold">Users</h4>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">user_id</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="user in users" :key="user.user_id">
+                    <td>{{user.user_id}}</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 </template>
 <script>
@@ -39,6 +57,7 @@
         name: "Appointments",
         mounted() {
             this.$store.dispatch('fetchAppointments')
+            this.$store.dispatch('fetchUsers')
         },
         methods: {
             deleteAppointment(appointment) {
@@ -48,7 +67,8 @@
         },
         computed: {
             ...mapGetters([
-                'appointments'
+                'appointments',
+                'users'
             ])
         }
     }

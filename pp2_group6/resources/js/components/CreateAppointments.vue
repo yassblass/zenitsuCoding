@@ -9,13 +9,17 @@
             <div class="form-group">
                 <input type="text" placeholder="lastName" v-model="appointment.lastName" class="form-control">
             </div>
-            <!-- <div class="form-group">
-                <input hidden type="text" placeholder="student_id" v-model="appointment.student_id" class="form-control">
-            </div>  -->
-            <!-- <div class="form-group">
-                <input type="text" placeholder="user_id" v-model="appointment.user_id" class="form-control">
-            </div> -->
 
+            <div class="form-group">
+                <label v-for="user in users" :key="user.user_id"> {{user.firstName + ' ' + user.lastName}}
+                    <input  :value="user.user_id"  
+                            :key="user.user_id" 
+                            v-model="appointment.user_id"
+                            type="radio" 
+                            class="form-control"> 
+                </label>
+            </div>
+            
             <div class="form-group">
                 <input type="date" placeholder="date" v-model="appointment.date" class="form-control">
             </div>
@@ -25,39 +29,25 @@
             <div class="form-group">
                 <input type="text" placeholder="subject" v-model="appointment.subject" class="form-control">
             </div>
-            <!-- <div class="form-group">
-                <input type="text" placeholder="status" v-model="appointment.status" class="form-control">
-            </div>
-            <div class="form-group">
-                <input type="text" placeholder="cancelToken" v-model="appointment.cancelToken" class="form-control">
-            </div> -->
-
-          
-
+        
             <div class="form-group">
                 <button :disabled="!isValid" class="btn btn-block btn-primary" @click.prevent="createAppointment(appointment)">Submit</button>
-                
-
             </div>
-
         </form>
 
         <div>
-
                 <button  class="btn btn-block btn-primary" @click="GenerateRandomString">Send Token</button>
-
                 <pre> {{ output }} </pre>
-
         </div>
 
     </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
     export default {
         name: "CreateAppointment",
             data() {
                 return {
-                    
                     appointment: {
                         //student_id: '',
                         //user_id: '',
@@ -66,8 +56,10 @@
                         subject: '',
                         //status: '',
                         //cancelToken: '',
-                        
-                        
+                    },
+                    user: {
+                        firstName: "",
+                        lastName:""
                     },
                     output: '',
                 }
@@ -93,7 +85,10 @@
         computed: {
             isValid() {
                 return this.appointment.firstName !== '' && this.appointment.lastName !== ''
-            }
+            },
+            ...mapGetters([
+                'users'
+            ])
         }
     }
 </script>

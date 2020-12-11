@@ -37,18 +37,20 @@ class AppointmentController extends Controller
 
         //Check if given $email exist in DB
         $checkEmail = Student::where('email', '=', $email)->exists();
-        //Gives object with student_id based on given email from DB
+        //Gives object with student_id based on given EMAIL () from DB
         $getStudentId = Student::select('student_id')->where('email', '=', $email)->get();
+
+        //Gives object with user_id based on given USER
 
         if($checkEmail){
             $appointment = Appointment::create(array(
                 'student_id' => $getStudentId[0]->student_id,
-                'user_id' => 1,
+                'user_id' => $request->input('user_id'),
                 'date' => $request->input('date'),
                 'startsAt' => $request->input('startsAt'),
                 'subject' => $request->input('subject'),
                 'status' => 'pending',
-                'cancelToken' => '231541321qsdf3sqsdfqsdfdfs2136546'
+                'cancelToken' => '231541321qsdfssqdfsdfgsdfdfsdfdfsqsdf3sdsqsdfqsdfdfs2136546'
             ));
         }
 

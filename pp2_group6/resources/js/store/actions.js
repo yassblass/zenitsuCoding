@@ -27,6 +27,15 @@ let actions = {
                 console.log(err)
             })
         }
+        ,
+        fetchUsers({commit}) {
+            axios.get('users')
+                .then(res => {
+                    commit('FETCH_USERS', res.data)
+                }).catch(err => {
+                console.log(err)
+            })
+        }
     }
 
     export default actions

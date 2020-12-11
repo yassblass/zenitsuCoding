@@ -7347,11 +7347,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Appointments",
   mounted: function mounted() {
     this.$store.dispatch('fetchAppointments');
+    this.$store.dispatch('fetchUsers');
   },
   methods: {
     deleteAppointment: function deleteAppointment(appointment) {
@@ -7359,7 +7378,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       window.location.reload();
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['appointments']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['appointments', 'users']))
 });
 
 /***/ }),
@@ -7373,6 +7392,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -7417,16 +7443,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreateAppointment",
   data: function data() {
@@ -7439,6 +7456,10 @@ __webpack_require__.r(__webpack_exports__);
         subject: '' //status: '',
         //cancelToken: '',
 
+      },
+      user: {
+        firstName: "",
+        lastName: ""
       },
       output: ''
     };
@@ -7460,11 +7481,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  computed: {
+  computed: _objectSpread({
     isValid: function isValid() {
       return this.appointment.firstName !== '' && this.appointment.lastName !== '';
     }
-  }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['users']))
 });
 
 /***/ }),
@@ -70315,6 +70336,30 @@ var render = function() {
         }),
         0
       )
+    ]),
+    _vm._v(" "),
+    _c("h4", { staticClass: "text-center font-weight-bold" }, [
+      _vm._v("Users")
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.users, function(user) {
+          return _c("tr", { key: user.user_id }, [
+            _c("td", [_vm._v(_vm._s(user.user_id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(user.firstName))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(user.lastName))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(user.email))])
+          ])
+        }),
+        0
+      )
     ])
   ])
 }
@@ -70329,7 +70374,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Student_id")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Secretary_id")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("User_id")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Day")]),
         _vm._v(" "),
@@ -70338,6 +70383,22 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("subject")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("status")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("user_id")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("First Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Last Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")])
       ])
     ])
   }
@@ -70426,6 +70487,43 @@ var render = function() {
             }
           })
         ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          _vm._l(_vm.users, function(user) {
+            return _c("label", { key: user.user_id }, [
+              _vm._v(
+                " " +
+                  _vm._s(user.firstName + " " + user.lastName) +
+                  "\n                "
+              ),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.appointment.user_id,
+                    expression: "appointment.user_id"
+                  }
+                ],
+                key: user.user_id,
+                staticClass: "form-control",
+                attrs: { type: "radio" },
+                domProps: {
+                  value: user.user_id,
+                  checked: _vm._q(_vm.appointment.user_id, user.user_id)
+                },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.appointment, "user_id", user.user_id)
+                  }
+                }
+              })
+            ])
+          }),
+          0
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("input", {
@@ -84321,6 +84419,14 @@ var actions = {
     })["catch"](function (err) {
       console.log(err);
     });
+  },
+  fetchUsers: function fetchUsers(_ref4) {
+    var commit = _ref4.commit;
+    axios.get('users').then(function (res) {
+      commit('FETCH_USERS', res.data);
+    })["catch"](function (err) {
+      console.log(err);
+    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (actions);
@@ -84339,6 +84445,9 @@ __webpack_require__.r(__webpack_exports__);
 var getters = {
   appointments: function appointments(state) {
     return state.appointments;
+  },
+  users: function users(state) {
+    return state.users;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (getters);
@@ -84398,6 +84507,9 @@ var mutations = {
       return item.id === appointment.appointmentId;
     });
     state.appointments.splice(index, 1);
+  },
+  FETCH_USERS: function FETCH_USERS(state, users) {
+    return state.users = users;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (mutations);
@@ -84414,7 +84526,8 @@ var mutations = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  appointments: []
+  appointments: [],
+  users: []
 };
 /* harmony default export */ __webpack_exports__["default"] = (state);
 
