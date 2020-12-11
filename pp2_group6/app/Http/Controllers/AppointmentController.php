@@ -241,7 +241,7 @@ class AppointmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**

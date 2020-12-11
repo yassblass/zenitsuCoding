@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/appointment', function () {
+Route::get('/manageAppointment', function () {
     return view('secretary/appointment');
 });
 
