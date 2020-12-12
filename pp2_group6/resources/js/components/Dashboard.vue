@@ -4,7 +4,7 @@
            
         <h1 style="text-align: center; font-size:50px; font-family:Georgia Pro">Welcome</h1>
         <img class="center" src="https://st3.depositphotos.com/4111759/13425/v/380/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"  style="width: 100px; height:100px; border-radius:50%; ">
-        <p>{{nom +" "+ prenom}}</p>
+        <p>{{user.name+" "+user.email+ " "}}</p>
         <router-link to="/setAvailability"><button type="button" class="btn btn-danger" style="margin-top:10px; margin-left: 10px; width:185px; " >Set availability</button></router-link>
         <router-link to="/manageAppointment"><button type="button" class="btn btn-danger" style="margin-top:10px;  margin-left: 25px;width:185px;" >Manage appointments</button></router-link>
         <router-link to="/manageRequest"><button type="button" class="btn btn-danger" style="margin-top:30px;  margin-left: 120px; width:185px;" >Manage request</button></router-link>
@@ -18,17 +18,21 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        data(){
+             return {
+                user: "",
+            
+            }
         },
-        data: function() {
-         return {
-             //--> get from db
-          nom: 'Karen',
-          prenom: 'Sec'
-        }
+        mounted() {
+            axios.get('/api/user').then((res)=>{
+                this.user = res.data;
+            })
+            console.log('Component mounted.');
+        },
+        
     }
-    }
+    
 
     
    

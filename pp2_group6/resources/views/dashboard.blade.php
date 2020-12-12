@@ -7,8 +7,7 @@
     <div class="bg-dark p-4">
         <div class="flex">
             <router-link class="mr-4" to="/login"><span style="color:white">Login</span></router-link>
-            <router-link to="/register"><span style="color:white">Register</span></router-link>
-            
+            <router-link to="/register"><span style="color:white">Register</span></router-link>  
         </div>
     </div>
 </div>

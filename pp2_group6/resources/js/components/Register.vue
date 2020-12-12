@@ -1,6 +1,17 @@
 <template>
     <div>
-        Register
+        <h1>Register</h1>
+        <!--<span v-if="errors.name">{{errors.name[0]}}</span>-->
+        
+        <input placeholder="Name" type="text" v-model="form.name">
+
+        <input placeholder="Email" type="email" v-model="form.email">
+
+        <input placeholder="Password" type="password" v-model="form.password">
+
+        <input placeholder="Confirm Password" type="password" v-model="form.password_confirmation">
+
+        <button @click.prevent="saveForm" type="submit">register</button>
     </div>
 </template>
 
@@ -8,7 +19,25 @@
 export default {
     data(){
         return{
-            
+            form:{
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation:''
+            },
+            errors:[]
+        }
+    },
+    methods:{
+        saveForm(){
+            axios.post('/api/register', this.form).then(() => {
+
+                console.log('saved');
+
+            }).catch((error) => {
+                this.errors = error.response.data.errors;
+
+            })
         }
     }
     

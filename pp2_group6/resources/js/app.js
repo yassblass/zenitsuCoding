@@ -24,11 +24,6 @@ window.onload = function () {
         
     });
 
-    const app1 = new Vue({
-        el: '#app1',
-        router:new VueRouter(routes)
-        
-    });
 }
 
 

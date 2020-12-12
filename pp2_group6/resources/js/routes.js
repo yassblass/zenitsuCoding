@@ -7,28 +7,39 @@ export default{
 
     routes: [
         {
-            path:"/Dashboard",
-            component:Dashboard
+            path:"/dashboard",
+            component:Dashboard,
+            name:"dashboard",
         },
         {
             path:"/setAvailability",
-            component:Dashboard
+            component:Dashboard,
+            name:"setAvailability",
+
         },
         {
             path:"/manageRequest",
-            component:Dashboard
+            component:Dashboard,
+            name:"manageRequest",
+
         },
         {
             path:"/manageAppointment",
-            component:Dashboard
+            component:Dashboard,
+            name:"manageAppointment",
+
         },
         {
             path:"/login",
-            component:Login
+            component:Login,
+            name:"login",
+
         },
         {
             path:"/register",
-            component:Register
+            component:Register,
+            name:"register",
+
         },
     
     ]
