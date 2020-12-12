@@ -1,102 +1,203 @@
 <template>
+  <div>
+    <form action="" @submit="makeRequest(appointment)">
+      <h4 class="text-center font-weight-bold">Create an Appointment Request</h4>
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="student_id"
+          v-model="appointment.student_id"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="user_id"
+          v-model="appointment.user_id"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="date"
+          v-model="appointment.date"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="startsAt"
+          v-model="appointment.startsAt"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="subject"
+          v-model="appointment.subject"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <button
+          :disabled="!isValid"
+          class="btn btn-block btn-primary"
+          @click.prevent="makeRequest(appointment)"
+        >
+          Make Appointment
+        </button>
+      </div>
+      
+    </form>
+
+    <br/>
+    <hr>
+    <br/>
+
+    <h4 class="text-center font-weight-bold">Confirm an Appointment</h4>
+    <div class="form-group">
+        <input
+          type="text"
+          placeholder="Appointment ID"
+          v-model="appointmentId"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <button
+          class="btn btn-block btn-primary"
+          @click.prevent="confirmAppointment(appointmentId)"
+        >
+          Confirm Appointment
+        </button>
+      </div>
+
+
+    <br/>
+    <hr>
+    <br/>
+
+    <h4 class="text-center font-weight-bold">Show an Appointment</h4>
+    <div class="form-group">
+        <input
+          type="text"
+          placeholder="Token"
+          v-model="token"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <button
+          class="btn btn-block btn-primary"
+          @click="showAppointment(token)"
+        >
+          Show Appointment
+        </button>
+      </div>
+
+
     <div>
-        <h2>Create an appointment</h2>
-        <b-form @submit="createAppointment(appointment)">
-            <b-form-group label="Insert your first name">
-                <b-form-input type="text" placeholder="First name" v-model="appointment.firstName"></b-form-input>
-            </b-form-group>
-
-            <b-form-group label="Insert your last name">
-                <b-form-input type="text" placeholder="Last name" v-model="appointment.lastName"></b-form-input>
-            </b-form-group>
-
-            <b-form-group label="Choose between available secretary">
-                <b-form-radio-group
-                    v-model="appointment.user_id"
-                    buttons
-                    button-variant="danger">
-
-                    <template v-for="user in users">
-                    <b-form-radio :value="user.user_id" :key="user.user_id">
-                        {{ user.firstName + ' ' + user.lastName }}
-                    </b-form-radio>
-                    </template>
-                </b-form-radio-group>
-            </b-form-group>
-
-            <b-form-group label="Choose a date">
-                <b-form-input type="date" placeholder="Date" v-model="appointment.date"></b-form-input>
-            </b-form-group>
-
-            <b-form-group label="Choose a date and time">
-                <b-form-input type="datetime-local" placeholder="Time" v-model="appointment.startsAt"></b-form-input>
-            </b-form-group>
-
-            <b-form-group label="Choose a subject">
-                <b-form-radio-group
-                    v-model="appointment.subject"
-                    buttons
-                    button-variant="danger">
-
-                    <template v-for="subject in subjects">
-                    <b-form-radio :value="subject.name" :key="subject.subjectId">
-                        {{ subject.name }}
-                    </b-form-radio>
-                    </template>
-                </b-form-radio-group>
-            </b-form-group>
-
-            <b-button @click.prevent="createAppointment(appointment)">Make appointment</b-button>
-        </b-form>
-    </div> 
+      <pre> {{ output }} </pre>
+    </div>
+  </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-    export default {
-        name: "CreateAppointment",
-            data() {
-                return {
-                    appointment: {
-                        date: '',
-                        startsAt: ''
-                    },
-                    user: {
-                        firstName: "",
-                        lastName:""
-                    },
-                    subject: {
-                        name: "",
-                        duration: ""
-                    },
-                    output: '',
-                }
-            },
-        methods: {
-            createAppointment(appointment) {
-                this.$store.dispatch('createAppointment', appointment)
-                //window.location.reload();
-            },
-            GenerateRandomString() {
-                var crypto = require('crypto');
-                let currentObj = this;
-                var token = crypto.randomBytes(15).toString('hex');
+export default {
+  name: "CreateAppointment",
+  data() {
+    return {
+      appointment: {
+        appointmentId: "",
+        student_id: "",
+        user_id: "",
+        date: "",
+        startsAt: "",
+        subject: "",
+      },
+      output: "",
+      appointmentId: "",
+      token : "",
+    };
+  },
+  methods: {
+    createAppointment(appointment) {
+      this.$store.dispatch("createAppointment", appointment);
+    },
+    makeRequest(appointment) {
+      //Declare needed Variables
+      var crypto = require("crypto");
+      let currentObj = this;
+      //Generate unique token
+      var token = crypto.randomBytes(15).toString("hex");
 
-                axios.get('appointment/accept/' + token)
-                .then(function (response) {
-                    currentObj.output = response.data;
-                }).catch(function (error) {
-                    currentObj.output = error;
-                });
-            }
-        },
-        computed: {
-            isValid() {
-                return this.appointment.firstName !== '' && this.appointment.lastName !== ''
-            },
-            ...mapGetters([
-                'users',
-                'subjects'
-            ])
-        }
-    }
+      //Axios call [POST]
+      axios
+        .post("appointment/accept/", {
+          appointment: currentObj.appointment,
+          token: token,
+        })
+        .then(function (response) {
+          currentObj.output = response.data;
+        })
+        .catch(function (error) {
+          currentObj.output = error;
+        });
+        window.location.reload();
+    },
+
+    updateAppointment(appointment) {
+      //Declare needed Variables
+      let currentObj = this;
+
+      //Axios call [POST]
+      axios
+        .post("appointment/update/", {
+          appointment: currentObj.appointment,
+        })
+        .then(function (response) {
+          currentObj.output = response.data;
+        })
+        .catch(function (error) {
+          currentObj.output = error;
+        });
+        window.location.reload();
+    },
+    confirmAppointment(appointmentId) {
+      //Declare needed Variables
+      let currentObj = this;
+
+      //Axios call [POST]
+      axios
+        .get("appointment/confirm/" + appointmentId)
+        .then(function (response) {
+          //This.output gets filled with the response data.
+          currentObj.output = response.data;
+        })
+        .catch(function (error) {
+          //This output gets filled with error message.
+          currentObj.output = error;
+        });
+        window.location.reload();
+    },
+
+    showAppointment(token) {
+      //Declare needed Variables
+      let currentObj = this;
+
+      window.location.href = "appointment/token/" + token;
+    },
+  },
+  computed: {
+    isValid() {
+      return (
+        this.appointment.firstName !== "" && this.appointment.lastName !== ""
+      );
+    },
+  },
+};
 </script>

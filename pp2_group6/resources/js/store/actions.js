@@ -1,6 +1,4 @@
-//Actions => used to update the data in State
 let actions = {
-    //Appointments
         createAppointment({commit}, appointment) {
             axios.post('appointments', appointment)
                 .then(res => {
@@ -25,26 +23,6 @@ let actions = {
                     console.log(res.data);
                     if (res.data === 'ok')
                         commit('DELETE_APPOINTMENT', appointment)
-                }).catch(err => {
-                console.log(err)
-            })
-        },
-
-        //Users
-        fetchUsers({commit}) {
-            axios.get('users')
-                .then(res => {
-                    commit('FETCH_USERS', res.data)
-                }).catch(err => {
-                console.log(err)
-            })
-        },
-
-        //Subjects
-        fetchSubjects({commit}) {
-            axios.get('subjects')
-                .then(res => {
-                    commit('FETCH_SUBJECTS', res.data)
                 }).catch(err => {
                 console.log(err)
             })

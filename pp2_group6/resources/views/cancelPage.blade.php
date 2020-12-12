@@ -78,7 +78,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
-                    <cancel-page check = "{{ $check }}" token = "'{{ $token}}'" id="{{ $id }}" name="'{{ $name }}'" secretary = "'{{ $secretary }}'">
+                    <cancel-page  check = "{{ $check }}" appointment-id = "{{ $appointmentId }}" student_id = "{{ $student_id }}" user_id = "{{ $user_id }}"  date ="{{ $date }}"  starts-at = "{{ $startsAt }}" subject = "{{ $subject }}" status = "{{$status}}" cancel-token = "{{ $cancelToken }}"  >
 
                     </cancel-page>
                 </div>

@@ -16,7 +16,9 @@ class CreateAppointmentsTable extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id('appointmentId');
             $table->unsignedBigInteger('student_id');
+            $table->foreign('student_id')->references('student_id')->on('students');
             $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('user_id')->on('users');;
             $table->date('date');
             $table->datetime('startsAt');
             $table->string('subject');
@@ -25,8 +27,8 @@ class CreateAppointmentsTable extends Migration
             $table->timestamps();
 
             //indexes
-            $table->index('student_id');
-            $table->index('user_id');
+            //$table->index('student_id');
+            //$table->index('user_id');
         });
     }
 

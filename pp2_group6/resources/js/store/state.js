@@ -1,8 +1,5 @@
-//State => holds data that your components depend on and render
 let state = {
-    appointments: [],
-    users: [],
-    subjects: []
+    appointments: []
 }
 
 export default state
