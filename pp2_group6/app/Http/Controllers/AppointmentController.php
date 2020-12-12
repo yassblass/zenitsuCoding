@@ -12,10 +12,6 @@ class AppointmentController extends Controller
 {
     public function getAppointmentsInPending()
     {
-        // Select all appointments where the status is in pending
-    //   $appointment = Appointment::where('status', '=' ,'pending')->get();
-
-    //    return response()->json($appointment);
     // Join the database of appointments and students to get the firstname and lastname of the student
         //So we can get this data in our appointment.vue
         $users = DB::table('appointments')
