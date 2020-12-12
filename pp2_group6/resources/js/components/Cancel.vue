@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@cancel">
   Delete
 </button>
 

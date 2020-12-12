@@ -1,7 +1,7 @@
 <template>
       <div>
         <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@alert">
   Alert
 </button>
 
@@ -18,7 +18,7 @@
 
 
       <div class="modal-body">
-        <form @submit="formSubmit">
+        <form >
                 <label for="reason">Can you describe the problem?</label>
         
                 <textarea name="reason" id="reason" cols="30" rows="4" value="description" v-model="description"></textarea>
@@ -26,7 +26,7 @@
 
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" class="btn btn-success"  >Yes</button>
+        <button type="submit" class="btn btn-success" @submit="formSubmit" >Yes</button>
 
     
 

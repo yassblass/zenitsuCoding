@@ -15,25 +15,14 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //  $users = DB::table('appointments')
-        //      ->join('students', 'student_id', '=', 'students.student_id')
-        //      ->select('appointments.*', 'students.firstName', 'students.lastName')
-        //      ->where('status', 'confirmed')
-        //      ->get();
 
+          // Join the database of appointments and students to get the firstname and lastname of the student
+        //So we can get this data in our appointment.vue
         $users = DB::table('appointments')
         ->join('students', 'students.student_id', '=', 'appointments.student_id')
         ->select('appointments.*', 'students.firstName', 'students.lastName')
         ->where('status', 'confirmed')
          ->get();
-
-        //$ids = Appointment::select('user_id')-> where('status', 'confirmed')->get();
-        
-        
-
-
-      // $appointment = Appointment::where('status', 'confirmed')->
-
     
        return response()->json($users);
     }
@@ -56,10 +45,6 @@ class AppointmentController extends Controller
     {
         //$appointment = Appointment::create($request->all());
         //return response()->json($appointment);
-
-
-        
-
     
         // $appointment = User::create(array(
         
