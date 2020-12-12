@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import Dashboard from './components/Dashboard.vue';
 import Login from './components/Login.vue';
 import Register from './components/Register.vue';
@@ -10,6 +11,13 @@ export default{
             path:"/dashboard",
             component:Dashboard,
             name:"dashboard",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then(()=>{
+                    next();
+                }).catch(()=>{
+                    return next({name:"login"});
+                })
+            }
         },
         {
             path:"/setAvailability",
