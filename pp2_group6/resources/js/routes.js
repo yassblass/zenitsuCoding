@@ -2,6 +2,8 @@ import Axios from 'axios';
 import Dashboard from './components/Dashboard.vue';
 import Login from './components/Login.vue';
 import Register from './components/Register.vue';
+import ManageRequest from './components/ManageRequest.vue';
+
 
 export default{
     mode:'history',
@@ -27,7 +29,7 @@ export default{
         },
         {
             path:"/manageRequest",
-            component:Dashboard,
+            component:ManageRequest,
             name:"manageRequest",
 
         },

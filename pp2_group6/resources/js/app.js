@@ -1,18 +1,13 @@
 'use strict'
-
-
-require('./bootstrap');
-
-window.Vue = require('vue');
-
-import VueRouter from 'vue-router';
-
-Vue.use(VueRouter);
 import Vue from 'vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import moment from 'moment';
+
+import VueRouter from 'vue-router';
+
+
 require('./bootstrap');
 
 
@@ -31,11 +26,11 @@ Vue.filter('formatDate', function(value) {
 Vue.component('manage', require('./components/ManageRequest.vue').default);
 Vue.component('calendar', require('./components/setAvailability.vue').default);
 
+Vue.use(VueRouter);
 
 import routes from './routes'
 
-
-
+// Instantiation
 window.onload = function () {
     const app = new Vue({
         el: '#app',

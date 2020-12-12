@@ -18,6 +18,8 @@
         "lodash": "^4.17.19",
         "popper.js": "^1.16.1",
         "resolve-url-loader": "^3.1.0",
+        "sass": "^1.30.0",
+        "sass-loader": "^8.0.2",
         "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.12"
     },
@@ -25,6 +27,7 @@
         "bootstrap-vue": "^2.20.1",
         "moment": "^2.29.1",
         "qs": "^6.9.4",
-        "vue-bootstrap-datetimepicker": "^5.0.1"
+        "vue-bootstrap-datetimepicker": "^5.0.1",
+        "vue-router": "^3.4.9"
     }
 }
