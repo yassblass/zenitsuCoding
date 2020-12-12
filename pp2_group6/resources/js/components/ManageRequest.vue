@@ -25,8 +25,8 @@
   <br>
 <table>
 <tr v-for="appointment in appointments" :key="appointment.appointmentId">
-     <th >{{ appointment.date }} {{ appointment.startAt }}</th>
-     <th >{{ appointment.user_id }}</th>
+     <th >{{ appointment.startsAt }}</th>
+     <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>
      <th >{{ appointment.status }}</th>
      <th> 
       <b-button variant="primary" @click="editAccept(appointment.appointmentId)">Accept</b-button>
