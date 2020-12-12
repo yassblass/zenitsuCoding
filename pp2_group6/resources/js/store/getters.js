@@ -1,3 +1,4 @@
+//Getters => to acces our State data
 let getters = {
     appointments: state => {
         return state.appointments

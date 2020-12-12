@@ -11,6 +11,7 @@
                     <th scope="col">startsAt</th>
                     <th scope="col">subject</th>
                     <th scope="col">status</th>
+                    <th scope=""></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -23,7 +24,7 @@
                     <td>{{appointment.subject}}</td>
                     <td>{{appointment.status}}</td>
                     <td>
-                        <button class="btn btn-danger" @click="deleteAppointment(appointment)"><i style="color:grey" class="fa fa-trash"></i></button>
+                        <button class="btn btn-danger" @click="deleteAppointment(appointment)"><b-icon icon="trash" aria-hidden="true"></b-icon></button>
                     </td>
                 </tr>
                 </tbody>

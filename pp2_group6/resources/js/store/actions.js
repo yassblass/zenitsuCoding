@@ -1,4 +1,6 @@
+//Actions => used to update the data in State
 let actions = {
+    //Appointments
         createAppointment({commit}, appointment) {
             axios.post('appointments', appointment)
                 .then(res => {
@@ -27,6 +29,8 @@ let actions = {
                 console.log(err)
             })
         },
+
+        //Users
         fetchUsers({commit}) {
             axios.get('users')
                 .then(res => {
@@ -35,6 +39,8 @@ let actions = {
                 console.log(err)
             })
         },
+
+        //Subjects
         fetchSubjects({commit}) {
             axios.get('subjects')
                 .then(res => {

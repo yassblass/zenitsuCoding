@@ -1,52 +1,54 @@
 <template>
-        
     <div>
-        <form action="" @submit="createAppointment(appointment)">
-            <h2>Create an appointment</h2>
-            <div>
-                <input type="text" placeholder="firstName" v-model="appointment.firstName">
-            </div>
-            <div>
-                <input type="text" placeholder="lastName" v-model="appointment.lastName">
-            </div>
+        <h2>Create an appointment</h2>
+        <b-form @submit="createAppointment(appointment)">
+            <b-form-group label="Insert your first name">
+                <b-form-input type="text" placeholder="First name" v-model="appointment.firstName"></b-form-input>
+            </b-form-group>
 
-            <div class="input-div">
-                <label class="input-label" v-for="user in users" :key="user.user_id"> {{user.firstName + ' ' + user.lastName}}
-                    <input  :value="user.user_id"  
-                            :key="user.user_id" 
-                            v-model="appointment.user_id"
-                            type="radio" class="input-radio"> 
-                </label>
-            </div>
-            
-            <div>
-                <input type="date" placeholder="date" v-model="appointment.date">
-            </div>
+            <b-form-group label="Insert your last name">
+                <b-form-input type="text" placeholder="Last name" v-model="appointment.lastName"></b-form-input>
+            </b-form-group>
 
-            <div>
-                <input type="datetime-local" placeholder="startsAt" v-model="appointment.startsAt">
-            </div>
-            
-            <div class="input-div">
-                <label class="input-label" v-for="subject in subjects" :key="subject.subjectId"> {{subject.name + ' (' + subject.duration + 'min.)' }}
-                    <input  :value="subject.name"  
-                            :key="subject.subjectId" 
-                            v-model="appointment.subject"
-                            type="radio" class="input-radio"> 
-                </label>
-            </div>
-        
-            <div>
-                <button :disabled="!isValid" @click.prevent="createAppointment(appointment)">Submit</button>
-            </div>
-        </form>
+            <b-form-group label="Choose between available secretary">
+                <b-form-radio-group
+                    v-model="appointment.user_id"
+                    buttons
+                    button-variant="danger">
 
-        <div>
-                <button @click="GenerateRandomString">Send Token</button>
-                <pre> {{ output }} </pre>
-        </div>
+                    <template v-for="user in users">
+                    <b-form-radio :value="user.user_id" :key="user.user_id">
+                        {{ user.firstName + ' ' + user.lastName }}
+                    </b-form-radio>
+                    </template>
+                </b-form-radio-group>
+            </b-form-group>
 
-    </div>
+            <b-form-group label="Choose a date">
+                <b-form-input type="date" placeholder="Date" v-model="appointment.date"></b-form-input>
+            </b-form-group>
+
+            <b-form-group label="Choose a date and time">
+                <b-form-input type="datetime-local" placeholder="Time" v-model="appointment.startsAt"></b-form-input>
+            </b-form-group>
+
+            <b-form-group label="Choose a subject">
+                <b-form-radio-group
+                    v-model="appointment.subject"
+                    buttons
+                    button-variant="danger">
+
+                    <template v-for="subject in subjects">
+                    <b-form-radio :value="subject.name" :key="subject.subjectId">
+                        {{ subject.name }}
+                    </b-form-radio>
+                    </template>
+                </b-form-radio-group>
+            </b-form-group>
+
+            <b-button @click.prevent="createAppointment(appointment)">Make appointment</b-button>
+        </b-form>
+    </div> 
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -55,13 +57,8 @@ import { mapGetters } from "vuex";
             data() {
                 return {
                     appointment: {
-                        //student_id: '',
-                        //user_id: '',
                         date: '',
-                        startsAt: '',
-                        //subject: '',
-                        //status: '',
-                        //cancelToken: '',
+                        startsAt: ''
                     },
                     user: {
                         firstName: "",
@@ -77,7 +74,7 @@ import { mapGetters } from "vuex";
         methods: {
             createAppointment(appointment) {
                 this.$store.dispatch('createAppointment', appointment)
-                window.location.reload();
+                //window.location.reload();
             },
             GenerateRandomString() {
                 var crypto = require('crypto');
@@ -103,36 +100,3 @@ import { mapGetters } from "vuex";
         }
     }
 </script>
-<style>
-.input-div {
-    margin: 10px;
-}
-
-.input-div .input-radio{
-    opacity: 0;
-    position: fixed;
-    width: 0;
-}
-
-.input-div .input-label  {
-    display: inline-block;
-    background-color: rgb(184, 0, 0);
-    padding: 10px 20px;
-    font-family: sans-serif, Arial;
-    font-size: 16px;
-    color: white;
-    border: 2px solid rgb(95, 0, 0);
-    border-radius: 4px; 
-    margin-right: 10px;
-} 
-
-.input-div .input-label:hover {
-  border-color: red;
-  background-color: rgb(221, 136, 136)
-}
-
-.input-div .input-label:checked{
-    background-color: rgb(20, 4, 255);
-    color: rgb(0, 255, 21);
-}
-</style>
