@@ -16,36 +16,95 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', \App\Http\Controllers\AppointmentController::class . '@getIndex');
 
-Route::post('appointments', \App\Http\Controllers\AppointmentController::class . '@store');
+// Route::post('appointments', \App\Http\Controllers\AppointmentController::class . '@store');
 
-Route::get('appointments', \App\Http\Controllers\AppointmentController::class . '@get');
-
-
+// Route::get('appointments', \App\Http\Controllers\AppointmentController::class . '@get');
 
 
 
+//ALL ROUTES WITH 'users' PREFIX.
+Route::group(['prefix' => 'users'], function (){
+
+    //Fetch all user from DB
+    Route::get('/get', \App\Http\Controllers\UserController::class . '@get');
+
+    
+
+});
+
+
+//ALL ROUTES WITH 'subjects' PREFIX.
+Route::group(['prefix' => 'subjects'], function (){
+
+
+    //Fetch all user from DB
+    Route::get('/get', \App\Http\Controllers\SubjectController::class . '@get');
+
+
+});
+
+
+
+
+//ALL ROUTES WITH 'appointment' PREFIX.
 Route::group(['prefix' => 'appointment'], function () {
 
     //Make an appointment request [POST]
-    Route::post('accept/', \App\Http\Controllers\AppointmentController::class . '@makeRequest');
+    Route::post('create/', \App\Http\Controllers\AppointmentController::class . '@makeRequest');
+
+    //Get all appointments [GET]
+    Route::get('get', \App\Http\Controllers\AppointmentController::class . '@get');
 
     //Update an appointment [POST]
     Route::post('update/', \App\Http\Controllers\AppointmentController::class . '@updateAppointment');
 
     //Confirm an appointment [GET]
     Route::get('confirm/{appointmentId}', \App\Http\Controllers\AppointmentController::class . '@confirmAppointment');
+    
 
     //Show Cancel Page based on TOKEN [GET]
     Route::get('token/{token}', \App\Http\Controllers\AppointmentController::class . '@showCancelPage')->name('showCancelPage');
 
+    //Delete an appointment based on Appointment ID [DELETE]
+    Route::delete('delete/{appointmentId}', \App\Http\Controllers\AppointmentController::class . '@delete');
+
     //Delete an appointment based on ID [DELETE]
     Route::delete('cancel/{appointmentId}', \App\Http\Controllers\AppointmentController::class . '@cancelAppointment');
 
-    
+    //
     Route::get('/token/appointments', \App\Http\Controllers\AppointmentController::class . '@returnView');
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Student;
 
 
 class AppointmentController extends Controller
@@ -18,8 +19,32 @@ class AppointmentController extends Controller
     //Get all appointments from DB.
     public function get(Request $request)
     {
-        $appointments = Appointment::orderBy('created_at', 'asc')->get();
-        return response()->json($appointments);
+        //Fetch all apointments from DB. Return true/false.
+        if($appointments = Appointment::orderBy('created_at', 'asc')->get()) {
+
+            return response($appointments);
+        }
+        else {
+            return response(false);
+        }
+        
+    }
+
+
+    //Delete an appointment
+    public function delete($appointmentId)
+    {
+        //Delete apointment from DB based on Appointment ID. Return true/false.
+        if(Appointment::where('appointmentId', $appointmentId)->delete()) {
+
+            return response(true);
+            
+        }   
+        else {
+
+            return response(false);
+        }
+        
     }
 
     
@@ -124,47 +149,48 @@ class AppointmentController extends Controller
 
 
     //Make an appointment request
-    public function makeRequest(Request $request) {
-
-
-        //Here, the $request object containes 2 properties: a Token & an Appointment object containing every needed info to make a request.
-        //That's why we isolate both of them and put them in two different variables for efficienty.
+    public function makeRequest(Request $request)
+    {
+        //Declare needed varibales.
+        //IsolateToken & Appointment object from request.
         $token = $request['token'];
-        $appointment = $request['appointment'];
-        
-        
-        //VALIDATION
-        
-        // $data = request()->validate([
-        //     'student_id' =>'required',
-        //     'user_id' => 'required',
-        //     'date' => 'required',
-        //     'startsAt' =>'required',
-        //     'subject' => 'required',
-        //     'status' => '',
-        //     'canceltoken' => '',
-        // ]);
+        $appointment = $request['request'];
+        $domain = '@student.ehb.be';
+        $firstName = $appointment['firstName'];
+        $lastName = $appointment['lastName'];
+        $email = $firstName . '.' . $lastName . $domain;
 
-      
-        //Since a first token is generated at the VueJS side, we hash it once more in the backend. Hashing technique used -> [sha256].
+        // //Since a first token is generated at the VueJS side, we hash it once more in the backend. Hashing technique used -> [sha256].
         $hashedToken = hash('sha256',$token);
         
-            //Create an appointment in the DB using Laravel eloquent Models.
+
+        // //Check if given $email exist in DB
+        $checkEmail = Student::where('email', '=', $email)->exists();
+
+        // //Gives object with student_id based on given EMAIL () from DB
+        $getStudentId = Student::select('student_id')->where('email', '=', $email)->get();
+
+        //If email exists, create an appointment request.
+        if($checkEmail){
             $appointment = Appointment::create(array(
-        
-                'student_id' => $appointment['student_id'],
+                'student_id' => $getStudentId[0]->student_id,
                 'user_id' => $appointment['user_id'],
                 'date' => $appointment['date'],
                 'startsAt' => $appointment['startsAt'],
                 'subject' => $appointment['subject'],
                 'status' => 'pending',
                 'cancelToken' => $hashedToken,
-                )
-            );
-        
-        //For testing purposes, we return the made object to the axios call in question.
-        return response()->json($appointment);
+            ));
+
+            return response(true);
+        }
+        else
+        {
+            return response(false);
+        } 
+
     }
+    
 
 
 
@@ -267,43 +293,42 @@ class AppointmentController extends Controller
 
 
     //Temporary function
-    public function store(Request $request)
-    {
-        //$appointment = Appointment::create($request->all());
-        //return response()->json($appointment);
-
-
-        
-
+    public function store(Request $request) {
+        //Here, the $request object containes 2 properties: a Token & an Appointment object containing every needed info to make a request.
+        //That's why we isolate both of them and put them in two different variables for efficienty.
+        $token = $request['token'];
+        $appointment = $request['appointment'];
     
-        // $appointment = User::create(array(
+        //VALIDATION
         
-        //     'firstName' => 'Test',
-        //     'lastName' => 'test',
-        //     'email' => 'yaibzfyi@greoiungh.com',
-        //     'password' => 'password',
-        //      )
-        //     );
+        // $data = request()->validate([
+        //     'student_id' =>'required',
+        //     'user_id' => 'required',
+        //     'date' => 'required',
+        //     'startsAt' =>'required',
+        //     'subject' => 'required',
+        //     'status' => '',
+        //     'canceltoken' => '',
+        // ]);
 
-        $appointment = Appointment::create(array(
+      
+        //Since a first token is generated at the VueJS side, we hash it once more in the backend. Hashing technique used -> [sha256].
+        $hashedToken = hash('sha256',$token);
         
-        'student_id' => 2,
-        'user_id' => 2,
-        'date' => '2020-12-10',
-        'startsAt' => '2020-12-10 16:02:54',
-        'subject' => 'Subject',
-        'status' => 'pending',
-        'cancelToken' => 'eriahuyfzrerergzèreara'
-         )
-        );
-    
-    
+            //Create an appointment in the DB using Laravel eloquent Models.
+            $appointment = Appointment::create(array(
         
-    
-        // $appointment->save();
-
-        return response()->json($request);
-
+                'student_id' => $appointment['student_id'],
+                'user_id' => $appointment['user_id'],
+                'date' => $appointment['date'],
+                'startsAt' => $appointment['startsAt'],
+                'subject' => $appointment['subject'],
+                'status' => 'pending',
+                'cancelToken' => $hashedToken,
+                )
+            );
+        
+        //For testing purposes, we return the made object to the axios call in question.
+        return response()->json($appointment);
     }
-
 }

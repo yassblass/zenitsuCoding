@@ -1,7 +1,14 @@
 require('./bootstrap');
-window.Vue = require('vue');
 
+//Declarations
+import Vue from 'vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import store from './store/index.js'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 
 Vue.component('appointments', require('./components/Appointments.vue').default);
 Vue.component('createAppointments', require('./components/CreateAppointments.vue').default);

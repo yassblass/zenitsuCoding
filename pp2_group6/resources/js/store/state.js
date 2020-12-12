@@ -1,5 +1,7 @@
 let state = {
-    appointments: []
+    appointments: [],
+    users: [],
+    subjects: []
 }
 
 export default state

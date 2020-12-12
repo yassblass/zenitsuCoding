@@ -31,8 +31,7 @@
             
             <button
               class="btn btn-danger"
-              @click="deleteAppointment(appointment)"
-            >
+              @click="deleteAppointment(appointment)">
               <i style="color: grey" class="fa fa-trash"></i>
             </button>
           </td>
@@ -48,19 +47,12 @@ export default {
   name: "Appointments",
   mounted() {
     this.$store.dispatch("fetchAppointments");
+    this.$store.dispatch('fetchUsers')
+    this.$store.dispatch('fetchSubjects')
   },
   methods: {
     deleteAppointment(appointment) {
       this.$store.dispatch("deleteAppointment", appointment);
-      window.location.reload();
-    },
-    deleteApp(appointment) {
-      axios
-        .delete("appointment/delete/" + appointment.appointmentId)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((error) => console.log(error));
     },
   },
   computed: {
