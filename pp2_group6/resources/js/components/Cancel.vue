@@ -24,7 +24,7 @@
                 <label for="reason">Are you sure you want to cancel this appointment?</label>
                 <textarea name="reason" id="reason" cols="30" rows="4" value="description" v-model="description"></textarea>
                     <div class="modal-footer">
-                    
+                    <pre> {{ output }}</pre>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     <button type="button" class="btn btn-success" @click='cancelSubmit' >Yes</button>
                     </div>
@@ -41,7 +41,7 @@
 <script>
     export default {
         
- props: ['id'],
+ props: ['id', 'myId'],
         
 
  data(){
@@ -61,9 +61,9 @@
 
                 cancelSubmit() {
                 let currentObj = this;
-                
+                let id = this.$parent.$props.key;
                 axios.post('cancelSubmit', {
-                    id: this.$props.id,
+                    id: id,
                     description: this.description
                 })
                 .then(function (response) {

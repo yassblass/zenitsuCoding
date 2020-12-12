@@ -106,13 +106,13 @@ class MailController extends Controller
        ];
 
        //Sent mail with the information
-       Mail::to($mail)->send(new cancelMail($cancel));
+      // Mail::to($mail)->send(new cancelMail($cancel));
 
        //Get delete function that let you delete the appointment if it is cancelled
-       $this->deleteAppointment($appointmentId);
+      // $this->deleteAppointment($appointmentId);
 
       // return "Email sent";
-      return response($request['description']);
+      return response($request);
     }
 
  

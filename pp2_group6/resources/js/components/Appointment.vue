@@ -36,13 +36,13 @@
  </thead>
    <tbody>
 
-  <tr v-for="appointment in appointments" :key="appointment.appointmentId">
+  <tr v-for="appointment in appointments" :key="appointment.appointmentId" :myId="appointment.appointmentId">
      <th >{{ appointment.startsAt }}</th>
      <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>
      <th >{{ appointment.subject }}</th>
-     <th><cancelappointment v-bind:id="appointment.appointmentId"></cancelappointment></th>
+     <th><cancelappointment></cancelappointment></th>
 
-     
+     <!--  v-bind:id="appointment.appointmentId" -->
     
       </tr>
       </tbody>
@@ -65,7 +65,7 @@
 export default {
 
 
- props: ['id', 'data'],
+ props: ['id', 'data', 'myId'],
  data(){
 
     return{
