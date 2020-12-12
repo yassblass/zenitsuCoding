@@ -34,3 +34,13 @@ Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::clas
 Route::post('/editAccept/{id}', \App\Http\Controllers\AppointmentController::class .'@updateAccepted');
 
 Route::post('/editRefuse/{id}', \App\Http\Controllers\AppointmentController::class .'@updateRefused');
+Route::get('/manageAppointment', function () {
+    return view('secretary/appointment');
+});
+
+//nh
+Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'index']);
+Route::delete('/appointment/{id}', [App\Http\Controllers\AppointmentController::class,'delete']);
+
+Route::post('/formSubmit', [App\Http\Controllers\MailController::class,'formSubmit']);
+Route::post('/cancelSubmit', [App\Http\Controllers\MailController::class,'cancelSubmit']);

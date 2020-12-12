@@ -9,6 +9,10 @@ import VueRouter from 'vue-router';
 
 
 require('./bootstrap');
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+Vue.component('pagination', require('laravel-vue-pagination'));
+Vue.use(VueRouter);
 
 
 Vue.use(BootstrapVue)
@@ -29,6 +33,11 @@ Vue.component('calendar', require('./components/setAvailability.vue').default);
 Vue.use(VueRouter);
 
 import routes from './routes'
+Vue.component('appointment', require('./components/Appointment.vue').default);
+Vue.component('cancelappointment', require('./components/Cancel.vue').default);
+Vue.component('alert', require('./components/Alert.vue').default);
+
+
 
 // Instantiation
 window.onload = function () {

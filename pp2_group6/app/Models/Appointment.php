@@ -23,5 +23,6 @@ class Appointment extends Model
 
 
 
-    protected $fillable = ['student_id','user_id','date','startsAt','subject','status','cancelToken'];
+    protected $fillable = ['student_id','user_id','date','startsAt','subject','status','cancelToken','hasRight'];
+
 }

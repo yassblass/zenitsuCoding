@@ -21,4 +21,5 @@ class AvailabilityController extends Controller
     
             return response()->json($request);
     }
+    
 }
