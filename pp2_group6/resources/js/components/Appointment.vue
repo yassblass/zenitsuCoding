@@ -36,11 +36,11 @@
  </thead>
    <tbody>
 
-  <tr v-for="appointment in appointments" :key="appointment.appointmentId" :myId="appointment.appointmentId">
+  <tr v-for="appointment in appointments" :key="appointment.appointmentId" >
      <th >{{ appointment.startsAt }}</th>
      <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>
      <th >{{ appointment.subject }}</th>
-     <th><cancelappointment></cancelappointment></th>
+     <th><cancelappointment v-bind:id="appointment.appointmentId"></cancelappointment></th>
 
      <!--  v-bind:id="appointment.appointmentId" -->
     

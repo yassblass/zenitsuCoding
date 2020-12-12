@@ -26,7 +26,7 @@
                     <div class="modal-footer">
                     <pre> {{ output }}</pre>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-success" @click='cancelSubmit' >Yes</button>
+                    <button type="submit" class="btn btn-success" @click='cancelSubmit' >Yes</button>
                     </div>
         </form>
       </div>
@@ -61,9 +61,9 @@
 
                 cancelSubmit() {
                 let currentObj = this;
-                let id = this.$parent.$props.key;
+            
                 axios.post('cancelSubmit', {
-                    id: id,
+                    id: this.$props.id,
                     description: this.description
                 })
                 .then(function (response) {
