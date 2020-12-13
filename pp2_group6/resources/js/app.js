@@ -15,9 +15,13 @@ Vue.use(VueRouter);
 window.Vue = require('vue');
 
 // New component
-Vue.component('appointment', require('./components/Appointment.vue').default);
-Vue.component('cancelappointment', require('./components/Cancel.vue').default);
-Vue.component('alert', require('./components/Alert.vue').default);
+Vue.component('appointment', require('./components/secretary/Appointment.vue').default);
+Vue.component('cancelappointment', require('./components/secretary/CancelAppointment.vue').default);
+Vue.component('alert', require('./components/secretary/Alert.vue').default);
+
+Vue.component('managerequest', require('./components/secretary/ManageRequest.vue').default);
+Vue.component('setavailability', require('./components/secretary/setAvailability.vue').default);
+
 
 
 

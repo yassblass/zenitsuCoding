@@ -15,7 +15,6 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-
         // Join the database of appointments and students to get the firstname and lastname of the student
         //So we can get this data in our appointment.vue
         $users = DB::table('appointments')
@@ -27,13 +26,45 @@ class AppointmentController extends Controller
        return response()->json($users);
     }
 
+    public function getPendingAppointments()
+    {
+      $appointment = Appointment::where('status', '=' ,'pending')->get();
 
+       return response()->json($appointment);
+    }
+
+    public function confirmAppointment($appointmentId){
+              
+        if (Appointment::find($appointmentId))
+        {
+            $appointment=Appointment::find($appointmentId)->update(['status' => 'confirmed']);
+    
+            return response()->json($appointment);
+        }
+        else
+        {
+            $errorMessage = "Appointment Not Found!";
+            return response()->json($errorMessage);
+        }
+    }
+
+    public function refuseAppointment($appointmentId){
+        if (Appointment::find($appointmentId))
+        {
+            $appointment=Appointment::find($appointmentId)->update(['status' => 'refused']);
+
+            return response()->json($appointment);
+        }
+        else
+        {
+            $errorMessage = "Appointment Not Found!";
+            return response()->json($errorMessage);
+        }
+    }
 
     public function delete($id)
     {
         Appointment::where('appointmentId', $id)->delete();
         return response()->json($id);
     }
-
-
 }
