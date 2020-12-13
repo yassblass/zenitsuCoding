@@ -3,7 +3,9 @@
         <h1>Register</h1>
         <!--<span v-if="errors.name">{{errors.name[0]}}</span>-->
         
-        <input placeholder="Name" type="text" v-model="form.name">
+        <input placeholder="first name" type="text" v-model="form.firstName">
+
+        <input placeholder="last name" type="text" v-model="form.lastName">
 
         <input placeholder="Email" type="email" v-model="form.email">
 
@@ -20,7 +22,8 @@ export default {
     data(){
         return{
             form:{
-                name: '',
+                firstName: '',
+                lastName: '',
                 email: '',
                 password: '',
                 password_confirmation:''

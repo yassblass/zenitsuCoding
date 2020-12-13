@@ -18,13 +18,11 @@
       <div class="modal-body">
         <form>
 
-          
           <input type="hidden" value= v-bind:id>
 
                 <label for="reason">Are you sure you want to cancel this appointment?</label>
                 <textarea name="reason" id="reason" cols="30" rows="4" value="description" v-model="description"></textarea>
                     <div class="modal-footer">
-                    <pre> {{ output }}</pre>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     <button type="submit" class="btn btn-success" @click='cancelSubmit' >Yes</button>
                     </div>
@@ -56,13 +54,10 @@
 
 
     methods : {
-       
-
-
-                cancelSubmit() {
+          cancelSubmit() {
                 let currentObj = this;
             
-                axios.post('cancelSubmit', {
+                axios.post('/api/cancelSubmit', {
                     id: this.$props.id,
                     description: this.description
                 })

@@ -40,7 +40,5 @@ Route::get('/manageAppointment', function () {
 
 //nh
 Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'index']);
-Route::delete('/appointment/{id}', [App\Http\Controllers\AppointmentController::class,'delete']);
 
 Route::post('/formSubmit', [App\Http\Controllers\MailController::class,'formSubmit']);
-Route::post('/cancelSubmit', [App\Http\Controllers\MailController::class,'cancelSubmit']);

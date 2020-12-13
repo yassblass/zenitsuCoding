@@ -3,6 +3,8 @@ import Dashboard from './components/Dashboard.vue';
 import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import ManageRequest from './components/ManageRequest.vue';
+import Appointment from './components/Appointment.vue';
+import setAvailability from './components/setAvailability.vue';
 
 
 export default{
@@ -23,7 +25,7 @@ export default{
         },
         {
             path:"/setAvailability",
-            component:Dashboard,
+            component:setAvailability,
             name:"setAvailability",
 
         },
@@ -35,7 +37,7 @@ export default{
         },
         {
             path:"/manageAppointment",
-            component:Dashboard,
+            component:Appointment,
             name:"manageAppointment",
 
         },

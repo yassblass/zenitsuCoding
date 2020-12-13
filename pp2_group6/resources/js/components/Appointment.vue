@@ -27,6 +27,7 @@
       <th scope="col">DATE TIME</th>
       <th scope="col">STUDENT</th>
       <th scope="col">SUBJECT</th>
+      <th scope="col">CANCEL</th>
      
     
 
@@ -75,7 +76,7 @@ export default {
     }
   },
   created(){
-      axios.get('/appointmentList')
+      axios.get('/api/appointmentLists')
       .then(response => this.appointments = response.data)
       .catch(error => console.log(error))
     },
@@ -90,12 +91,6 @@ export default {
       },
 
 
-     getResults(page = 1) {
-			  axios.get('/appointmentList?page=' + page)
-				.then(response => {
-			  		this.appointments = response.data;
-			  	});
-	  	}
 
     }
  

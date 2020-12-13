@@ -11,12 +11,9 @@ import VueRouter from 'vue-router';
 require('./bootstrap');
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
-Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.use(VueRouter);
 
 
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
 // Declaration
 window.Vue = require('vue');
 
