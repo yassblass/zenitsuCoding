@@ -19,19 +19,14 @@ Route::get('/{any}', function () {
 
 //Route::post('logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/request', function () {
     return view('secretary/request');
 });
 
-Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getAppointmentsInPending');
+Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getInPending');
 
 
-Route::post('/editAccept/{id}', \App\Http\Controllers\AppointmentController::class .'@updateAccepted');
+Route::post('/editAccept/{id}', \App\Http\Controllers\AppointmentController::class .'@updateConfirmed');
 
 Route::post('/editRefuse/{id}', \App\Http\Controllers\AppointmentController::class .'@updateRefused');
 Route::get('/manageAppointment', function () {
@@ -39,9 +34,9 @@ Route::get('/manageAppointment', function () {
 });
 
 //nh
-Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'index']);
+Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'getConfirmed']);
 
-Route::post('/formSubmit', [App\Http\Controllers\MailController::class,'formSubmit']);
+Route::post('/formSubmit', [App\Http\Controllers\MailController::class,'sendAlert']);
 
 Route::get('/', \App\Http\Controllers\AppointmentController::class . '@getIndex');
 

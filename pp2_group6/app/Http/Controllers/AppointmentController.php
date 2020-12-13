@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Student;
+use Illuminate\Support\Facades\DB;
 
 
 class AppointmentController extends Controller

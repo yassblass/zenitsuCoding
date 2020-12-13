@@ -26,8 +26,8 @@ Route::post('register', [App\Http\Controllers\RegisterController::class, 'regist
 Route::post('login', [App\Http\Controllers\LoginController::class, 'login']);
 Route::post('logout', [App\Http\Controllers\LoginController::class, 'logout']);
 
-Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'index']);
+Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'getConfirmed']);
 Route::post('/cancelSubmit', [App\Http\Controllers\MailController::class,'cancelSubmit']);
 
-Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getAppointmentsInPending');
+Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getPending');
 

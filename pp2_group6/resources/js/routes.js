@@ -60,7 +60,6 @@ export default{
                     return next({name:"login"});
                 })
             }
-
         },
         {
             path:"/login",
@@ -72,8 +71,6 @@ export default{
             path:"/register",
             component:Register,
             name:"register",
-            
-
         },
     
     ]
