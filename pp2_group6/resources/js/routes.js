@@ -27,18 +27,39 @@ export default{
             path:"/setAvailability",
             component:setAvailability,
             name:"setAvailability",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then(()=>{
+                    next();
+                }).catch(()=>{
+                    return next({name:"login"});
+                })
+            }
 
         },
         {
             path:"/manageRequest",
             component:ManageRequest,
             name:"manageRequest",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then(()=>{
+                    next();
+                }).catch(()=>{
+                    return next({name:"login"});
+                })
+            }
 
         },
         {
             path:"/manageAppointment",
             component:Appointment,
             name:"manageAppointment",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then(()=>{
+                    next();
+                }).catch(()=>{
+                    return next({name:"login"});
+                })
+            }
 
         },
         {
@@ -51,6 +72,7 @@ export default{
             path:"/register",
             component:Register,
             name:"register",
+            
 
         },
     
