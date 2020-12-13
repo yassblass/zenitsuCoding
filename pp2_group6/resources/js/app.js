@@ -13,15 +13,16 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueRouter);
 
+//Declarations
+import Vue from 'vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import store from './store/index.js'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-// Declaration
-window.Vue = require('vue');
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 
-Vue.filter('formatDate', function(value) {
-    if (value) {
-        return moment(String(value)).format('DD/MM/YYYY')
-    }
-});
 
 // New component
 Vue.component('manage', require('./components/ManageRequest.vue').default);
@@ -36,6 +37,11 @@ Vue.component('alert', require('./components/Alert.vue').default);
 
 
 
+Vue.component('appointments', require('./components/Appointments.vue').default);
+Vue.component('createAppointments', require('./components/CreateAppointments.vue').default);
+Vue.component('cancelPage', require('./components/cancelPage.vue').default);
+Vue.component('updatePage', require('./components/updatePage.vue').default);
+
 // Instantiation
 window.onload = function () {
     const app = new Vue({
@@ -45,5 +51,3 @@ window.onload = function () {
     });
 
 }
-
-

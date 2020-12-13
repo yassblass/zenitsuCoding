@@ -30,3 +30,4 @@ Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::cla
 Route::post('/cancelSubmit', [App\Http\Controllers\MailController::class,'cancelSubmit']);
 
 Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getAppointmentsInPending');
+
