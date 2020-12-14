@@ -256,27 +256,12 @@ class AppointmentController extends Controller
         //Check if given $email exist in DB
         $checkEmail = Student::where('email', '=', $email)->exists();
 
+        //Hash first version of given token 
+        $hashedToken = hash('sha256', $token);
+
         // If email exists, create an appointment request.
         if($checkEmail){
-            //Get student_id based on given email
             $getStudentId = Student::select('student_id')->where('email', '=', $email)->get();
-
-            if($appointment = Appointment::create(array(
-                'student_id' => $getStudentId[0]->student_id,
-                'user_id' => $appointment['user_id'],
-                'date' => $appointment['date'],
-                'startsAt' => $appointment['startsAt'],
-                'subject' => $appointment['subject'],
-                'status' => 'pending',
-                'cancelToken' => $hashedToken,
-            ))){
-                
-                $matchThese = ['user_id' => $appointment['user_id'], 'date' => $appointment['date'], 'time' => $appointment['startsAt']];
-                    $takenAvailabilityId = Availability::where($matchThese)->update(['status' => 'taken']);
-
-            }
-
-            //Get 'hasRight' field from student table based on user_id
             $getHasRight = Student::select('hasRight')->where('student_id', '=', $getStudentId[0]->student_id)->get();
 
             //Get 'flagged" field from student table based on user_id
@@ -284,11 +269,16 @@ class AppointmentController extends Controller
 
             //Since a first token is generated at the VueJS side, we hash it once more in the backend. Hashing technique used -> [sha256].
             $hashedToken = hash('sha256',$token);
+            //Get student_id based on given email
+            
 
             if($getHasRight[0]->hasRight === 1)
             {
                 if($getFlagged[0]->isFlagged === 0)
                 {
+
+                   
+
                     $appointment = Appointment::create(array(
                         'student_id' => $getStudentId[0]->student_id,
                         'user_id' => $appointment['user_id'],
