@@ -103,7 +103,7 @@ class MailController extends Controller
        $cancel = [
            'title' => 'Appointment cancelled',
            'description' => $request['description'],
-           'name' => $studentName.startsAt,
+           'name' => $studentName,
            'lastname' => $studentLast,
            'appoint' => $appoint
        ];

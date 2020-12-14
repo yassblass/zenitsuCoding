@@ -27,7 +27,7 @@ Route::post('login', [App\Http\Controllers\LoginController::class, 'login']);
 Route::post('logout', [App\Http\Controllers\LoginController::class, 'logout']);
 
 Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'getConfirmed']);
-Route::post('/cancelSubmit', [App\Http\Controllers\MailController::class,'cancelSubmit']);
+Route::post('/cancelAppointment', [App\Http\Controllers\MailController::class,'cancelSubmit']);
 
 Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getPending');
 

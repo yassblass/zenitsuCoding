@@ -343,6 +343,8 @@ class AppointmentController extends Controller
         ->select('appointments.*', 'students.firstName', 'students.lastName')
         ->where('status', 'confirmed')
          ->get();
+
+      
     
        return response()->json($users);
     }

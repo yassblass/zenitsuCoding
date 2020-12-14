@@ -24,7 +24,7 @@
                 <textarea name="reason" id="reason" cols="30" rows="4" value="description" v-model="description"></textarea>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-success" @click='cancelSubmit' >Yes</button>
+                    <button type="submit" class="btn btn-success" @click='cancelAppointmentSubmit(id)' >Yes</button>
                     </div>
         </form>
       </div>
@@ -54,11 +54,11 @@
 
 
     methods : {
-          cancelSubmit() {
+          cancelAppointmentSubmit(id) {
                 let currentObj = this;
-            
-                axios.post('/api/cancelSubmit', {
-                    id: this.$props.id,
+                //call the function 
+                axios.post('/api/cancelAppointment', {
+                    id: id,
                     description: this.description
                 })
                 .then(function (response) {

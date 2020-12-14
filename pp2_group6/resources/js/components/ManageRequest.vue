@@ -16,7 +16,7 @@
       </thead>
         <tbody>
         <tr v-for="appointment in appointments" :key="appointment.appointmentId" >
-          <th >{{ appointment.startsAt }}</th>
+          <th >{{ appointment.date }} {{ appointment.startsAt }}</th>
           <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>
           <th >{{ appointment.subject }}</th>
           <b-button variant="primary" @click="editAccept(appointment.appointmentId)">Accept</b-button>
@@ -28,10 +28,10 @@
 
       </table>
   
-
-      <b-button pill variant="danger">Back</b-button>
+<div style="position:absolute">
+      <b-button  pill variant="danger">Back</b-button>
       <alert></alert>
-
+</div>
       
 </div>
 </template>
@@ -42,6 +42,7 @@ export default {
         return {
             myStyle:{
             backgroundColor: "#bababa",
+          
             },
             title : 'Manage Requests',
             
