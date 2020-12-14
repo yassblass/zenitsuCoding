@@ -32,6 +32,8 @@ let actions = {
             }
             window.location.reload();
         },
+
+
         fetchAppointments({commit}) {
              //Declare needed Variables
              let currentObj = this;
@@ -82,6 +84,7 @@ let actions = {
             window.location.reload();
         },
 
+
         //Users
         fetchUsers({commit}) {
             axios.get('users/get')
@@ -91,6 +94,7 @@ let actions = {
                 console.log(err)
             })
         },
+
 
         //Subjects
         fetchSubjects({commit}) {
