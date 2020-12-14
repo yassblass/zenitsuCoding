@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 use App\Mail\AlMail;
 use App\Mail\cancelMail;
-
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
 use Mail;
-
-
-
 
 class MailController extends Controller
 {
