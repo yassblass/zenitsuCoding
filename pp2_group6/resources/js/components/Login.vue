@@ -1,10 +1,16 @@
 <template>
-    <div>
+    <div class="container">
         <h1>Login</h1>
-        <input placeholder="Email" type="email" v-model="form.email">
-        <input placeholder="Password" type="password" v-model="form.password">
 
-        <button @click.prevent="loginUser" type="submit">Log in</button>
+        <input type="email" class="form-control" placeholder="Email" v-model="form.email">
+        
+        <!--<input placeholder="Email" type="email" v-model="form.email">-->
+
+        
+        <input type="password" class="form-control" placeholder="Password" v-model="form.password">
+       <!-- <input placeholder="Password" type="password" v-model="form.password">-->
+
+        <button @click.prevent="loginUser" type="submit" class="btn btn-danger">Log in</button>
 
     </div>
 </template>
@@ -33,3 +39,24 @@ export default {
     
 }
 </script>
+
+<style>
+.container{
+    position: relative;
+    width: 280px; 
+    height:400px; 
+    margin-top: 100px
+}
+
+h1{
+    text-align: center; 
+    font-size:50px; 
+    font-family:Georgia
+}
+
+input{
+    margin-top: 18px
+}
+
+
+</style>
