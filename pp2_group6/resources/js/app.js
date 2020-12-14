@@ -10,10 +10,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
+//Student components
 Vue.component('appointments', require('./components/Appointments.vue').default);
 Vue.component('createAppointments', require('./components/CreateAppointments.vue').default);
 Vue.component('cancelPage', require('./components/cancelPage.vue').default);
 Vue.component('updatePage', require('./components/updatePage.vue').default);
+Vue.component('checkEmail', require('./components/checkEmail.vue').default);
 Vue.component('showAvailabilities', require('./components/ShowAvailabilities.vue').default);
 
 //Secretary components

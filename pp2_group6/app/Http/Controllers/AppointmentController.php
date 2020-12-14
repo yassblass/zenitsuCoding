@@ -18,6 +18,13 @@ class AppointmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Return to appointments page.
+    public function getIndex(){
+        return view('appointments');
+    }
+
+
     public function index()
     {
         // Join the database of appointments and students to get the firstname and lastname of the student
@@ -29,12 +36,6 @@ class AppointmentController extends Controller
          ->get();
     
        return response()->json($users);
-    }
-
-
-    //Return to appointments page.
-    public function getIndex(){
-        return view('appointments');
     }
 
     //Get all appointments from DB.
@@ -121,8 +122,6 @@ class AppointmentController extends Controller
 
     //Show cancel page based on token.
     public function showCancelPage ($token){
-
-
         //8aa32d535944427a88ec2a75fe957aa387509c009cceda69b9a2d0f8450ea46f
         
         //Check if appointment exists with token.
@@ -130,7 +129,6 @@ class AppointmentController extends Controller
 
             //Simple check message for testing purposes.
             $check = "Appointment exists!";
-
 
             //Make empty appointment array template, will be used below.
             $appointment = array(
@@ -191,7 +189,55 @@ class AppointmentController extends Controller
         } 
     }
 
+    public function checkEmail(Request $request)
+    {
+        $domain = '@student.ehb.be';
+        $firstName = $request['firstName'];
+        $lastName = $request['lastName'];
 
+
+        //Concat firstName, lastName and domain to give email of format : firstName.lastName@student.ehb.be
+        $email = $firstName . '.' . $lastName . $domain;
+
+        //Check if given $email exist in DB
+        $checkEmail = Student::where('email', '=', $email)->exists();
+
+        // If email exists, create an appointment request.
+        if($checkEmail){
+            //Get student_id based on given email
+            $getStudentId = Student::select('student_id')->where('email', '=', $email)->get();
+
+            //Get 'hasRight' field from student table based on user_id
+            $getHasRight = Student::select('hasRight')->where('student_id', '=', $getStudentId[0]->student_id)->get();
+
+            //Get 'flagged" field from student table based on user_id
+            $getFlagged = Student::select('isFlagged')->where('student_id', '=', $getStudentId[0]->student_id)->get();
+
+            if($getHasRight[0]->hasRight === 1)
+            {
+                if($getFlagged[0]->isFlagged === 0)
+                {
+                    //All check done, return student_id based on email
+                    return response(1);
+                }
+                else
+                {
+                    //When the student is flagged
+                    return response(2);
+                }
+            }
+            else
+            {
+                //When the student has no rights
+                return response(3);
+            }
+        }
+        else
+        {
+            //When the email does not exist in the organization
+            return response(0);
+        } 
+    }
 
     //Make an appointment request
     public function makeRequest(Request $request)
@@ -203,20 +249,16 @@ class AppointmentController extends Controller
         $domain = '@student.ehb.be';
         $firstName = $appointment['firstName'];
         $lastName = $appointment['lastName'];
+
+        //Concat firstName, lastName and domain to give email of format : firstName.lastName@student.ehb.be
         $email = $firstName . '.' . $lastName . $domain;
-
-        // //Since a first token is generated at the VueJS side, we hash it once more in the backend. Hashing technique used -> [sha256].
-        $hashedToken = hash('sha256',$token);
         
-
-        // //Check if given $email exist in DB
+        //Check if given $email exist in DB
         $checkEmail = Student::where('email', '=', $email)->exists();
 
-        // //Gives object with student_id based on given EMAIL () from DB
-        
-
-        //If email exists, create an appointment request.
+        // If email exists, create an appointment request.
         if($checkEmail){
+            //Get student_id based on given email
             $getStudentId = Student::select('student_id')->where('email', '=', $email)->get();
 
             if($appointment = Appointment::create(array(
@@ -234,15 +276,50 @@ class AppointmentController extends Controller
 
             }
 
-            return response(true);
+            //Get 'hasRight' field from student table based on user_id
+            $getHasRight = Student::select('hasRight')->where('student_id', '=', $getStudentId[0]->student_id)->get();
+
+            //Get 'flagged" field from student table based on user_id
+            $getFlagged = Student::select('isFlagged')->where('student_id', '=', $getStudentId[0]->student_id)->get();
+
+            //Since a first token is generated at the VueJS side, we hash it once more in the backend. Hashing technique used -> [sha256].
+            $hashedToken = hash('sha256',$token);
+
+            if($getHasRight[0]->hasRight === 1)
+            {
+                if($getFlagged[0]->isFlagged === 0)
+                {
+                    $appointment = Appointment::create(array(
+                        'student_id' => $getStudentId[0]->student_id,
+                        'user_id' => $appointment['user_id'],
+                        'date' => $appointment['date'],
+                        'startsAt' => $appointment['startsAt'],
+                        'subject' => $appointment['subject'],
+                        'status' => 'pending',
+                        'cancelToken' => $hashedToken,
+                    )); 
+                    
+                    $matchThese = ['user_id' => $appointment['user_id'], 'date' => $appointment['date'], 'time' => $appointment['startsAt']];
+                    $takenAvailabilityId = Availability::where($matchThese)->update(['status' => 'taken']);
+                    //Availability::find($takenAvailabilityId)->update(['status' => 'taken']);
+
+                        //Appointment creation succesful
+                        return response($takenAvailabilityId);
+                }else{
+                    //When the student is flagged
+                    return response(2);
+                }
+            }else{
+                //When the student has no rights
+                return response(3);
+            }
         }
-        else
-        {
-            return response(false);
+        else{
+            //When the email does not exist in the organization
+            return response(0);
         } 
 
-       // return response($request);
-
+        //return response()->json($request['request']);
     }
     
 
