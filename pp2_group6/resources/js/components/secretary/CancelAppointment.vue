@@ -60,7 +60,7 @@
                   No
                 </button>
                 <button
-                  type="button"
+                  type="submit"
                   class="btn btn-success"
                   @click="cancelAppointment()"
                 >
