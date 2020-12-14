@@ -9,7 +9,7 @@ class Availability extends Model
 {
     use HasFactory;
 
-
+    public $timestamps = false;
     protected $dateFormat = 'H:i:s';
     protected $primaryKey = 'avId';
     public function users () {

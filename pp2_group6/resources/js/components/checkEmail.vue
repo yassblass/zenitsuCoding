@@ -45,7 +45,7 @@ export default {
                         console.log("Email exists!")
 
                         //SEND TRUE to Parent.
-                        this.$emit('nameChecked', 1)
+                        this.$emit('nameChecked', [1, this.student])
                     }
                     else if(this.response === 2){
                         //If student is flagged

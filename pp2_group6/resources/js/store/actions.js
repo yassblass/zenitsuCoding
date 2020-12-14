@@ -13,7 +13,7 @@ let actions = {
                 token : token,
             })
                 .then(res => {
-                    console.log("Response: " + res.data);
+                    //console.log("Response: " + res.data);
                     response = res.data;
 
                     if(response === 1) {
@@ -47,7 +47,7 @@ let actions = {
             //Axios [GET]
             axios.get('appointment/get')
                 .then(res => {
-                    console.log(res.data);
+                    //console.log(res.data);
                     commit('FETCH_APPOINTMENTS', res.data)
                 }).catch(err => {
                 console.log(err)

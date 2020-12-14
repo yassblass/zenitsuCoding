@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
+use App\Models\Availability;
 
 class AppointmentController extends Controller
 {
@@ -281,10 +282,14 @@ class AppointmentController extends Controller
                         'subject' => $appointment['subject'],
                         'status' => 'pending',
                         'cancelToken' => $hashedToken,
-                    ));
+                    )); 
+                    
+                    $matchThese = ['user_id' => $appointment['user_id'], 'date' => $appointment['date'], 'time' => $appointment['startsAt']];
+                    $takenAvailabilityId = Availability::where($matchThese)->update(['status' => 'taken']);
+                    //Availability::find($takenAvailabilityId)->update(['status' => 'taken']);
 
                         //Appointment creation succesful
-                        return response(1);
+                        return response($takenAvailabilityId);
                 }else{
                     //When the student is flagged
                     return response(2);
@@ -298,6 +303,8 @@ class AppointmentController extends Controller
             //When the email does not exist in the organization
             return response(0);
         } 
+
+        //return response()->json($request['request']);
     }
     
 
