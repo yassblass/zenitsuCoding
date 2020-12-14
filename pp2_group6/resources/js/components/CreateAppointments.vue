@@ -161,13 +161,18 @@ export default {
         name: "",
         duration: "",
       },
+      student: {
+        firstName: "",
+        lastName: "",
+      },
       output: "",
-      appointmentId: "",
-      token: "",
-      currentComponent: "",
+      currentComponent: "check-email",
       selectedSecretary: "",
       availabilities: {},
       chosenTime: '',
+      appointmentId: "",
+      token: "",
+      check: "THIS IS THE CHECK",
     };
   },
   methods: {

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
+use App\Models\Availability;
 
 class AppointmentController extends Controller
 {
@@ -217,8 +218,8 @@ class AppointmentController extends Controller
         //If email exists, create an appointment request.
         if($checkEmail){
             $getStudentId = Student::select('student_id')->where('email', '=', $email)->get();
-            
-            $appointment = Appointment::create(array(
+
+            if($appointment = Appointment::create(array(
                 'student_id' => $getStudentId[0]->student_id,
                 'user_id' => $appointment['user_id'],
                 'date' => $appointment['date'],
@@ -226,7 +227,12 @@ class AppointmentController extends Controller
                 'subject' => $appointment['subject'],
                 'status' => 'pending',
                 'cancelToken' => $hashedToken,
-            ));
+            ))){
+                
+                $matchThese = ['user_id' => $appointment['user_id'], 'date' => $appointment['date'], 'time' => $appointment['startsAt']];
+                    $takenAvailabilityId = Availability::where($matchThese)->update(['status' => 'taken']);
+
+            }
 
             return response(true);
         }
