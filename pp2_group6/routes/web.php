@@ -64,6 +64,10 @@ Route::prefix('secretary')->group( function ()  {
 
     //
     Route::post('/refuseAppointment/{id}', \App\Http\Controllers\AppointmentController::class .'@refuseAppointment');
+
+    Route::post('/insertAvailabilities', \App\Http\Controllers\AvailabilityController::class .'@insertAvailabilities');
+
+
     
     //Not used for now.
     //Route::delete('/delete/{id}', [App\Http\Controllers\AppointmentController::class,'delete']);
