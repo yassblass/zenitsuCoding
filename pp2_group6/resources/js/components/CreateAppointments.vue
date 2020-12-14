@@ -205,7 +205,7 @@ export default {
 
       axios
         .get("availabilities/" + secretaryId)
-        .then((response) => (this.availabilities = response.data))
+        .then((response) => (console.log(response.data)))
         .catch((error) => console.log(error));
 
         this.$props.availabilities = this.availabilities;

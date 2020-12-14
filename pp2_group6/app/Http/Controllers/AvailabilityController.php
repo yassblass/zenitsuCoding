@@ -13,13 +13,38 @@ class AvailabilityController extends Controller
 
         $matchThese = ['user_id' => $secretaryId, 'status' => 'free'];
 
+    
+        $availabilitiesObject = array(
+            'avId' => '',
+            'user_id' => '',
+            'date' => '',
+            'time' => '',
+            'status' => '',
+    );
+
+        
+
         if($availabilities = Availability::where($matchThese)->get()){
 
-            return response($availabilities);
+            foreach ($availabilities as $availability) {
+        
+        $availabilitiesObject[0]=$availability['avId'];
+        $availabilitiesObject[1]=$availability['user_id'];
+        $availabilitiesObject[2]=$availability['date'];
+        $availabilitiesObject[3]=$availability['time'];
+        $availabilitiesObject[4]=$availability['status'];
+
+              }
+       
+
+
+            return response($availabilitiesObject);
         }
         else{
             return response(false);
         }
+
+        
 
 
         //return response($secretaryId);

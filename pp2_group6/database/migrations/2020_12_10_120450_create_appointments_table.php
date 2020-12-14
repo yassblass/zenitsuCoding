@@ -20,7 +20,7 @@ class CreateAppointmentsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('users');;
             $table->date('date');
-            $table->datetime('startsAt');
+            $table->time('startsAt');
             $table->string('subject');
             $table->string('status')->default('pending');
             $table->string('cancelToken')->unique();
