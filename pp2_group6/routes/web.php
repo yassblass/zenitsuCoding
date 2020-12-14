@@ -73,8 +73,6 @@ Route::group(['prefix' => 'appointment'], function () {
 
     //
     Route::get('/token/appointments', \App\Http\Controllers\AppointmentController::class . '@returnView');
-
-
 });
 
 
