@@ -16,11 +16,11 @@ class CreateAvailabilitiesTable extends Migration
         Schema::create('availabilities', function (Blueprint $table) {
             $table->id('avId');
             $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('user_id')->on('users');
             $table->date('date');
             $table->dateTime('time');
             $table->string('status')->default('free');
        
-            $table->index('user_id');
         });
     }
 

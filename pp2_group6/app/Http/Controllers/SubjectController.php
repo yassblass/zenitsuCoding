@@ -11,7 +11,7 @@ class SubjectController extends Controller
 
     public function get(Request $request)
     {
-        $subjects = Subject::orderBy('created_at', 'desc')->get();
+        $subjects = Subject::all();
         return response()->json($subjects);
     }
 }
