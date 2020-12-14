@@ -10,27 +10,30 @@
         <tbody>
           <tr v-for="availability in availabilities" :key="availability.avId">
             <th>{{ availability.time }}</th>
-
+            
+           
             <th>
               <button>Choose</button>
             </th>
           </tr>
         </tbody>
       </table>
+    
+       
     </div>
   </div>
 </template>
 <script>
 export default {
+    props: ['secretaryId', 'availabilities'],
   data() {
     return {
-      availabilities: {},
+      test: 10,
     };
   },
   created() {
-      axios.get('availabilities')
-      .then((response) => (this.availabilities = response.data))
-      .catch((error) => console.log(error));
+
+    
   },
 };
 </script>
