@@ -361,36 +361,7 @@ class AppointmentController extends Controller
        return response()->json($users);
     }
     
-    //Change status of appointment to 'confirmed'
-    public function updateConfirmed($appointmentId){
-    if (Appointment::find($appointmentId))
-        {
-            // If appointment is found -> change the status from 'pending' to 'confirmed' when you click on the accept button
-            $appointment=Appointment::find($appointmentId)->update(['status' => 'confirmed']);
+    
 
-            return response()->json($appointment);
-        }
-        else
-        {
-            $errorMessage = "Appointment Not Found!";
-            return response()->json($errorMessage);
-        }
-    }
-
-
-    //Change status of appointment to 'refused'
-    public function updateRefused($appointmentId){
-        if (Appointment::find($appointmentId))
-        {
-            // If appointment is found -> change the status from 'pending' to 'refused' when you click on the accept button
-            $appointment=Appointment::find($appointmentId)->update(['status' => 'refused']);
-
-            return response()->json($appointment);
-        }
-        else
-        {
-            $errorMessage = "Appointment Not Found!";
-            return response()->json($errorMessage);
-        }
-    }
+    
 }

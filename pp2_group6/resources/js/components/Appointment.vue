@@ -1,20 +1,8 @@
 <template>
-<div>
+<div :style="myStyle">
   <b-navbar toggleable type="dark" variant="dark">
     <b-navbar-brand href="#"><img src="/img/logo.jpg" width="50" height="40"></b-navbar-brand>
 
-    <b-navbar-toggle target="navbar-toggle-collapse">
-      <template #default="{ expanded }">
-        <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
-        <b-icon v-else icon="chevron-bar-down"></b-icon>
-      </template>
-    </b-navbar-toggle>
-
-    <b-collapse id="navbar-toggle-collapse" is-nav>
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item href="#">Link 1</b-nav-item>
-      </b-navbar-nav>
-    </b-collapse>
   </b-navbar>
 
     <h1>{{title}}</h1> <b-button pill variant="primary">Add/Import iCal</b-button>
@@ -28,9 +16,6 @@
       <th scope="col">STUDENT</th>
       <th scope="col">SUBJECT</th>
       <th scope="col">CANCEL</th>
-     
-    
-
     </tr>
 
     
@@ -53,7 +38,7 @@
 </div>
 
 <div> 
-  <b-button squared variant="outline-danger">Back</b-button>
+  <b-button class="text-center" squared variant="outline-danger">Back</b-button>
   <alert></alert>
 
 </div>
@@ -70,8 +55,12 @@ export default {
  data(){
 
     return{
+      myStyle:{
+        backgroundColor: "#bababa",
+      },
       title : "Manage Appointments",
       appointments: '',
+    
       
     }
   },
@@ -89,6 +78,8 @@ export default {
         .then(response => this.id = response.data)
         .catch(error => console.log(error));
       },
+
+
 
 
 

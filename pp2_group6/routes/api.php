@@ -31,3 +31,7 @@ Route::post('/cancelSubmit', [App\Http\Controllers\MailController::class,'cancel
 
 Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getPending');
 
+Route::post('/editAccept/{id}', \App\Http\Controllers\MailController::class .'@updateConfirmed');
+
+Route::post('/editRefuse/{id}', \App\Http\Controllers\MailController::class .'@updateRefused');
+

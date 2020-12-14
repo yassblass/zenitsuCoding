@@ -6,7 +6,7 @@
     <title>Cancel Mail</title>
 </head>
 <body>
-    <h1>Dear {{ $cancel ['name'] }} {{ $cancel ['lastname'] }}</h1>
+    <h1>Dear {{$cancel['name']}} {{$cancel['lastname']}}</h1>
 
     <p> Your appointment on {{$cancel['appoint']}} has been cancelled. For the next reason's: {{$cancel['description']}}</p>
 

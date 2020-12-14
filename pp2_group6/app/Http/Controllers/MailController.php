@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 use App\Mail\AlMail;
 use App\Mail\cancelMail;
+use App\Mail\AcceptMail;
+use App\Mail\RefuseMail;
+
+
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
@@ -33,6 +37,7 @@ class MailController extends Controller
        Mail::to("secretary.ehb@gmail.com")->send(new AlMail($details));
        return "Email sent";
    }
+   //DELETE
 
    public function deleteAppointment($appointmentId)
    {
@@ -53,9 +58,7 @@ class MailController extends Controller
     }
 
    }
-
-
-
+   // CANCEL
 
    public function cancelSubmit(Request $request){
 
@@ -100,7 +103,7 @@ class MailController extends Controller
        $cancel = [
            'title' => 'Appointment cancelled',
            'description' => $request['description'],
-           'name' => $studentName,
+           'name' => $studentName.startsAt,
            'lastname' => $studentLast,
            'appoint' => $appoint
        ];
@@ -115,6 +118,159 @@ class MailController extends Controller
       return response($request);
     }
 
+    
+    public function acceptMail($appointmentId){
+
+    //take data from database
+
+    //get mail of the student
+    $mail = DB::table('appointments')
+    ->join('students', 'students.student_id', '=', 'appointments.student_id')
+    ->select('students.email')
+    ->where('appointments.appointmentId' , $appointmentId)
+     ->get();
+
+    //get firstname of the student
+     $studentName =  DB::table('appointments')
+     ->join('students', 'students.student_id', '=', 'appointments.student_id')
+     ->select('students.firstName')
+     ->where('appointments.appointmentId' , $appointmentId)
+      ->get();
+
+      //get lastname of the student
+      $studentLast = DB::table('appointments')
+      ->join('students', 'students.student_id', '=', 'appointments.student_id')
+      ->select('students.lastName')
+      ->where('appointments.appointmentId' , $appointmentId)
+       ->get();
+
+        //get appointment date
+       $appoint = DB::table('appointments')
+       ->join('students', 'students.student_id', '=', 'appointments.student_id')
+       ->select('appointments.startsAt')
+       ->where('appointments.appointmentId' , $appointmentId)
+        ->get();
+        //get token
+        $token = DB::table('appointments')
+        ->join('students', 'students.student_id', '=', 'appointments.student_id')
+        ->select('appointments.cancelToken')
+        ->where('appointments.appointmentId' , $appointmentId)
+         ->get();
+        
+        
+        //Get all the data in a object
+
+       $accept = [
+           'title' => 'Appointment cancelled',
+           'name' => $studentName,
+           'lastname' => $studentLast,
+           'appoint' => $appoint,
+           'token' => $token
+       ];
+
+       //Sent mail with the information
+      Mail::to($mail)->send(new AcceptMail($accept));
+
+
+
+      // return "Email sent";
+      return "Email sent";
+    }
+
+ //Change status of appointment to 'confirmed'
+ public function updateConfirmed($appointmentId){
+  
+    if (Appointment::find($appointmentId))
+        {
+            // If appointment is found -> change the status from 'pending' to 'confirmed' when you click on the accept button
+            $appointment=Appointment::find($appointmentId)->update(['status' => 'confirmed']);
+
+            $this->acceptMail($appointmentId);
+            
+            return response()->json($appointment);
+        }
+        else
+        {
+            $errorMessage = "Appointment Not Found!";
+            return response()->json($errorMessage);
+        }
+    }
+
+ 
+    public function refuseMail($appointmentId){
+
+        //take data from database
+    
+        //get mail of the student
+        $mail = DB::table('appointments')
+        ->join('students', 'students.student_id', '=', 'appointments.student_id')
+        ->select('students.email')
+        ->where('appointments.appointmentId' , $appointmentId)
+         ->get();
+    
+        //get firstname of the student
+         $studentName =  DB::table('appointments')
+         ->join('students', 'students.student_id', '=', 'appointments.student_id')
+         ->select('students.firstName')
+         ->where('appointments.appointmentId' , $appointmentId)
+          ->get();
+    
+          //get lastname of the student
+          $studentLast = DB::table('appointments')
+          ->join('students', 'students.student_id', '=', 'appointments.student_id')
+          ->select('students.lastName')
+          ->where('appointments.appointmentId' , $appointmentId)
+           ->get();
+    
+            //get appointment date
+           $appoint = DB::table('appointments')
+           ->join('students', 'students.student_id', '=', 'appointments.student_id')
+           ->select('appointments.startsAt')
+           ->where('appointments.appointmentId' , $appointmentId)
+            ->get();
+            //get token
+            $token = DB::table('appointments')
+            ->join('students', 'students.student_id', '=', 'appointments.student_id')
+            ->select('appointments.cancelToken')
+            ->where('appointments.appointmentId' , $appointmentId)
+             ->get();
+            
+            
+            //Get all the data in a object
+    
+           $refuse = [
+               'title' => 'Appointment cancelled',
+               'name' => $studentName,
+               'lastname' => $studentLast,
+               'appoint' => $appoint,
+               'token' => $token
+           ];
+    
+           //Sent mail with the information
+          Mail::to($mail)->send(new RefuseMail($refuse));
+    
+    
+     
+          // return "Email sent";
+          return "Email sent";
+        }
+    
+
+    //Change status of appointment to 'refused'
+    public function updateRefused($appointmentId){
+        if (Appointment::find($appointmentId))
+        {
+            // If appointment is found -> change the status from 'pending' to 'refused' when you click on the accept button
+            $appointment=Appointment::find($appointmentId)->update(['status' => 'refused']);
+            $this->refuseMail($appointmentId);
+            return response()->json($appointment);
+        }
+        else
+        {
+            $errorMessage = "Appointment Not Found!";
+            return response()->json($errorMessage);
+        }
+    }
  
 
 

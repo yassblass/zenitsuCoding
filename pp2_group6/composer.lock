@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c556d2a31c49fc764414823c6f9c8f55",
+    "content-hash": "04eccb60087cf4a9f4c2ab0e0a5371da",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2526,6 +2526,63 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "spatie/calendar-links",
+            "version": "1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/calendar-links.git",
+                "reference": "c705b17416e2cf0b673a742f9fb6716a111ed984"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/calendar-links/zipball/c705b17416e2cf0b673a742f9fb6716a111ed984",
+                "reference": "c705b17416e2cf0b673a742f9fb6716a111ed984",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5 || ^9.0",
+                "spatie/phpunit-snapshot-assertions": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\CalendarLinks\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generate add to calendar links for Google, iCal and other calendar systems",
+            "homepage": "https://github.com/spatie/calendar-links",
+            "keywords": [
+                "calendar-links",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/calendar-links/issues",
+                "source": "https://github.com/spatie/calendar-links/tree/1.4.2"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-09-01T09:49:15+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

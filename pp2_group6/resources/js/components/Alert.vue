@@ -48,13 +48,12 @@
         data(){
             return {
                 description: '',
-                
+          
             }
         },
           methods: {
             formSubmit() {
                 let currentObj = this;
-                
                 axios.post('formSubmit', {
                     description: this.description
                 })
@@ -64,8 +63,6 @@
                 .catch(function (error) {
                     currentObj.output = error;
                 });
-
-                
             }
         },
 
