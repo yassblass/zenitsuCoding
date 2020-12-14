@@ -44,7 +44,7 @@ Route::group(['prefix' => 'subjects'], function (){
 });
 
 //Get secretary availabilities based on secretary ID
-Route::get('availabilities/{secretaryId}', \App\Http\Controllers\AvailabilityController::class . '@getAvailabilities');
+Route::post('availabilities/', \App\Http\Controllers\AvailabilityController::class . '@getAvailabilities');
 
 
 

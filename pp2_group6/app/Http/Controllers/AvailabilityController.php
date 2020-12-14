@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 
 class AvailabilityController extends Controller
 {
-    public function getAvailabilities ($secretaryId) {
+    public function getAvailabilities (Request $request) {
+
+
+        //Isolate date & secretary ID (user_id) from request.
+        $secretaryId = $request['secretaryId'];
+        $date = $request['date'];
 
         //Get all secretary availabilities where status = 'free' and store them.
         
 
-        $matchThese = ['user_id' => $secretaryId, 'status' => 'free'];
+        $matchThese = ['user_id' => $secretaryId, 'status' => 'free', 'date' => $date];
 
     
         $availabilitiesObject = array(
@@ -36,6 +41,6 @@ class AvailabilityController extends Controller
         
 
 
-        //return response($secretaryId);
+       // return response($request);
     }
 }

@@ -44,9 +44,11 @@
 
       <show-availabilities
         :is="currentComponent"
-        :availabilities="availabilities"
+        :availabilities="availabilities" v-on:childToParent="timeIsChosen"
       >
       </show-availabilities>
+
+      <pre> {{ chosenTime }} </pre>
       <!-- <pre>{{ selectedSecretary }} </pre>
       <pre>{{ availabilities }} </pre> -->
 
@@ -165,12 +167,17 @@ export default {
       currentComponent: "",
       selectedSecretary: "",
       availabilities: {},
+      chosenTime: '',
     };
   },
   methods: {
     createAppointment(request) {
       let currentObj = this;
       this.$store.dispatch("createAppointment", request);
+    },
+    timeIsChosen(newTime) {
+
+        this.chosenTime = newTime;
     },
     confirmAppointment(appointmentId) {
       //Declare needed Variables
@@ -204,7 +211,10 @@ export default {
       let secretaryId = newSecretary;
 
       axios
-        .get("availabilities/" + secretaryId)
+        .post("availabilities/",{
+            secretaryId : secretaryId,
+            date : this.request.date,
+        } )
         .then((response) => (this.availabilities = response.data))
         .catch((error) => console.log(error));
 
