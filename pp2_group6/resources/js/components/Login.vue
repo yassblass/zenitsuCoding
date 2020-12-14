@@ -3,12 +3,10 @@
         <h1>Login</h1>
 
         <input type="email" class="form-control" placeholder="Email" v-model="form.email">
-        
-        <!--<input placeholder="Email" type="email" v-model="form.email">-->
 
         
         <input type="password" class="form-control" placeholder="Password" v-model="form.password">
-       <!-- <input placeholder="Password" type="password" v-model="form.password">-->
+       
 
         <button @click.prevent="loginUser" type="submit" class="btn btn-danger">Log in</button>
 
@@ -58,5 +56,8 @@ input{
     margin-top: 18px
 }
 
-
+button{
+    margin-top:18px;
+    margin-left:90px;
+}
 </style>

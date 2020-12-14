@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="width: 450px; height:400px; margin-top: 70px">
             
            
         <h1 style="text-align: center; font-size:50px; font-family:Georgia Pro">Welcome</h1>
@@ -49,9 +49,7 @@
 <style>
 .container{
     position: relative;
-    width: 450px; 
-    height:400px; 
-    margin-top: 70px
+
 }
 
 .center{
@@ -64,12 +62,6 @@ p{
     text-align: center;
     font-family:Georgia;
     font-size:30px;
-}
-
-h1{
-    text-align: center; 
-    font-size:50px; 
-    font-family:Georgia
 }
 
 
