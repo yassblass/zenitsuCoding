@@ -212,10 +212,12 @@ class AppointmentController extends Controller
         $checkEmail = Student::where('email', '=', $email)->exists();
 
         // //Gives object with student_id based on given EMAIL () from DB
-        $getStudentId = Student::select('student_id')->where('email', '=', $email)->get();
+        
 
         //If email exists, create an appointment request.
         if($checkEmail){
+            $getStudentId = Student::select('student_id')->where('email', '=', $email)->get();
+            
             $appointment = Appointment::create(array(
                 'student_id' => $getStudentId[0]->student_id,
                 'user_id' => $appointment['user_id'],
@@ -232,6 +234,8 @@ class AppointmentController extends Controller
         {
             return response(false);
         } 
+
+       // return response($request);
 
     }
     

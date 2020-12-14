@@ -48,7 +48,7 @@
       >
       </show-availabilities>
 
-      <pre> {{ chosenTime }} </pre>
+      
       <!-- <pre>{{ selectedSecretary }} </pre>
       <pre>{{ availabilities }} </pre> -->
 
@@ -173,6 +173,7 @@ export default {
   methods: {
     createAppointment(request) {
       let currentObj = this;
+      this.request.startsAt = this.chosenTime;
       this.$store.dispatch("createAppointment", request);
     },
     timeIsChosen(newTime) {
