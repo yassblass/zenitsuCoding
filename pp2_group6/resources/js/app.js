@@ -16,6 +16,7 @@ Vue.component('createAppointments', require('./components/CreateAppointments.vue
 Vue.component('cancelPage', require('./components/cancelPage.vue').default);
 Vue.component('updatePage', require('./components/updatePage.vue').default);
 Vue.component('checkEmail', require('./components/checkEmail.vue').default);
+Vue.component('showAvailabilities', require('./components/ShowAvailabilities.vue').default);
 
 //Secretary components
 Vue.component('appointment', require('./components/secretary/Appointment.vue').default);

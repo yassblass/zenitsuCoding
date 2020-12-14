@@ -18,7 +18,7 @@ class CreateAvailabilitiesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('users');
             $table->date('date');
-            $table->dateTime('time');
+            $table->time('time');
             $table->string('status')->default('free');
        
         });
