@@ -2,21 +2,7 @@
     <div>
         <h2>Create an appointment</h2>
         <b-form @submit="createAppointment(appointment)">
-            <b-form-group label="Insert your first name">
-                <b-form-input
-                    type="text"
-                    placeholder="First name"
-                    v-model="request.firstName">
-                </b-form-input>
-            </b-form-group>
-
-            <b-form-group label="Insert your last name">
-                <b-form-input
-                    type="text"
-                    placeholder="Last name"
-                    v-model="request.lastName">
-                </b-form-input>
-            </b-form-group>
+            <check-email :is=currentComponent v-on:nameChecked="showDateForm"></check-email>
 
             <b-form-group label="Choose between available secretary">
                 <b-form-radio-group
@@ -30,6 +16,8 @@
                     </template>
                 </b-form-radio-group>
             </b-form-group>
+
+            <pre> {{ check }} </pre>
 
             <b-form-group label="Choose a date">
                 <b-form-input
@@ -114,8 +102,11 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import checkEmail from './checkEmail.vue';
 export default {
+  components: { checkEmail },
     name: "CreateAppointment",
+    props: ["firstName", "lastName"],
     data() {
         return {
             appointment: {
@@ -144,13 +135,19 @@ export default {
               name: "",
               duration: ""
             },
+            student:{
+                firstName: "",
+                lastName: ""
+            },
             output: "",
+            currentComponent:"check-email",
             appointmentId: "",
-            token: ""
+            token: "",
+            check: "THIS IS THE CHECK",
         };
     },
     methods: {
-        createAppointment(request) {
+        createAppointment(student) {
 
           let currentObj = this;
             this.$store.dispatch("createAppointment" , request);
@@ -177,7 +174,23 @@ export default {
             let currentObj = this;
 
             window.location.href = "appointment/token/" + token;
+        }, 
+        showDateForm: function(value) {
+        
+            if(value === 1){
+                this.check = "NAME HAS BEEN VALIDATED";
+
+                //Jump to next component
+            }
         }
+
+
+
+
+
+    },
+    watch: {
+        
     },
     computed: {
         ...mapGetters([

@@ -1,13 +1,11 @@
 let actions = {
         //Appointments
         createAppointment({commit}, request) {
-
             //Declare needed Variables
             let crypto = require("crypto");
-            let currentObj = this;
-            let thisResponse ="";
+            let response = "";
             //Generate unique token
-            var token = crypto.randomBytes(15).toString("hex");
+            let token = crypto.randomBytes(15).toString("hex");
 
             //Axios call [POST]
             axios.post('appointment/create/', {
@@ -15,22 +13,29 @@ let actions = {
                 token : token,
             })
                 .then(res => {
-                    console.log(res.data);
-                    commit('CREATE_APPOINTMENT', res.data)
+                    console.log("Response: " + res.data);
+                    response = res.data;
+
+                    if(response === 1) {
+                        //handle action
+                        console.log("Appointment created!")
+                        window.location.reload();
+                        commit('CREATE_APPOINTMENT', res.data)
+                    }
+                    else if(response === 2){
+                        //handle action
+                       console.log("You have been flagged, try again in 15 minutes!")
+                    } else if(response === 3){
+                        //handle action
+                       console.log("You have no rights, try again in 15 minutes!")
+                    }  else if(response === 0) {
+                        console.log("Email does not exist in organization!")
+                    } else {
+                        console.log("Something went wrong, try again!")
+                    }
                 }).catch(err => {
                 console.log(err)
             })
-
-
-            //Whether true or false is returned by the axios call, different actions will be triggered.
-            if(this.thisResponse === 1) {
-                //handle action
-            }
-            else {
-                //handle action
-
-            }
-            window.location.reload();
         },
 
 
