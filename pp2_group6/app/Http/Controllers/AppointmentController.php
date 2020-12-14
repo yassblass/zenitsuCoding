@@ -120,8 +120,6 @@ class AppointmentController extends Controller
 
     //Show cancel page based on token.
     public function showCancelPage ($token){
-
-
         //8aa32d535944427a88ec2a75fe957aa387509c009cceda69b9a2d0f8450ea46f
         
         //Check if appointment exists with token.
@@ -143,7 +141,6 @@ class AppointmentController extends Controller
                 'cancelToken' => '',
         );
 
-            
             //Perform querybuilder, get appointment that is linked to given token.
             $getAppointment = Appointment::where('cancelToken', $token)->get();
 
@@ -235,9 +232,6 @@ class AppointmentController extends Controller
 
     }
     
-
-
-
     //Update an appointment
     public function updateAppointment(Request $request){
 
@@ -308,7 +302,6 @@ class AppointmentController extends Controller
         $hashedToken = hash('sha256',$token);
 
         $appointment = Appointment::create(array(
-        
             'student_id' => 2,
             'user_id' => 2,
             'date' => '2020-12-10',
@@ -325,7 +318,7 @@ class AppointmentController extends Controller
         // $app = Appointment::create(
         //     array(
         //         'firstName' =>'Adil',
-        //         'lastName' => 'Travlo',
+        //         'lastName' => 'sdqkjdhkj',
         //         'secretary' => $user['name'],
         //         'day' =>'monday',
         //         'cancelToken' => $hashedToken
@@ -375,4 +368,55 @@ class AppointmentController extends Controller
         //For testing purposes, we return the made object to the axios call in question.
         return response()->json($appointment);
     }
+
+
+    public function getAppointmentsInPending()
+    {
+        // Get the appointments with the name of the students with Join query
+        $users = DB::table('appointments')
+        ->join('students', 'students.student_id', '=', 'appointments.student_id')
+        ->select('appointments.*', 'students.firstName', 'students.lastName')
+        ->where('status', 'pending')
+         ->get();
+
+       return response()->json($users);
+    }
+
+    public function updateAccepted($appointmentId){
+        // Function secretary to accept the appointment
+        // extra check to be sure that he founds the appointment
+    if (Appointment::find($appointmentId))
+        {
+            // It will change the status from pending to confirmed when you click on the 'accept' button
+            $appointment=Appointment::find($appointmentId)->update(['status' => 'confirmed']);
+
+            return response()->json($appointment);
+        }
+        else
+        {
+            $errorMessage = "Appointment Not Found!";
+            return response()->json($errorMessage);
+        }
+    }
+
+    public function updateRefused($appointmentId){
+        // Function secretary to refuse the appointment
+        // extra check to be sure that he founds the appointment
+        if (Appointment::find($appointmentId))
+        {
+            // It will change the status from pending to refused when you click on the 'accept' button
+
+            $appointment=Appointment::find($appointmentId)->update(['status' => 'refused']);
+
+            return response()->json($appointment);
+        }
+        else
+        {
+            $errorMessage = "Appointment Not Found!";
+            return response()->json($errorMessage);
+        }
+    }
+
+  
 }
+

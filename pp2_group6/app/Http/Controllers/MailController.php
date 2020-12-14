@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Mail;
 
 
+
+
 class MailController extends Controller
 {
     //Sends an email to the developers when someone clicks on the Alert button 
@@ -101,5 +103,3 @@ class MailController extends Controller
         return response($request);
     }
 }
-
-

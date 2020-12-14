@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
-{
-    use HasFactory;
+class student extends Model
+{use HasFactory;
 
     //protected $primaryKey = 'my_string_key';
 
@@ -17,6 +16,5 @@ class Student extends Model
     }
 
     protected $fillable = ['firstName','lastName','email','flagCounter','isFlagged','hasRight'];
+
 }
-
-

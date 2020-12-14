@@ -78,7 +78,7 @@ export default {
   },
   created() {
     axios
-      .get('/secretary/appointmentList')
+      .get('/secretary/appointmentLists')
       .then((response) => (this.appointments = response.data))
       .catch((error) => console.log(error));
   },
@@ -91,3 +91,6 @@ export default {
   },
 };
 </script>
+
+
+

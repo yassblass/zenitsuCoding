@@ -56,9 +56,9 @@
                   No
                 </button>
                 <button
-                  type="button"
+                  type="submit"
                   class="btn btn-success"
-                  @click="submitAlert"
+                  @submit="submitAlert"
                 >
                   Yes
                 </button>

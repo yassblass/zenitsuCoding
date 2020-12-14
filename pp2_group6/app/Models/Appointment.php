@@ -22,9 +22,5 @@ class Appointment extends Model
         return $this->belongsTo(Student::class);
     }
 
-
-
     protected $fillable = ['student_id','user_id','date','startsAt','subject','status','cancelToken'];
-
-
 }
