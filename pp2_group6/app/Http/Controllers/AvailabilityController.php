@@ -26,19 +26,8 @@ class AvailabilityController extends Controller
 
         if($availabilities = Availability::where($matchThese)->get()){
 
-            foreach ($availabilities as $availability) {
-        
-        $availabilitiesObject[0]=$availability['avId'];
-        $availabilitiesObject[1]=$availability['user_id'];
-        $availabilitiesObject[2]=$availability['date'];
-        $availabilitiesObject[3]=$availability['time'];
-        $availabilitiesObject[4]=$availability['status'];
 
-              }
-       
-
-
-            return response($availabilitiesObject);
+            return response($availabilities);
         }
         else{
             return response(false);

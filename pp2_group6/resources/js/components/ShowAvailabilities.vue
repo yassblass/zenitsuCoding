@@ -25,7 +25,7 @@
 </template>
 <script>
 export default {
-    props: ['secretaryId', 'availabilities'],
+    props: ['availabilities'],
   data() {
     return {
       test: 10,

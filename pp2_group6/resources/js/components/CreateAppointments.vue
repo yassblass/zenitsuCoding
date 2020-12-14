@@ -20,6 +20,10 @@
         </b-form-input>
       </b-form-group>
 
+      <b-form-group label="Choose a date">
+        <b-form-input type="date" placeholder="Date" v-model="request.date">
+        </b-form-input>
+      </b-form-group>
       <b-form-group label="Choose between available secretary">
         <b-form-radio-group
           v-model="request.user_id"
@@ -38,26 +42,22 @@
         </b-form-radio-group>
       </b-form-group>
 
-
-    <show-availabilities :is=currentComponent :availabilities= availabilities> </show-availabilities>
+      <show-availabilities
+        :is="currentComponent"
+        :availabilities="availabilities"
+      >
+      </show-availabilities>
       <!-- <pre>{{ selectedSecretary }} </pre>
       <pre>{{ availabilities }} </pre> -->
 
-      
-
-      <b-form-group label="Choose a date">
-        <b-form-input type="date" placeholder="Date" v-model="request.date">
-        </b-form-input>
-      </b-form-group>
-
-      <b-form-group label="Choose a date and time">
+      <!--<b-form-group label="Choose a date and time">
         <b-form-input
           type="datetime-local"
           placeholder="Time"
           v-model="request.startsAt"
         >
         </b-form-input>
-      </b-form-group>
+      </b-form-group> -->
 
       <b-form-group label="Choose a subject">
         <b-form-radio-group
@@ -130,7 +130,7 @@ import ShowAvailabilities from "./ShowAvailabilities.vue";
 export default {
   components: { ShowAvailabilities },
   name: "CreateAppointment",
-  props: ["user_id","availabilitiesProp"],
+  props: ["user_id", "availabilitiesProp"],
   data() {
     return {
       appointment: {
@@ -205,10 +205,10 @@ export default {
 
       axios
         .get("availabilities/" + secretaryId)
-        .then((response) => (console.log(response.data)))
+        .then((response) => (this.availabilities = response.data))
         .catch((error) => console.log(error));
 
-        this.$props.availabilities = this.availabilities;
+      this.$props.availabilities = this.availabilities;
     },
   },
   computed: {
