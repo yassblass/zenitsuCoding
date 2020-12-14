@@ -43,6 +43,8 @@ Route::group(['prefix' => 'subjects'], function (){
 
 });
 
+Route::get('availabilities', \App\Http\Controllers\AvailabilityController::class . '@getAvailabilities');
+
 
 
 

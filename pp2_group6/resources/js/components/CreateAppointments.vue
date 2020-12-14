@@ -18,6 +18,9 @@
                 </b-form-input>
             </b-form-group>
 
+
+            
+
             <b-form-group label="Choose between available secretary">
                 <b-form-radio-group
                     v-model="request.user_id"
@@ -30,6 +33,10 @@
                     </template>
                 </b-form-radio-group>
             </b-form-group>
+
+
+            <show-availabilities :is=currentComponent>   </show-availabilities>
+
 
             <b-form-group label="Choose a date">
                 <b-form-input
@@ -53,8 +60,8 @@
                     buttons
                     button-variant="danger">
                     <template v-for="subject in subjects">
-                        <b-form-radio :value="subject.name" :key="subject.subjectId">
-                            {{ subject.name }}
+                        <b-form-radio :value="subject.name" :key="subject.subjectId" @click="ShowAvailabilities()">
+                            {{ subject.name }} 
                         </b-form-radio>
                     </template>
                 </b-form-radio-group>
@@ -114,8 +121,11 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import ShowAvailabilities from './ShowAvailabilities.vue';
 export default {
+  components: { ShowAvailabilities },
     name: "CreateAppointment",
+    props: ['user_id'],
     data() {
         return {
             appointment: {
@@ -146,7 +156,8 @@ export default {
             },
             output: "",
             appointmentId: "",
-            token: ""
+            token: "",
+            currentComponent: '',
         };
     },
     methods: {
@@ -177,6 +188,9 @@ export default {
             let currentObj = this;
 
             window.location.href = "appointment/token/" + token;
+        },
+        ShowAvailabilities() {
+            
         }
     },
     computed: {

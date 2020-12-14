@@ -9,7 +9,7 @@ class Availability extends Model
 {
     use HasFactory;
 
-
+    protected $primaryKey = 'avId';
     public function users () {
 
         return $this->belongsTo(User::class);

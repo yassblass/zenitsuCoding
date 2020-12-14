@@ -10,13 +10,13 @@ class AvailabilityController extends Controller
 
         //Get all secretary availabilities where status = 'free' and store them.
         
-        if($availabilities = Availability::where('status', 'free')){
+        if($availabilities = Availability::select('time')->where('status', 'free')->get()){
 
-            return respone(true);
+            return response($availabilities);
         }
         else{
-            return respone(false);
+            return response(false);
         }
-        
+
     }
 }
