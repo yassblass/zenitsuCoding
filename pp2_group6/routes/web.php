@@ -78,6 +78,8 @@ Route::group(['prefix' => 'appointment'], function () {
 });
 
 
+
+
 Route::prefix('secretary')->group( function ()  {
     //Returns the manage appointments page
     Route::get('/manageAppointment', function () {
@@ -95,7 +97,7 @@ Route::prefix('secretary')->group( function ()  {
     });
 
     //Get all apointments where status = confirmed.
-    Route::get('/appointmentList', [App\Http\Controllers\AppointmentController::class,'index']);
+    Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'index']);
 
     //Send feedback alert to admin.
     Route::post('/submitAlert', [App\Http\Controllers\MailController::class,'sendAlert']);

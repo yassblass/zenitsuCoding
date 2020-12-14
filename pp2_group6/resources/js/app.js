@@ -6,12 +6,16 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueRouter from 'vue-router';
-import store from './store/index.js'
+
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.use(VueRouter);
+
+import Vuex from 'vuex'
+Vue.use(Vuex)
+import storeData from "./store/index"
 
 //Student
 Vue.component('appointments', require('./components/Appointments.vue').default);
@@ -27,9 +31,11 @@ Vue.component('alert', require('./components/secretary/Alert.vue').default);
 Vue.component('managerequest', require('./components/secretary/ManageRequest.vue').default);
 Vue.component('setavailability', require('./components/secretary/setAvailability.vue').default);
 
-const app = new Vue({
-    el: '#app',
-    store
-});
 
+window.onload = function(e) {
+    const app = new Vue({
+        el: '#app',
+        storeData
+    });
+}
 
