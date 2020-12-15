@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Availability;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AvailabilityController extends Controller
@@ -11,6 +12,7 @@ class AvailabilityController extends Controller
     public function insertAvailabilities(Request $request){
         // Put the array of hours in another array variable
         $hours = $request['hours'];
+        $user = Auth::user();
     
         foreach($hours as $hour){ 
         // Make a string wtih de date and time
@@ -19,7 +21,7 @@ class AvailabilityController extends Controller
           $date = strtotime($string); 
           // Insert the availabilities to the database
         DB::table('availabilities')->insert([
-            ['user_id' => 6, 'date' => $request['date'], 'time' => date('Y-m-d H:i:s', $date), 'status' => 'free']
+            ['user_id' => $user->user_id, 'date' => $request['date'], 'time' => date('Y-m-d H:i:s', $date), 'status' => 'free']
             
         ]);
             }
