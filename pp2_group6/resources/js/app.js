@@ -31,6 +31,8 @@ Vue.component('createAppointments', require('./components/CreateAppointments.vue
 Vue.component('cancelPage', require('./components/cancelPage.vue').default);
 Vue.component('updatePage', require('./components/updatePage.vue').default);
 
+Vue.component('navbar', require('./components/Navbar.vue').default);
+
 // Instantiation
 window.onload = function () {
     const app = new Vue({

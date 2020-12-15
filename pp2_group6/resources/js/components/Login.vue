@@ -1,4 +1,6 @@
 <template>
+<div>
+    <navbar></navbar> 
     <div class="container">
         <h1>Login</h1>
 
@@ -11,12 +13,14 @@
         <button @click.prevent="loginUser" type="submit" class="btn btn-danger">Log in</button>
 
     </div>
+</div>
 </template>
 
 <script>
 export default {
     data(){
         return{
+            //object with email and password to send to controller for checking
             form:{
                 email:'',
                 password:''
@@ -26,6 +30,7 @@ export default {
         }
     },
     methods:{
+        //method send object to controller and if ok send to dashboard
         loginUser(){
             axios.post('/api/login', this.form).then(()=>{
                 this.$router.push({name:"dashboard"});

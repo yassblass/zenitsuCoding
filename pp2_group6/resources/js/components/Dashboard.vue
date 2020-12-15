@@ -1,7 +1,11 @@
 <template>
+<div>
+    
+    <navbar></navbar> 
+    
     <div class="container" style="width: 450px; height:400px; margin-top: 70px">
             
-           
+          
         <h1 style="text-align: center; font-size:50px; font-family:Georgia Pro">Welcome</h1>
         <img class="center" src="https://st3.depositphotos.com/4111759/13425/v/380/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"  style="width: 100px; height:100px; border-radius:50%; ">
         <p>{{user.firstName+" "+user.lastName+ " "}}</p>
@@ -14,24 +18,26 @@
         
             
     </div>
-    
+</div>   
 </template>
 
 <script>
     export default {
         data(){
              return {
-                user: "",
+                user:'',
             
             }
         },
         methods:{
+            // method to logout and then redirect to login
             logout(){
                 axios.post('/api/logout').then(()=>{
                     this.$router.push({name:"login"});
                 });
             }
         },
+        // when component is mountend get user who is logged in to show on page
         mounted() {
             axios.get('/api/user').then((res)=>{
                 this.user = res.data;

@@ -13,15 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//return dashboard even if you write an none existing path
 Route::get('/{any}', function () {
     return view('dashboard');
 })->where('any','.*');
 
-//Route::post('logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
-
-Route::get('/request', function () {
-    return view('secretary/request');
-});
 
 Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getInPending');
 
