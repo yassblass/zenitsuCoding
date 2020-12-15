@@ -11,12 +11,13 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 //Student components
-Vue.component('appointments', require('./components/Appointments.vue').default);
-Vue.component('createAppointments', require('./components/CreateAppointments.vue').default);
-Vue.component('cancelPage', require('./components/cancelPage.vue').default);
-Vue.component('updatePage', require('./components/updatePage.vue').default);
-Vue.component('checkEmail', require('./components/checkEmail.vue').default);
-Vue.component('showAvailabilities', require('./components/ShowAvailabilities.vue').default);
+Vue.component('appointments', require('./components/student/Appointments.vue').default);
+Vue.component('createAppointments', require('./components/student/CreateAppointments.vue').default);
+Vue.component('cancelPage', require('./components/student/cancelPage.vue').default);
+Vue.component('updatePage', require('./components/student/updatePage.vue').default);
+Vue.component('checkEmail', require('./components/student/checkEmail.vue').default);
+Vue.component('showAvailabilities', require('./components/student/ShowAvailabilities.vue').default);
+Vue.component('showSubjects', require('./components/student/ShowSubjects.vue').default);
 
 //Secretary components
 Vue.component('appointment', require('./components/secretary/Appointment.vue').default);
