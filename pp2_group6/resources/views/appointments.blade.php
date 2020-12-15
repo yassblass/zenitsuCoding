@@ -78,14 +78,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
-                    <create-appointments>
-
-                    </create-appointments>
-
+                    <create-appointments></create-appointments>
                 </div>
                 <div class="col-md-7">
                     <appointments></appointments>
-
                 </div>
             </div>
         </div>

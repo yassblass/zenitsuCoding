@@ -13,14 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', \App\Http\Controllers\AppointmentController::class . '@getIndex');
 
 // Route::post('appointments', \App\Http\Controllers\AppointmentController::class . '@store');
 
 // Route::get('appointments', \App\Http\Controllers\AppointmentController::class . '@get');
-
-
 
 //ALL ROUTES WITH 'users' PREFIX.
 Route::group(['prefix' => 'users'], function (){
@@ -32,18 +29,11 @@ Route::group(['prefix' => 'users'], function (){
 
 });
 
-
 //ALL ROUTES WITH 'subjects' PREFIX.
 Route::group(['prefix' => 'subjects'], function (){
     //Fetch all user from DB
     Route::get('/get', \App\Http\Controllers\SubjectController::class . '@get');
 });
-
-
-
-
-
-
 
 //Get secretary availabilities based on secretary ID
 Route::post('availabilities/', \App\Http\Controllers\AvailabilityController::class . '@getAvailabilities');
