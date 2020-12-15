@@ -27,6 +27,7 @@ Vue.component('setavailability', require('./components/secretary/setAvailability
 Vue.component('alert', require('./components/secretary/Alert.vue').default);
 
 
+
 window.onload = function(e) {
     const app = new Vue({
         el: '#app',

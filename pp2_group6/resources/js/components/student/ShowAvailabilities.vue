@@ -119,7 +119,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["users", "subjects"]),
+    ...mapGetters(["users"]),
   },
 };
 </script>
