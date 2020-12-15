@@ -8,11 +8,12 @@
             <!-- <pre> {{ check }} </pre>
             <pre> {{ request }} </pre> -->
 
-        <b-form-group label="Choose a date">
+        <!-- <b-form-group label="Choose a date">
         <b-form-input type="date" placeholder="Date" v-model="request.date">
         </b-form-input>
-      </b-form-group>
-      <b-form-group label="Choose between available secretary">
+      </b-form-group> -->
+
+      <!-- <b-form-group label="Choose between available secretary">
         <b-form-radio-group
           v-model="request.user_id"
           buttons
@@ -28,14 +29,14 @@
             </b-form-radio>
           </template>
         </b-form-radio-group>
-      </b-form-group>
+      </b-form-group> -->
 
       <show-availabilities
-        :is="currentComponent"
-        :availabilities="availabilities" v-on:childToParent="timeIsChosen"
+
+        :availabilities="availabilities" v-on:availabilityChosen="availabilitySet"
       >
       </show-availabilities>
-
+  <pre> {{ request }} </pre>
       
       <!-- <pre>{{ selectedSecretary }} </pre>
       <pre>{{ availabilities }} </pre> -->
@@ -136,7 +137,6 @@ export default {
         subject: "",
       },
       request: {
-        appointmentId: "",
         student_id: "",
         firstName: "",
         lastName: "",
@@ -172,9 +172,11 @@ export default {
       let currentObj = this;
       this.$store.dispatch("createAppointment", request);
     },
-    timeIsChosen(newTime) {
+    availabilitySet(availabilityRequest) {
 
-        this.request.startsAt= newTime;
+        this.request.date = availabilityRequest.date;
+        this.request.user_id = availabilityRequest.user_id;
+        this.request.startsAt = availabilityRequest.startsAt;
     },
     confirmAppointment(appointmentId) {
       //Declare needed Variables
