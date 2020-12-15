@@ -308,8 +308,6 @@ class AppointmentController extends Controller
             //When the email does not exist in the organization
             return response(0);
         } 
-
-        //return response()->json($request['request']);
     }
     
 
