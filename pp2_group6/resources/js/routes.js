@@ -68,6 +68,13 @@ export default{
             path:"/login",
             component:Login,
             name:"login",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then(()=>{
+                    
+                }).catch(()=>{
+                    next();
+                })
+            }
 
         },
         {

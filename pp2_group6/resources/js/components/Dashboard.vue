@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="user != ''">
     
     <navbar></navbar> 
     
@@ -13,9 +13,6 @@
         <router-link to="/manageAppointment"><button type="button" class="btn btn-danger" style="margin-top:10px;  margin-left: 25px;width:185px;" >Manage appointments</button></router-link>
         <router-link to="/manageRequest"><button type="button" class="btn btn-danger" style="margin-top:30px;  margin-left: 120px; width:185px;" >Manage request</button></router-link>
 
-        <button @click.prevent="logout">Logout</button>
-          
-        
             
     </div>
 </div>   
@@ -29,20 +26,12 @@
             
             }
         },
-        methods:{
-            // method to logout and then redirect to login
-            logout(){
-                axios.post('/api/logout').then(()=>{
-                    this.$router.push({name:"login"});
-                });
-            }
-        },
         // when component is mountend get user who is logged in to show on page
         mounted() {
             axios.get('/api/user').then((res)=>{
                 this.user = res.data;
             })
-            console.log('Component mounted.');
+            
         },
         
     }
