@@ -8,6 +8,8 @@ use App\Models\Appointment;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
 use App\Models\Availability;
+use App\Mail\requestMail;
+use Mail;
 
 class AppointmentController extends Controller
 {
@@ -73,58 +75,59 @@ class AppointmentController extends Controller
        return response()->json($appointment);
     }
 
-    //Delete an appointment
-    public function delete($appointmentId)
-    {
-        //Get the date of the appointment 
-        $dateAppointment = Appointment::select('date')->where('appointmentId', '=', $appointmentId)->get();
-        $dateApp = $dateAppointment[0]->date;
-
-        //
-
-        //Get data of the availability
-        $getAvUserId = Availability::select('user_id')->where('date', '=', $dateApp)->get();
-        $userId = $getAvUserId[0]->user_id;
-        $getAvDate = Availability::select('date')->where('date', '=', $dateApp)->get();
-        $date = $getAvDate[0]->date;
-        $getAvTime= Availability::select('time')->where('date', '=', $dateApp)->get();
-        $time = $getAvTime[0]->time;
-        
-        //For where statement
-        $matchThese = ['user_id' => $userId, 'date' => $date, 'time' => $time];
-
-        //Get status from availabily
-        $getAvStatus = Availability::select('status')->where($matchThese)->get(); 
-        $status = $getAvStatus[0]->status;
-              
-    //Check if status is taken
-    if($status === "taken"){
-        if($dateAppointment[0]->date > date("Y/m/d"))
-        {
-               //Get the availability based on the appointmentId and update the status to free
-               Availability::select('avId')->where($matchThese)->update(['status' => 'free']);
-               //Delete appointment from DB based on Appointment ID. 
-               Appointment::where('appointmentId', $appointmentId)->delete();
-
-               return response()->json("Availability set to free and deleted appointment!");
-   
-   
-           } else {
-               //Get the availability based on the appointmentId and update the status to free
-               Availability::select('avId')->where($matchThese)->delete();
-               //Delete appointment from DB based on Appointment ID. When the date is passed already 
-               Appointment::where('appointmentId', $appointmentId)->delete();
-
-               return response("Date is passed! Delete appointment and availability!");
-           }
-    } else {
-        //Status is not taken, just delete
-        Appointment::where('appointmentId', $appointmentId)->delete();
 
 
-        return response()->json('Availability status is not on taken');
-    }
-}
+     //Delete an appointment
+     public function delete($appointmentId)
+     {
+         //Get the date of the appointment 
+         $dateAppointment = Appointment::select('date')->where('appointmentId', '=', $appointmentId)->get();
+         $dateApp = $dateAppointment[0]->date;
+ 
+ 
+         //Get data of the availability
+         $getAvUserId = Availability::select('user_id')->where('date', '=', $dateApp)->get();
+         $userId = $getAvUserId[0]->user_id;
+         $getAvDate = Availability::select('date')->where('date', '=', $dateApp)->get();
+         $date = $getAvDate[0]->date;
+         $getAvTime= Availability::select('time')->where('date', '=', $dateApp)->get();
+         $time = $getAvTime[0]->time;
+         
+         //For where statement
+         $matchThese = ['user_id' => $userId, 'date' => $date, 'time' => $time];
+ 
+         //Get status from availabily
+         $getAvStatus = Availability::select('status')->where($matchThese)->get(); 
+         $status = $getAvStatus[0]->status;
+               
+     //Check if status is taken
+     if($status === "taken"){
+         if($dateAppointment[0]->date > date("Y/m/d"))
+         {
+                //Get the availability based on the appointmentId and update the status to free
+                Availability::select('avId')->where($matchThese)->update(['status' => 'free']);
+                //Delete appointment from DB based on Appointment ID. 
+                Appointment::where('appointmentId', $appointmentId)->delete();
+ 
+                return response()->json("Availability set to free and deleted appointment!");
+    
+    
+            } else {
+                //Get the availability based on the appointmentId and update the status to free
+                Availability::select('avId')->where($matchThese)->delete();
+                //Delete appointment from DB based on Appointment ID. When the date is passed already 
+                Appointment::where('appointmentId', $appointmentId)->delete();
+ 
+                return response("Date is passed! Delete appointment and availability!");
+            }
+     } else {
+         //Status is not taken, just delete
+         Appointment::where('appointmentId', $appointmentId)->delete();
+ 
+ 
+         return response()->json('Availability status is not on taken');
+     }
+ }
 
     
     //Cancel an appointment based on appointment ID.
@@ -293,7 +296,7 @@ class AppointmentController extends Controller
         //Declare needed varibales.
         //IsolateToken & Appointment object from request.
         $token = $request['token'];
-        $appointment = $request['request'];
+         $appointment = $request['request'];
         $domain = '@student.ehb.be';
         $firstName = $appointment['firstName'];
         $lastName = $appointment['lastName'];
@@ -324,6 +327,8 @@ class AppointmentController extends Controller
             {
                 if($getFlagged[0]->isFlagged === 0)
                 {
+
+                
                     $appointment = Appointment::create(array(
                         'student_id' => $getStudentId[0]->student_id,
                         'user_id' => $appointment['user_id'],
@@ -338,8 +343,31 @@ class AppointmentController extends Controller
                     $takenAvailabilityId = Availability::where($matchThese)->update(['status' => 'taken']);
                     //Availability::find($takenAvailabilityId)->update(['status' => 'taken']);
 
-                    //Appointment creation succesful
-                    return response($takenAvailabilityId);
+                        
+                    
+                    
+                        //Appointment creation succesful. Send request confirmation as email.
+
+                         
+                        $secreterayNameQuery = User::select('firstName','lastName')->where('user_id',$appointment['user_id'])->get();
+                        $secretayFirstName = $secreterayNameQuery[0]['firstName'];
+                        $secretaylastName = $secreterayNameQuery[0]['lastName'];
+                        $secretaryName = $secretayFirstName . ' ' . $secretaylastName;
+                        $cancelLink = "http://127.0.0.1:8000/appointment/token/" . $hashedToken;
+
+                        $requestForMail = array(
+                            'firstName' => $appointment['firstName'],
+                            'lastName' => $appointment['lastName'],
+                            'date' => $appointment['date'],
+                            'startsAt' => $appointment['startsAt'],
+                            'subject' => $appointment['subject'],
+                            'secretaryName' => $secretaryName,
+                            'cancelLink' => $cancelLink,
+                        );
+
+                        Mail::to($email)->send(new requestMail($requestForMail));
+                        
+                        return response($takenAvailabilityId);
                 }else{
                     //When the student is flagged
                     return response(2);
@@ -353,6 +381,7 @@ class AppointmentController extends Controller
             //When the email does not exist in the organization
             return response(0);
         } 
+
     }
     
 
