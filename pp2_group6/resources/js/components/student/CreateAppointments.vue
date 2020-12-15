@@ -10,28 +10,33 @@
 
       <!-- <pre> {{ check }} </pre>
             <pre> {{ request }} </pre> -->
-
+<transition name="slide-fade">
       <show-availabilities
         v-if="nameChecked && !dateChecked"
         :availabilities="availabilities"
         v-on:availabilityChosen="availabilitySet"
       ></show-availabilities>
-
+</transition>
       <!-- <pre> {{ request }} </pre> -->
 
       <!-- <pre>{{ selectedSecretary }} </pre>
             <pre>{{ availabilities }} </pre> -->
 
+<transition name="slide-fade">
+
       <show-subjects
-        v-if="dateChecked"
+        v-if="dateChecked && !subjectChecked"
         v-on:subjectChosen="subjectSet"
       ></show-subjects>
 
-      <modify-request :request="request" ></modify-request>
+</transition>
 
-      <b-button v-if="dateChecked" @click.prevent="createAppointment(request)"
+<transition name="slide-fade">
+      <modify-request v-if="subjectChecked && nameChecked" :request="request"  v-on:showAvailabilityEdit="editSecretary"  v-on:showSubjectEdit="editSubject"></modify-request>
+</transition>
+      <!-- <b-button v-if="subjectChecked" on:click.prevent="createAppointment(request)"
         >Make appointment</b-button
-      >
+      > -->
     </b-form>
 
     <br />
@@ -116,9 +121,21 @@ export default {
       token: "",
       nameChecked: false,
       dateChecked: false,
+      subjectChecked: false,
     };
   },
   methods: {
+    editSecretary(value){
+      this.dateChecked = value.dateChecked;
+      this.nameChecked = value.nameChecked;
+      this.subjectChecked = false;
+  },
+  editSubject (value) {
+    this.dateChecked = value.dateChecked;
+    this.subjectChecked = value.subjectChecked;
+
+
+  },
     createAppointment(request) {
       let currentObj = this;
       this.$store.dispatch("createAppointment", request);
@@ -168,6 +185,7 @@ export default {
     },
     subjectSet(chosenSubject) {
       this.request.subject = chosenSubject;
+      this.subjectChecked = true;
     },
   },
   watch: {
@@ -188,8 +206,23 @@ export default {
       this.$props.availabilities = this.availabilities;
     },
   },
+  
   computed: {
     ...mapGetters(["users", "subjects"]),
   },
 };
 </script>
+
+<style scoped>
+.slide-fade-enter-active {
+  transition: all .8s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

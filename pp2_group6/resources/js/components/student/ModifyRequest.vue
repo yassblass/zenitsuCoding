@@ -1,43 +1,89 @@
 <template>
   <div>
-    <b-list-group>
-      <p>Secretary: </p><b-list-group-item active>{{  }} </b-list-group-item>
-      <p>Date: </p><b-list-group-item active></b-list-group-item>
-      <p>StartsAt: </p><b-list-group-item active ></b-list-group-item>
-      <p>Subject: </p><b-list-group-item active></b-list-group-item>
-    </b-list-group>
+    <b-form-group
+      label="Are you sure you want to make an appoint with the following data?"
+    >
+    <div>
+      <b-form-radio-group buttons button-variant="danger">
+        <b-form-radio v-model="selectedSecretary">
+          {{ secretary["firstName"] + " " + secretary["lastName"] }}
+        </b-form-radio>
+        
+      </b-form-radio-group>
+    
 
-    <pre> {{ secretary }}</pre>
-    <pre> {{ request }}</pre>
+      <br />
+      <b-form-radio-group buttons button-variant="danger">
+        <b-form-radio >
+          {{ request['date']  }}
+        </b-form-radio>
+       
+      </b-form-radio-group>
 
+      <br />
+
+      <b-form-radio-group buttons button-variant="danger">
+        <b-form-radio >
+          {{ request['startsAt'] }}
+        </b-form-radio>
+        <button
+          type="button"
+          @click="showAvailabilityEdit"
+          class="btn btn-primary"
+        >
+          Edit
+        </button>
+      </b-form-radio-group>
+      </div>
+      <br />
+      <b-form-radio-group buttons button-variant="danger">
+        <b-form-radio v-model="selectedSecretary">
+          {{ request['subject'] }}
+        </b-form-radio>
+         <button
+          type="button"
+          @click="showSubjectEdit"
+          class="btn btn-primary"
+        >
+          Edit
+        </button> 
+      </b-form-radio-group>
+    </b-form-group>
+
+    <!-- <pre> {{ secretary }}</pre> -->
+    <!-- <pre> {{ request }}</pre> -->
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
-
 export default {
   props: ["request"],
-  data () {
-      return {
-          secretary: '',
-          secretaryId: '',
-          
-      }
+  data() {
+    return {
+      secretary: "",
+      selectedSecretary: "",
+    };
   },
-  created(){
+  methods: {
+    showAvailabilityEdit() {
+      let dateChecked = false;
+      let nameChecked = true;
 
-      this.secretaryId = this.request['user_id'];
-      this.users.foreach( function (user) {
-          if(user.user_id === this.secretaryId ) {
-              this.secretary = user.firstName + " " + user.lastName;
-          }
-      })
+      this.$emit("showAvailabilityEdit", { 'dateChecked' : dateChecked, 'nameChecked': nameChecked});
+    },
+    showSubjectEdit (){
+        let dateChecked = true;
+        let subjectChecked = false;
+        
+        this.$emit('showSubjectEdit',{ 'dateChecked' : dateChecked, 'subjectChecked': subjectChecked} )
+    }
   },
-  computed: {
-    ...mapGetters(["users"]),
+  mounted() {
+    axios
+      .get("users/getName/" + this.request["user_id"])
+      .then((response) => (this.secretary = response.data))
+      .catch((error) => console.log(error));
   },
+  computed: {},
 };
-
 </script>

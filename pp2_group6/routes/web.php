@@ -22,9 +22,11 @@ Route::get('/', \App\Http\Controllers\AppointmentController::class . '@getIndex'
 //ALL ROUTES WITH 'users' PREFIX.
 Route::group(['prefix' => 'users'], function (){
 
-    //Fetch all user from DB
-    Route::get('/get', \App\Http\Controllers\UserController::class . '@get');
+    //Fetch all users from DB
+    Route::get('/get', \App\Http\Controllers\UserController::class . '@getAll');
 
+    //Fetch one user's name from DB
+    Route::get('/getName/{userId}', \App\Http\Controllers\UserController::class . '@getName');
     
 
 });

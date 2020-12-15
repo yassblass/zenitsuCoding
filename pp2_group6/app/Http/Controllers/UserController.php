@@ -17,10 +17,16 @@ class UserController extends Controller
         //
     }
 
-    public function get(Request $request)
+    public function getAll()
     {
         $users = User::orderBy('created_at', 'desc')->get();
         return response()->json($users);
+    }
+
+    public function getName($userId)
+    {
+        $userName = User::select('firstName', 'lastName')->where('user_id', $userId)->get();
+        return response()->json($userName[0]);
     }
 
     /**
