@@ -46,7 +46,7 @@ class MailController extends Controller
     if (Appointment::find($appointmentId) )
     {
         //If you find the ID, delete the appointment
-        $appointment=Appointment::find($appointmentId)->delete();
+        $appointment=Appointment::where('appointmentId', '=' , $appointmentId)->delete();
 
         return response()->json($appointment);
     }
