@@ -4,76 +4,28 @@
         <b-form @submit="createAppointment(appointment)">
             <check-email :is=currentComponent v-on:nameChecked="showDateForm"></check-email>
 
-
             <!-- <pre> {{ check }} </pre>
             <pre> {{ request }} </pre> -->
 
-        <!-- <b-form-group label="Choose a date">
-        <b-form-input type="date" placeholder="Date" v-model="request.date">
-        </b-form-input>
-      </b-form-group> -->
+            <show-availabilities :availabilities="availabilities" v-on:availabilityChosen="availabilitySet"></show-availabilities>
 
-      <!-- <b-form-group label="Choose between available secretary">
-        <b-form-radio-group
-          v-model="request.user_id"
-          buttons
-          button-variant="danger"
-        >
-          <template v-for="user in users">
-            <b-form-radio
-              :value="user.user_id"
-              :key="user.user_id"
-              v-model="selectedSecretary"
-            >
-              {{ user.firstName + " " + user.lastName }}
-            </b-form-radio>
-          </template>
-        </b-form-radio-group>
-      </b-form-group> -->
-
-      <show-availabilities
-
-        :availabilities="availabilities" v-on:availabilityChosen="availabilitySet"
-      >
-      </show-availabilities>
-  <pre> {{ request }} </pre>
+            <pre> {{ request }} </pre>
       
-      <!-- <pre>{{ selectedSecretary }} </pre>
-      <pre>{{ availabilities }} </pre> -->
+            <!-- <pre>{{ selectedSecretary }} </pre>
+            <pre>{{ availabilities }} </pre> -->
 
-      <!--<b-form-group label="Choose a date and time">
-        <b-form-input
-          type="datetime-local"
-          placeholder="Time"
-          v-model="request.startsAt"
-        >
-        </b-form-input>
-      </b-form-group> -->
+            <show-subjects v-on:subjectChosen="subjectSet" ></show-subjects>
 
-      <b-form-group label="Choose a subject">
-        <b-form-radio-group
-          v-model="request.subject"
-          buttons
-          button-variant="danger"
-        >
-          <template v-for="subject in subjects">
-            <b-form-radio :value="subject.name" :key="subject.subjectId">
-              {{ subject.name }}
-            </b-form-radio>
-          </template>
-        </b-form-radio-group>
-      </b-form-group>
+      
 
-      <b-button @click.prevent="createAppointment(request)"
-        >Make appointment</b-button
-      >
+    <b-button @click.prevent="createAppointment(request)"
+        >Make appointment</b-button>
     </b-form>
 
     <br />
     <hr />
     <br />
             
-
         <h4 class="text-center font-weight-bold">Confirm an Appointment</h4>
         <div class="form-group">
             <input
@@ -86,8 +38,7 @@
         <div class="form-group">
             <button
                 class="btn btn-block btn-primary"
-                @click.prevent="confirmAppointment(appointmentId)"
-            >
+                @click.prevent="confirmAppointment(appointmentId)">
                 Confirm Appointment
             </button>
         </div>
@@ -102,8 +53,7 @@
                 type="text"
                 placeholder="Token"
                 v-model="token"
-                class="form-control"
-            />
+                class="form-control"/>
         </div>
         <div class="form-group">
             <button
@@ -122,8 +72,9 @@
 <script>
 import { mapGetters } from "vuex";
 import checkEmail from "./checkEmail.vue";
+import ShowSubjects from './ShowSubjects.vue';
 export default {
-  components: { checkEmail },
+  components: { checkEmail, ShowSubjects },
   name: "CreateAppointment",
   props: ["firstName", "lastName"],
   data() {
@@ -144,18 +95,6 @@ export default {
         date: "",
         startsAt: "",
         subject: "",
-      },
-      user: {
-        firstName: "",
-        lastName: "",
-      },
-      subject: {
-        name: "",
-        duration: "",
-      },
-      student: {
-        firstName: "",
-        lastName: "",
       },
       output: "",
       currentComponent: "check-email",
@@ -216,6 +155,10 @@ export default {
        //this.currentComponent = "show-availabilities"
       }
     },
+    subjectSet(chosenSubject) {
+      this.request.subject =  chosenSubject;
+    }
+
   },
   watch: {
     selectedSecretary: function (newSecretary) {
