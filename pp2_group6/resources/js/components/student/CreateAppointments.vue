@@ -10,33 +10,38 @@
 
       <!-- <pre> {{ check }} </pre>
             <pre> {{ request }} </pre> -->
-<transition name="slide-fade">
-      <show-availabilities
-        v-if="nameChecked && !dateChecked"
-        :availabilities="availabilities"
-        v-on:availabilityChosen="availabilitySet"
-      ></show-availabilities>
-</transition>
+      <transition name="slide-fade">
+        <show-availabilities
+          v-if="nameChecked && !dateChecked"
+          :availabilities="availabilities"
+          v-on:availabilityChosen="availabilitySet"
+        ></show-availabilities>
+      </transition>
       <!-- <pre> {{ request }} </pre> -->
 
       <!-- <pre>{{ selectedSecretary }} </pre>
             <pre>{{ availabilities }} </pre> -->
 
-<transition name="slide-fade">
+      <transition name="slide-fade">
+        <show-subjects
+          v-if="dateChecked && !subjectChecked"
+          v-on:subjectChosen="subjectSet"
+        ></show-subjects>
+      </transition>
 
-      <show-subjects
-        v-if="dateChecked && !subjectChecked"
-        v-on:subjectChosen="subjectSet"
-      ></show-subjects>
-
-</transition>
-
-<transition name="slide-fade">
-      <modify-request v-if="subjectChecked && nameChecked" :request="request"  v-on:showAvailabilityEdit="editSecretary"  v-on:showSubjectEdit="editSubject"></modify-request>
-</transition>
-      <!-- <b-button v-if="subjectChecked" on:click.prevent="createAppointment(request)"
+      <transition name="slide-fade">
+        <modify-request
+          v-if="subjectChecked && nameChecked"
+          :request="request"
+          v-on:showAvailabilityEdit="editSecretary"
+          v-on:showSubjectEdit="editSubject"
+        ></modify-request>
+      </transition>
+      <b-button
+        v-if="subjectChecked"
+        @click.prevent="createAppointment(request)"
         >Make appointment</b-button
-      > -->
+      >
     </b-form>
 
     <br />
@@ -125,17 +130,15 @@ export default {
     };
   },
   methods: {
-    editSecretary(value){
+    editSecretary(value) {
       this.dateChecked = value.dateChecked;
       this.nameChecked = value.nameChecked;
       this.subjectChecked = false;
-  },
-  editSubject (value) {
-    this.dateChecked = value.dateChecked;
-    this.subjectChecked = value.subjectChecked;
-
-
-  },
+    },
+    editSubject(value) {
+      this.dateChecked = value.dateChecked;
+      this.subjectChecked = value.subjectChecked;
+    },
     createAppointment(request) {
       let currentObj = this;
       this.$store.dispatch("createAppointment", request);
@@ -206,7 +209,7 @@ export default {
       this.$props.availabilities = this.availabilities;
     },
   },
-  
+
   computed: {
     ...mapGetters(["users", "subjects"]),
   },
@@ -215,10 +218,10 @@ export default {
 
 <style scoped>
 .slide-fade-enter-active {
-  transition: all .8s ease;
+  transition: all 0.8s ease;
 }
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Mail\AlMail;
 use App\Mail\cancelMail;
+use App\Mail\requestMail;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
@@ -100,6 +101,9 @@ class MailController extends Controller
         //Return "Email sent";
         return response($request);
     }
+
+
+    
 }
 
 
