@@ -86,7 +86,7 @@ let actions = {
             else {
                 //handle action
             }
-            window.location.reload();
+            //window.location.reload();
         },
 
 

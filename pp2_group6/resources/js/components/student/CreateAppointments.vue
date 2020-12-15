@@ -9,17 +9,14 @@
 
             <show-availabilities :availabilities="availabilities" v-on:availabilityChosen="availabilitySet"></show-availabilities>
 
-            <pre> {{ request }} </pre>
+            <!-- <pre> {{ request }} </pre> -->
       
             <!-- <pre>{{ selectedSecretary }} </pre>
             <pre>{{ availabilities }} </pre> -->
 
             <show-subjects v-on:subjectChosen="subjectSet" ></show-subjects>
 
-      
-
-    <b-button @click.prevent="createAppointment(request)"
-        >Make appointment</b-button>
+            <b-button @click.prevent="createAppointment(request)">Make appointment</b-button>
     </b-form>
 
     <br />
@@ -112,7 +109,6 @@ export default {
       this.$store.dispatch("createAppointment", request);
     },
     availabilitySet(availabilityRequest) {
-
         this.request.date = availabilityRequest.date;
         this.request.user_id = availabilityRequest.user_id;
         this.request.startsAt = availabilityRequest.startsAt;
@@ -151,6 +147,7 @@ export default {
         this.request.firstName = value[1].firstName;
         this.request.lastName = value[1].lastName;
         
+        alert('Name has been successfully checked');
          //Jump to next component
        //this.currentComponent = "show-availabilities"
       }
