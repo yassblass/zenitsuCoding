@@ -22,7 +22,7 @@ class MailController extends Controller
 
 
 
-   public function formSubmit(Request $request){
+   public function sendAlert(Request $request){
        
         //If there is some problem in the page, the secretary can signal it us
 

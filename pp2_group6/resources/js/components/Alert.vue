@@ -26,7 +26,7 @@
 
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" class="btn btn-success" @submit="formSubmit" >Yes</button>
+        <button type="submit" class="btn btn-success" @click="alertClick" >Yes</button>
 
     
 
@@ -52,9 +52,9 @@
             }
         },
           methods: {
-            formSubmit() {
+            alertClick() {
                 let currentObj = this;
-                axios.post('formSubmit', {
+                axios.post('/sendAlert', {
                     description: this.description
                 })
                 .then(function (response) {

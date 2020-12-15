@@ -23,11 +23,13 @@
               <!--<pagination :data="appointments" @pagination-change-page="getResults"></pagination> -->
           </table>
     </div>
+    <br>
+
             <div id="button-alert">
               <alert ></alert>
             </div>
             <div id="button-back">
-            <b-button  class="button button-close" squared variant="outline-danger">Back</b-button>
+            <b-button @click="backbutton" class="button button-close" squared variant="outline-danger">Back</b-button>
             </div>
             
 </div>
@@ -51,12 +53,22 @@ export default {
       
     }
   },
+  mounted() {
+            axios.get('/api/user').then((res)=>{
+                this.user = res.data;
+            })
+            console.log('Component mounted.');
+        },
   created(){
       axios.get('/api/appointmentLists')
       .then(response => this.appointments = response.data)
       .catch(error => console.log(error))
     },
     methods : {
+
+      backbutton(){
+        this.$router.push({name:"dashboard"});
+      },
 
 
       deleteAppointment(id){
@@ -77,21 +89,21 @@ export default {
 }
 
 #table { 
+  height: 80%;
   width: 75%;
   background-color: white;
   border: 2px solid black;
   border-radius: 12px;
   margin-left: auto;
   margin-right: auto;
-    overflow: scroll;
+  overflow: auto; 
+  height:400px;
 
+  
 }
-
-
 #buttons{
  margin: 0;
 }
-
 #button-back{
   text-align: center;
 }

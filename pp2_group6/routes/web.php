@@ -34,7 +34,8 @@ Route::get('/manageAppointment', function () {
 //nh
 Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'getConfirmed']);
 
-Route::post('/formSubmit', [App\Http\Controllers\MailController::class,'sendAlert']);
+Route::post('/sendAlert', [App\Http\Controllers\MailController::class,'sendAlert']);
+
 
 Route::get('/', \App\Http\Controllers\AppointmentController::class . '@getIndex');
 

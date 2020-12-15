@@ -1,37 +1,37 @@
 <template>
-<div :style="myStyle">
-    <h1>{{title}}</h1>
+<div id="template">
+  <div id="titel">
+    <h1>{{title}} </h1>
+</div>
     <br> 
     <br>
-        <table class="table table-stripped table-bordered">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">DATE TIME</th>
-            <th scope="col">STUDENT</th>
-            <th scope="col">SUBJECT</th>
-            <th scope="col">CANCEL</th>
-          </tr>
 
-          
-      </thead>
+    <div id="table">
+        <table class="table table-stripped table-bordered">
+    
         <tbody>
         <tr v-for="appointment in appointments" :key="appointment.appointmentId" >
           <th >{{ appointment.date }} {{ appointment.startsAt }}</th>
           <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>
           <th >{{ appointment.subject }}</th>
+          <th>
           <b-button variant="primary" @click="editAccept(appointment.appointmentId)">Accept</b-button>
           <b-button variant="danger"  @click="editRefuse(appointment.appointmentId)">Refuse</b-button>
+          </th>
 
           
             </tr>
             </tbody>
 
       </table>
+      </div>
   
-<div style="position:absolute">
-      <b-button  pill variant="danger">Back</b-button>
-      <alert></alert>
-</div>
+            <div id="button-alert">
+              <alert ></alert>
+            </div>
+            <div id="button-back">
+            <b-button @click="backbutton" class="button button-close" squared variant="outline-danger">Back</b-button>
+            </div>
       
 </div>
 </template>
@@ -59,6 +59,10 @@ export default {
       .catch(error => console.log(error))
     },
     methods: {
+
+       backbutton(){
+        this.$router.push({name:"dashboard"});
+      },
       // update the status to confirmed
       
         editAccept(id){
@@ -81,5 +85,26 @@ export default {
 }
 </script>
 <style>
+#template{
+  background-color: #bababa;
+}
+#table { 
+height: 80%;
+  width: 75%;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 12px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto; 
+  height:400px;
+
+}
+#button-back{
+  text-align: center;
+}
+#button-alert{
+  float: right;
+}
 
 </style>
