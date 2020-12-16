@@ -113,7 +113,7 @@ export default {
       // this.availabilities = this.availabilities;
     },
     chosenTime: function (chosenTime) {
-
+      
       this.request.startsAt = chosenTime;
       this.$emit('availabilityChosen', this.request);
     }
