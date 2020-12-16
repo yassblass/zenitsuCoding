@@ -5,6 +5,8 @@ import Register from './components/secretary/Register.vue';
 import ManageRequest from './components/secretary/ManageRequest.vue';
 import Appointment from './components/secretary/Appointment.vue';
 import setAvailability from './components/secretary/setAvailability.vue';
+import manageAvailability from './components/secretary/ManageAvailability.vue';
+
 
 export default{
     mode:'history',
@@ -72,8 +74,23 @@ export default{
             component:Register,
             name:"register",
         },
+        {
+    
+            path:"/manageAvailability",
+            component:manageAvailability,
+            name:"manageAvailability",
+            //checking if you are logged in and if not it redirect you to the login page
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then(()=>{
+                    next();
+                }).catch(()=>{
+                    return next({name:"login"});
+                })
+            }
+        },
        
     
+
     ]
 
 
