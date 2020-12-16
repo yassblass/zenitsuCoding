@@ -20,7 +20,7 @@ class CreateVerificationsTable extends Migration
             $table->foreign('student_id')->references('student_id')->on('students');
             $table->integer('vc');
             $table->boolean('redeemed')->default(0);
-            $table->time('expiresAt')->default(Carbon::now()->addMinutes(5));
+            $table->time('expiresAt');
             
         });
     }

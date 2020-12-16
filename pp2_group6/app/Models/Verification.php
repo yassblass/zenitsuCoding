@@ -10,4 +10,7 @@ class Verification extends Model
     use HasFactory;
     
     protected $primaryKey = 'vc_id';
+
+    protected $fillable = ['student_id','vc','expiresAt'];
+    public $timestamps = false;
 }

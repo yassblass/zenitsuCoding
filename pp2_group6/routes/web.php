@@ -40,11 +40,16 @@ Route::group(['prefix' => 'subjects'], function (){
 //Get secretary availabilities based on secretary ID
 Route::post('availabilities/', \App\Http\Controllers\AvailabilityController::class . '@getAvailabilities');
 
+//Send verification code by email
+Route::post('sendCode/', \App\Http\Controllers\MailController::class . '@sendCode');
+
 //verify code sent by email when making an appointment request.
 Route::post('verifyCode/', \App\Http\Controllers\StudentController::class . '@verifyCode');
 
 //Check email
 Route::post('checkEmail', \App\Http\Controllers\AppointmentController::class . '@checkEmail');
+
+
 
 
 //ALL ROUTES WITH 'appointment' PREFIX.

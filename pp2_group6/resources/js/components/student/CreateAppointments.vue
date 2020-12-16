@@ -3,8 +3,8 @@
     <h2>Create an appointment</h2>
     <b-form @submit="createAppointment(appointment)">
       <check-email
-        v-if="!nameChecked"
-        :is="currentComponent"
+        v-if="showMailCheckComponent"
+        
         v-on:nameChecked="showDateForm"
       ></check-email>
 
@@ -12,7 +12,7 @@
             <pre> {{ request }} </pre> -->
       <transition name="slide-fade">
         <show-availabilities
-          v-if="nameChecked && !dateChecked"
+          v-if="showAvailabilityComponent"
           :availabilities="availabilities"
           v-on:availabilityChosen="availabilitySet"
         ></show-availabilities>
@@ -24,29 +24,31 @@
 
       <transition name="slide-fade">
         <show-subjects
-          v-if="dateChecked && !subjectChecked"
+          v-if="showSubjectComponent"
           v-on:subjectChosen="subjectSet"
         ></show-subjects>
       </transition>
 
       <transition name="slide-fade">
         <modify-request
-          v-if="subjectChecked && nameChecked"
+        :student_firstName="request.firstName"  :student_lastName="request.lastName"
+          v-if="showModifyRequestComponent"
           :request="request"
           v-on:showAvailabilityEdit="editSecretary"
           v-on:showSubjectEdit="editSubject"
+          v-on:showVerificationComp="askVerification"
         ></modify-request>
       </transition>
 
       <transition name="slide-fade">
-        <verification-code :student_firstName="request.firstName"  :student_lastName="request.lastName"> </verification-code>
+        <verification-code v-if="showVerificationComponent" :student_firstName="request.firstName"  :student_lastName="request.lastName" v-on:codeValidated="showSubmitButton"> </verification-code>
       </transition>
 
 
 
 
       <b-button
-        v-if="subjectChecked"
+        v-if="showSubmitComponent"
         @click.prevent="createAppointment(request)"
         >Make appointment</b-button
       >
@@ -103,8 +105,9 @@ import { mapGetters } from "vuex";
 import checkEmail from "./checkEmail.vue";
 import ShowSubjects from "./ShowSubjects.vue";
 import VerificationCode from './VerificationCode.vue';
+import ModifyRequest from './ModifyRequest.vue';
 export default {
-  components: { checkEmail, ShowSubjects, VerificationCode },
+  components: { checkEmail, ShowSubjects, VerificationCode, ModifyRequest },
   name: "CreateAppointment",
   props: ["firstName", "lastName"],
   data() {
@@ -127,36 +130,51 @@ export default {
         subject: "",
       },
       output: "",
-      currentComponent: "check-email",
       selectedSecretary: "",
       availabilities: {},
       chosenTime: "",
       appointmentId: "",
       token: "",
-      nameChecked: false,
-      dateChecked: false,
-      subjectChecked: false,
+      showVerificationComponent : false,
+      showMailCheckComponent: true,
+      showAvailabilityComponent: false,
+      showSubjectComponent: false,
+      showModifyRequestComponent: false,
+      showSubmitComponent: false,
+    
     };
   },
   methods: {
     editSecretary(value) {
-      this.dateChecked = value.dateChecked;
-      this.nameChecked = value.nameChecked;
-      this.subjectChecked = false;
+     //hide modify component
+      this.showModifyRequestComponent = false;
+
+      //show availability
+      this.showAvailabilityComponent = true;
     },
     editSubject(value) {
-      this.dateChecked = value.dateChecked;
-      this.subjectChecked = value.subjectChecked;
+      //show subject component
+     this.showSubjectComponent = true;
+
+      //hide modify component
+      this.showModifyRequestComponent = false;
     },
     createAppointment(request) {
       let currentObj = this;
       this.$store.dispatch("createAppointment", request);
     },
     availabilitySet(availabilityRequest) {
+
+      //Extract data from child component [show availabilitie] & store them in local request object for later POST call.
       this.request.date = availabilityRequest.date;
       this.request.user_id = availabilityRequest.user_id;
       this.request.startsAt = availabilityRequest.startsAt;
-      this.dateChecked = true;
+
+
+      //hide availability component
+      this.showAvailabilityComponent = false;
+      //Show next component.
+      this.showSubjectComponent = true;
     },
     confirmAppointment(appointmentId) {
       //Declare needed Variables
@@ -189,16 +207,39 @@ export default {
         console.log(value[1].firstName);
         this.request.firstName = value[1].firstName;
         this.request.lastName = value[1].lastName;
-        this.nameChecked = true;
+
+        //Hide name input
+        this.showMailCheckComponent = false;
+
+        //show availability component
+        this.showAvailabilityComponent = true;
 
         //Jump to next component
         //this.currentComponent = "show-availabilities"
       }
     },
-    subjectSet(chosenSubject) {
-      this.request.subject = chosenSubject;
-      this.subjectChecked = true;
+    askVerification (){
+      //Hide modify-request component.
+      this.showModifyRequestComponent = false;
+
+      //Show verification code component.
+      this.showVerificationComponent = true;
     },
+    subjectSet(chosenSubject) {
+      
+      //Extract data from child component [show availabilitie] & store them in local request object for later POST call 
+      this.request.subject = chosenSubject;
+
+      //Hide this component
+      this.showSubjectComponent = false;
+
+      //Show next component
+      this.showModifyRequestComponent = true;
+    },
+    showSubmitButton (value) {
+      this.showVerificationComponent = false;
+      this.showSubmitComponent = true;
+    }
   },
   watch: {
     selectedSecretary: function (newSecretary) {
