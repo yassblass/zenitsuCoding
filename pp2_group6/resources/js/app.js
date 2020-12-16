@@ -14,16 +14,16 @@ Vue.use(VueRouter);
 
 
 // New component
-Vue.component('manage', require('./components/ManageRequest.vue').default);
+Vue.component('manage', require('./components/secretary/ManageRequest.vue').default);
 Vue.component('calendar', require('./components/secretary/setAvailability.vue').default);
 
 
 import routes from './routes'
-Vue.component('appointment', require('./components/Appointment.vue').default);
-Vue.component('cancelappointment', require('./components/Cancel.vue').default);
-Vue.component('alert', require('./components/Alert.vue').default);
+Vue.component('appointment', require('./components/secretary/Appointment.vue').default);
+Vue.component('cancelappointment', require('./components/secretary/Cancel.vue').default);
+Vue.component('alert', require('./components/secretary/Alert.vue').default);
 
-Vue.component('navbar', require('./components/Navbar.vue').default);
+Vue.component('navbar', require('./components/secretary/Navbar.vue').default);
 
 // Instantiation
 window.onload = function () {

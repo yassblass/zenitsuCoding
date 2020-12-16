@@ -1,9 +1,9 @@
 import Axios from 'axios';
-import Dashboard from './components/Dashboard.vue';
-import Login from './components/Login.vue';
-import Register from './components/Register.vue';
-import ManageRequest from './components/ManageRequest.vue';
-import Appointment from './components/Appointment.vue';
+import Dashboard from './components/secretary/Dashboard.vue';
+import Login from './components/secretary/Login.vue';
+import Register from './components/secretary/Register.vue';
+import ManageRequest from './components/secretary/ManageRequest.vue';
+import Appointment from './components/secretary/Appointment.vue';
 import setAvailability from './components/secretary/setAvailability.vue';
 
 export default{

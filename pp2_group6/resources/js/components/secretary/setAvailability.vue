@@ -1,14 +1,10 @@
 <template>
 <body :style="myStyle" id="grijs">
+     <navbar></navbar>
+
   <div class= 'container'>
     <form @submit.prevent="insertAvailabilities">
-<div>
-  <b-navbar toggleable type="dark" variant="dark">
-    <b-navbar-brand href="#">EHB</b-navbar-brand>
 
-
-  </b-navbar>
-</div>
 <h1>{{title}}</h1>
 
   <div>
