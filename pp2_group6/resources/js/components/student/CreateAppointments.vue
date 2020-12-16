@@ -37,6 +37,14 @@
           v-on:showSubjectEdit="editSubject"
         ></modify-request>
       </transition>
+
+      <transition name="slide-fade">
+        <verification-code :student_firstName="request.firstName"  :student_lastName="request.lastName"> </verification-code>
+      </transition>
+
+
+
+
       <b-button
         v-if="subjectChecked"
         @click.prevent="createAppointment(request)"
@@ -94,8 +102,9 @@
 import { mapGetters } from "vuex";
 import checkEmail from "./checkEmail.vue";
 import ShowSubjects from "./ShowSubjects.vue";
+import VerificationCode from './VerificationCode.vue';
 export default {
-  components: { checkEmail, ShowSubjects },
+  components: { checkEmail, ShowSubjects, VerificationCode },
   name: "CreateAppointment",
   props: ["firstName", "lastName"],
   data() {
