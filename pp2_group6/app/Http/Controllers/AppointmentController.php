@@ -99,34 +99,34 @@ class AppointmentController extends Controller
          //Get status from availabily
          $getAvStatus = Availability::select('status')->where($matchThese)->get(); 
          $status = $getAvStatus[0]->status;
-               
-     //Check if status is taken
-     if($status === "taken"){
-         if($dateAppointment[0]->date > date("Y/m/d"))
-         {
-                //Get the availability based on the appointmentId and update the status to free
-                Availability::select('avId')->where($matchThese)->update(['status' => 'free']);
-                //Delete appointment from DB based on Appointment ID. 
-                Appointment::where('appointmentId', $appointmentId)->delete();
+
+         $currentDate = date("Y-m-d");
+
+        //  if($dateAppointment[0]->date < $currentDate){
+        //      return response()->json("Date is passed");
+             
+        //  }
+        //  else {
+        //      return response()->json("Date is NOT passed");
+             
+        //  }          
+        if($dateApp > $currentDate)
+        {
+            //Get the availability based on the appointmentId and update the status to free
+            Availability::select('avId')->where($matchThese)->update(['status' => 'free']);
+            //Delete appointment from DB based on Appointment ID. 
+            Appointment::where('appointmentId', $appointmentId)->delete();
  
-                return response()->json("Availability set to free and deleted appointment!");
-    
-    
+            return response()->json("Date is not passed -> availability set to free and deleted appointment!");
+
             } else {
                 //Get the availability based on the appointmentId and update the status to free
                 Availability::select('avId')->where($matchThese)->delete();
                 //Delete appointment from DB based on Appointment ID. When the date is passed already 
                 Appointment::where('appointmentId', $appointmentId)->delete();
  
-                return response("Date is passed! Delete appointment and availability!");
+                return response("Date is passed -> Delete appointment and availability!");
             }
-     } else {
-         //Status is not taken, just delete
-         Appointment::where('appointmentId', $appointmentId)->delete();
- 
- 
-         return response()->json('Availability status is not on taken');
-     }
  }
 
     
