@@ -106,7 +106,7 @@ export default {
       // insert all the available hours that are selected with the selected date
       insertAvailabilities(){
      
-            axios.post('/secretary/insertAvailabilities/', {
+            axios.post('/api/insertAvailabilities/', {
               date: this.value,
               hours: this.hours
             })

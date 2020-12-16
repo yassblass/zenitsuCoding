@@ -15,7 +15,7 @@ Vue.use(VueRouter);
 
 // New component
 Vue.component('manage', require('./components/ManageRequest.vue').default);
-Vue.component('calendar', require('./components/setAvailability.vue').default);
+Vue.component('calendar', require('./components/secretary/setAvailability.vue').default);
 
 
 import routes from './routes'

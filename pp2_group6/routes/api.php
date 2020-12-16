@@ -38,4 +38,7 @@ Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::clas
 Route::post('/editAccept/{id}', \App\Http\Controllers\MailController::class .'@updateConfirmed');
 Route::post('/editRefuse/{id}', \App\Http\Controllers\MailController::class .'@updateRefused');
 
+Route::post('/insertAvailabilities', \App\Http\Controllers\AvailabilityController::class .'@insertAvailabilities');
+
+
 

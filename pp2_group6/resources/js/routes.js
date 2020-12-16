@@ -4,7 +4,7 @@ import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import ManageRequest from './components/ManageRequest.vue';
 import Appointment from './components/Appointment.vue';
-import setAvailability from './components/setAvailability.vue';
+import setAvailability from './components/secretary/setAvailability.vue';
 
 export default{
     mode:'history',
