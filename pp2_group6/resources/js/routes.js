@@ -5,8 +5,6 @@ import Register from './components/Register.vue';
 import ManageRequest from './components/ManageRequest.vue';
 import Appointment from './components/Appointment.vue';
 import setAvailability from './components/setAvailability.vue';
-import CreateAppointments from './components/CreateAppointments.vue';
-
 
 export default{
     mode:'history',
@@ -68,25 +66,13 @@ export default{
             path:"/login",
             component:Login,
             name:"login",
-            beforeEnter: (to, form, next) =>{
-                Axios.get('/api/authenticated').then(()=>{
-                    
-                }).catch(()=>{
-                    next();
-                })
-            }
-
         },
         {
             path:"/register",
             component:Register,
             name:"register",
         },
-        {
-            path:"/createAppointment",
-            component:CreateAppointments,
-            name:"createAppointment",
-        },
+       
     
     ]
 
