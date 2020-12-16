@@ -6,11 +6,11 @@
     <title>Cancel Mail</title>
 </head>
 <body>
-    <h1>Dear {{ $refuse ['name'] }} {{ $refuse ['lastname'] }}</h1>
+<h3>Dear {{ $refuse ['name'] }}</h3>
 
-    <p> Your appointment on {{$refuse['appoint']}} has been refused.</p>
-    <p> You can take a new appointment on the site</p>
+<p> Your appointment on {{$refuse['appointment']}} has been confirmed.</p>
+<p>If you want to change your appointment, cancel it, you can do it : localhost:8000/{{$refuse['token']}} </p>
 
-    <p>The secretary </p>
+<p>The secretary </p>
 </body>
 </html>

@@ -72,15 +72,6 @@
     },
 
     
-     getResults(page = 1) {
-			  axios.get('/appointmentList?page=' + page)
-				.then(response => {
-			  		this.appointments = response.data;
-			  	});
-      },
-      
-      
- 
-  }
+    }
     }
 </script>

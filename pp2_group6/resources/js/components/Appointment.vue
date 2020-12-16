@@ -69,14 +69,6 @@ export default {
       backbutton(){
         this.$router.push({name:"dashboard"});
       },
-
-
-      deleteAppointment(id){
-        //window.location.reload();
-        axios.delete('/appointment/' + id)
-        .then(response => this.id = response.data)
-        .catch(error => console.log(error));
-      },
     }
 
   }

@@ -54,7 +54,7 @@
           methods: {
             alertClick() {
                 let currentObj = this;
-                axios.post('/sendAlert', {
+                axios.post('/api/sendAlert', {
                     description: this.description
                 })
                 .then(function (response) {

@@ -27,12 +27,11 @@ Route::post('login', [App\Http\Controllers\LoginController::class, 'login']);
 Route::post('logout', [App\Http\Controllers\LoginController::class, 'logout']);
 
 Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'getConfirmed']);
-Route::post('/cancelAppointment/{id}', [App\Http\Controllers\MailController::class,'cancelSubmit']);
+Route::post('/cancelAppointment/{id}', [App\Http\Controllers\MailController::class,'cancelAppointment']);
+Route::post('/sendAlert', [App\Http\Controllers\MailController::class,'sendAlert']);
 
 Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getPending');
-
 Route::post('/editAccept/{id}', \App\Http\Controllers\MailController::class .'@updateConfirmed');
-
 Route::post('/editRefuse/{id}', \App\Http\Controllers\MailController::class .'@updateRefused');
 
 
