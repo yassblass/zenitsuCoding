@@ -3,23 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Availability;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AvailabilityController extends Controller
 {
+    public function insertAvailabilities(Request $request){
+        // Put the array of hours in another array variable
+        $hours = $request['hours'];
+        $user = Auth::user();
     
-    public function setAvailibility(){
-        
-        $appointment = Appointment::create(array(
-        
-            'user_id' => 3,
-            'date' => 3,
-            'time' => '2020-12-25',
-            'status' => '2020-12-25 18:02:54'
-             )
-            );
-            // $appointment->save();
-    
-            return response()->json($request);
+        foreach($hours as $hour){ 
+        // Make a string wtih de date and time
+         $string = $request['date'] . $hour;
+         // Convert the string to datetime
+          $date = strtotime($string); 
+          // Insert the availabilities to the database
+        DB::table('availabilities')->insert([
+            ['user_id' => $user->user_id, 'date' => $request['date'], 'time' => date('Y-m-d H:i:s', $date), 'status' => 'free']
+            
+        ]);
+            }
     }
-    
 }
+
+
+

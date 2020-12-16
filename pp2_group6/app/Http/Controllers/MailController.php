@@ -18,10 +18,6 @@ use Mail;
 
 class MailController extends Controller
 {
-
-
-
-
    public function sendAlert(Request $request){
        
         //If there is some problem in the page, the secretary can signal it us
@@ -29,16 +25,17 @@ class MailController extends Controller
         //Get an object with the title and the description 
        $details = [
            'title' => 'Alert in site',
-           //Description is what the secretary write to tell us what the problemis
            'description' => $request['description'],
        ];
 
-       //Send it to our mail with the object details 
+       //Sends an email to developers with OBJECT $details
        Mail::to("secretary.ehb@gmail.com")->send(new AlMail($details));
        return "Email sent";
    }
+   
    //DELETE
 
+    //Deletes an appointment based on the ID
    public function deleteAppointment($appointmentId)
    {
        

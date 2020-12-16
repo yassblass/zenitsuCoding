@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any}', function () {
     return view('dashboard');
 })->where('any','.*');
+
+Route::post('/insertAvailabilities', \App\Http\Controllers\AvailabilityController::class .'@insertAvailabilities');
