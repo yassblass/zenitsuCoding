@@ -1,5 +1,8 @@
 <template>
-    <div>
+<div>
+    <navbar></navbar>
+
+    <div class="register">
         <h1>Register</h1>
         <!--<span v-if="errors.name">{{errors.name[0]}}</span>-->
         
@@ -15,12 +18,15 @@
 
         <button @click.prevent="saveForm" type="submit">register</button>
     </div>
+
+</div>
 </template>
 
 <script>
 export default {
     data(){
         return{
+            // object with all inputs to create a new user
             form:{
                 firstName: '',
                 lastName: '',
@@ -32,6 +38,7 @@ export default {
         }
     },
     methods:{
+        // method that send the form to controller for creating a new user
         saveForm(){
             axios.post('/api/register', this.form).then(() => {
 

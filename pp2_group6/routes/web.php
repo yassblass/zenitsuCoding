@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//return dashboard even if you write an none existing path
 Route::get('/{any}', function () {
     return view('dashboard');
 })->where('any','.*');

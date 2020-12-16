@@ -23,6 +23,7 @@ Vue.component('appointment', require('./components/Appointment.vue').default);
 Vue.component('cancelappointment', require('./components/Cancel.vue').default);
 Vue.component('alert', require('./components/Alert.vue').default);
 
+Vue.component('navbar', require('./components/Navbar.vue').default);
 
 // Instantiation
 window.onload = function () {
