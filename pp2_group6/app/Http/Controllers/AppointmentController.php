@@ -119,14 +119,14 @@ class AppointmentController extends Controller
  
             return response()->json("Date is not passed -> availability set to free and deleted appointment!");
 
-            } else {
+        } else {
                 //Get the availability based on the appointmentId and update the status to free
                 Availability::select('avId')->where($matchThese)->delete();
                 //Delete appointment from DB based on Appointment ID. When the date is passed already 
                 Appointment::where('appointmentId', $appointmentId)->delete();
  
                 return response("Date is passed -> Delete appointment and availability!");
-            }
+        }
  }
 
     
@@ -231,11 +231,9 @@ class AppointmentController extends Controller
             'lastName' => 'required',
         ]);
 
-
         $domain = '@student.ehb.be';
         $firstName = $request['firstName'];
         $lastName = $request['lastName'];
-
 
         //Concat firstName, lastName and domain to give email of format : firstName.lastName@student.ehb.be
         $email = $firstName . '.' . $lastName . $domain;

@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <b-alert :show="show" variant="danger" dismissible> {{errors.get('firstName') }} </b-alert>
+        <b-alert :show="show" variant="danger" dismissible> {{errors.get('lastName') }} </b-alert>
         <b-form-group label="Insert your first name">
             <b-form-input
                 type="text"
@@ -20,18 +22,35 @@
     </div>
 </template>
 <script>
+
+class Errors {
+    constructor(){
+        this.errors = {};
+    }
+
+    get(field){
+        if(this.errors[field]) {
+            return this.errors[field][0];
+        }
+    }
+
+    record(errors){
+        this.errors = errors.errors;
+    }
+}
 export default {
   data() {
     return {
         student: {
             firstName: "",
             lastName:""
-        }
-        
+        },
+        errors: new Errors(),
+        show: false
     };
   },
   created() {
-    
+     
   },
   methods: {
       checkEmail (event) {
@@ -61,7 +80,8 @@ export default {
                     }
                     
                 }).catch(err => {
-                console.log(err)
+                    this.show = true;
+                    this.errors.record(err.response.data);           
             })
 
             
