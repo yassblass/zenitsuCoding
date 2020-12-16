@@ -1,8 +1,8 @@
 <template>
       <div>
         <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@alert">
-  Alert
+<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@alert">
+  <b-icon icon="exclamation-circle-fill" variant="danger"></b-icon>
 </button>
 
 <!-- Modal -->

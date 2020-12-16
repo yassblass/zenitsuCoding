@@ -6,14 +6,7 @@
 </div>
     <div id="table">
           <table class="table table-stripped table-bordered">
-            <!-- <thead class="thead-dark">
-              <tr>
-                <th scope="col">DATE TIME</th>
-                <th scope="col">STUDENT</th>
-                <th scope="col">SUBJECT</th>
-                <th scope="col">CANCEL</th>
-              </tr>   
-          </thead> -->
+  
             <tr v-for="appointment in appointments" :key="appointment.appointmentId" >
               <th >{{ appointment.date }} {{ appointment.startsAt }}</th>
               <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>

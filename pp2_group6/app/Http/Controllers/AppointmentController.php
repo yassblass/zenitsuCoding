@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+Use \Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
@@ -15,6 +15,7 @@ class AppointmentController extends Controller
     //Get all appointments with confirmed status
     public function getConfirmed()
     {
+        $today = date("Y-m-d");
 
         $user = Auth::user();
         
@@ -24,7 +25,8 @@ class AppointmentController extends Controller
         ->join('students', 'students.student_id', '=', 'appointments.student_id')
         ->select('appointments.*', 'students.firstName', 'students.lastName')
         ->where('status', 'confirmed')
-        ->where('user_id', $user->user_id)
+        ->where('appointments.date', '>=', $today)
+        ->where('user_id', '=', $user->user_id)
         ->get();
 
       

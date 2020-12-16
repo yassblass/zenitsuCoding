@@ -5,9 +5,6 @@ use App\Mail\AlMail;
 use App\Mail\cancelMail;
 use App\Mail\AcceptMail;
 use App\Mail\RefuseMail;
-
-
-
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
@@ -81,33 +78,6 @@ class MailController extends Controller
         ->where('appointments.appointmentId' , $appointmentId)
         ->get();
 
-        //Get firstname of the student
-        // $studentFirstName =  DB::table('appointments')
-        // ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        // ->select('students.firstName')
-        // ->where('appointments.appointmentId' , $appointmentId)
-        // ->get();
-
-        // //Get lastname of the student
-        // $studentLastName = DB::table('appointments')
-        // ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        // ->select('students.lastName')
-        // ->where('appointments.appointmentId' , $appointmentId)
-        // ->get();
-
-        // //Get appointment date
-        // $appoint = DB::table('appointments')
-        // ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        // ->select('appointments.startsAt')
-        // ->where('appointments.appointmentId' , $appointmentId)
-        // ->get();
-
-        // //Get appointment date
-        // $date = DB::table('appointments')
-        // ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        // ->select('appointments.date')
-        // ->where('appointments.appointmentId' , $appointmentId)
-        // ->get()
         //Get all the data in a object
         $cancel = [
             'title' => 'Appointment cancelled',
@@ -150,26 +120,7 @@ class MailController extends Controller
         ->where('appointments.appointmentId' , $appointmentId)
         ->get();
 
-    // //get firstname of the student
-    //  $studentName =  DB::table('appointments')
-    //  ->join('students', 'students.student_id', '=', 'appointments.student_id')
-    //  ->select('students.firstName')
-    //  ->where('appointments.appointmentId' , $appointmentId)
-    //   ->get();
 
-    //   //get lastname of the student
-    //   $studentLast = DB::table('appointments')
-    //   ->join('students', 'students.student_id', '=', 'appointments.student_id')
-    //   ->select('students.lastName')
-    //   ->where('appointments.appointmentId' , $appointmentId)
-    //    ->get();
-
-    //     //get appointment date
-    //    $appoint = DB::table('appointments')
-    //    ->join('students', 'students.student_id', '=', 'appointments.student_id')
-    //    ->select('appointments.startsAt')
-    //    ->where('appointments.appointmentId' , $appointmentId)
-    //     ->get();
         //get token
         $token = DB::table('appointments')
         ->join('students', 'students.student_id', '=', 'appointments.student_id')
@@ -218,6 +169,7 @@ class MailController extends Controller
  
     public function refuseMail($appointmentId){
 
+        
         //take data from database
         $information =  Appointment::select('students.firstName', 'students.lastName', 'appointments.startsAt', 'appointments.date') 
         ->join('students', 'students.student_id', '=', 'appointments.student_id')
@@ -236,27 +188,7 @@ class MailController extends Controller
         ->select('students.email')
         ->where('appointments.appointmentId' , $appointmentId)
          ->get();
-    
-        // //get firstname of the student
-        //  $studentName =  DB::table('appointments')
-        //  ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        //  ->select('students.firstName')
-        //  ->where('appointments.appointmentId' , $appointmentId)
-        //   ->get();
-    
-        //   //get lastname of the student
-        //   $studentLast = DB::table('appointments')
-        //   ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        //   ->select('students.lastName')
-        //   ->where('appointments.appointmentId' , $appointmentId)
-        //    ->get();
-    
-        //     //get appointment date
-        //    $appoint = DB::table('appointments')
-        //    ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        //    ->select('appointments.startsAt')
-        //    ->where('appointments.appointmentId' , $appointmentId)
-        //     ->get();
+
             //get token
             $token = DB::table('appointments')
             ->join('students', 'students.student_id', '=', 'appointments.student_id')

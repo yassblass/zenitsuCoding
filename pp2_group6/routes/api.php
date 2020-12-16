@@ -39,6 +39,10 @@ Route::post('/editAccept/{id}', \App\Http\Controllers\MailController::class .'@u
 Route::post('/editRefuse/{id}', \App\Http\Controllers\MailController::class .'@updateRefused');
 
 Route::post('/insertAvailabilities', \App\Http\Controllers\AvailabilityController::class .'@insertAvailabilities');
+Route::get('/getAllAvailabilities', [App\Http\Controllers\AvailabilityController::class,'getAllAvailibility']);
+Route::post('/deleteAvailability/{id}', [App\Http\Controllers\AvailabilityController::class,'deleteAvailability']);
+
+
 
 
 

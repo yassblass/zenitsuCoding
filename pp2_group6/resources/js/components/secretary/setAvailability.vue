@@ -1,20 +1,19 @@
 <template>
-<body :style="myStyle" id="grijs">
+
+  <div id="template">
      <navbar></navbar>
 
-  <div class= 'container'>
+  
     <form @submit.prevent="insertAvailabilities">
 
 <h1>{{title}}</h1>
 
-  <div>
+
+  <div id="calendar">
     <b-calendar :date-format-options="{ day: 'numeric', year: 'numeric' , month: 'numeric'}"
     v-model="value" :min="min" :max="max" locale="fr" ></b-calendar>
-    <p> Date: {{value}}</p>
   </div>
-  <br>
-  <hr>
- <div>
+ <div id="time" >
 <input type="checkbox" id="1" value=" 09:00:00" v-model="hours">
 <label for="1">09:00 - 09:30 |</label>
 
@@ -53,17 +52,21 @@
  </div>
    <br>
  <br>
-  <b-button pill variant="danger">Back</b-button>
+  <div id="button-back">
+  <b-button @click="backbutton"  class="button button-close" squared variant="outline-danger">Back</b-button>
   <b-button pill variant="danger" type="submit">Save</b-button>
-  <b-button v-b-tooltip.hover.bottom="'Signal here for a problem !'" >
-  <b-icon icon="exclamation-circle-fill" variant="danger"></b-icon>
-  </b-button>
+  <div id="button-alert">
+       <alert ></alert>
+      </div>
+  </div>
+ 
   
     </form>
+     
+            
     
-  </div>
-  
-</body>
+</div>
+
 
 </template>
 
@@ -89,9 +92,6 @@ export default {
         value: '',
         min: minDate,
         max: maxDate,
-        myStyle:{
-                backgroundColor: "#d9d9d9"
-            },
         hours: [],
         datetime: '',
         
@@ -101,16 +101,42 @@ export default {
       methods: { 
       // insert all the available hours that are selected with the selected date
       insertAvailabilities(){
-     
-            axios.post('/api/insertAvailabilities/', {
-              date: this.value,
-              hours: this.hours
-            })
-            .then(response => console.log(JSON.stringify(response.data)+ ' Done'),
-            window.location.reload()
-            ).catch(error => console.log(error + ' Failed'));
-        
-      }
+      axios.post('/api/insertAvailabilities/', {
+      date: this.value,
+      hours: this.hours
+      })
+      .then(response => console.log(JSON.stringify(response.data)+ ' Done'),
+       window.location.reload()
+     )
+      .catch(error => console.log(error + ' Failed'));        
+      },
+        backbutton(){
+        this.$router.push({name:"dashboard"});
+      },
   }
 }
 </script>
+
+<style>
+#template{
+  background-color: #bababa;
+}
+#calendar{
+  height : 50%;
+  width: 40%;
+  margin-left: right;
+
+}
+#button-back{
+  text-align: center;
+}
+#button-alert{
+  float: right;
+}
+#time {
+   height : 50%;
+  width: 40%;
+  margin-left: auto;
+  margin-top: auto;
+}
+</style>
