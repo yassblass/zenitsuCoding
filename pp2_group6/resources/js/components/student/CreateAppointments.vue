@@ -4,7 +4,6 @@
     <b-form @submit="createAppointment(appointment)">
       <check-email
         v-if="showMailCheckComponent"
-        
         v-on:nameChecked="showDateForm"
       ></check-email>
 
@@ -31,7 +30,8 @@
 
       <transition name="slide-fade">
         <modify-request
-        :student_firstName="request.firstName"  :student_lastName="request.lastName"
+          :student_firstName="request.firstName"
+          :student_lastName="request.lastName"
           v-if="showModifyRequestComponent"
           :request="request"
           v-on:showAvailabilityEdit="editSecretary"
@@ -41,14 +41,21 @@
       </transition>
 
       <transition name="slide-fade">
-        <verification-code v-if="showVerificationComponent" :student_firstName="request.firstName"  :student_lastName="request.lastName" v-on:codeValidated="showSubmitButton"> </verification-code>
+        <verification-code
+          v-if="showVerificationComponent"
+          :student_firstName="request.firstName"
+          :student_lastName="request.lastName"
+          v-on:codeValidated="showCaptcha"
+        >
+        </verification-code>
       </transition>
 
-
-
+      <transition name="slide-fade">
+        <captcha v-if="showCaptchaComponent" v-on:captchaVerified="showSendRequest"> </captcha>
+      </transition>
 
       <b-button
-        v-if="showSubmitComponent"
+        v-if="showSendRequestButton"
         @click.prevent="createAppointment(request)"
         >Make appointment</b-button
       >
@@ -104,10 +111,18 @@
 import { mapGetters } from "vuex";
 import checkEmail from "./checkEmail.vue";
 import ShowSubjects from "./ShowSubjects.vue";
-import VerificationCode from './VerificationCode.vue';
-import ModifyRequest from './ModifyRequest.vue';
+import VerificationCode from "./VerificationCode.vue";
+import ModifyRequest from "./ModifyRequest.vue";
+import VueRecaptcha from "vue-recaptcha";
+import Captcha from "./Captcha.vue";
 export default {
-  components: { checkEmail, ShowSubjects, VerificationCode, ModifyRequest },
+  components: {
+    checkEmail,
+    ShowSubjects,
+    VerificationCode,
+    ModifyRequest,
+    Captcha,
+  },
   name: "CreateAppointment",
   props: ["firstName", "lastName"],
   data() {
@@ -135,18 +150,28 @@ export default {
       chosenTime: "",
       appointmentId: "",
       token: "",
-      showVerificationComponent : false,
+      showVerificationComponent: false,
       showMailCheckComponent: true,
       showAvailabilityComponent: false,
       showSubjectComponent: false,
       showModifyRequestComponent: false,
       showSubmitComponent: false,
-    
+      showCaptchaComponent: false,
+      showSendRequestButton:false,
+      
     };
   },
   methods: {
+    showSendRequest (){
+      //Hide captcha component
+      this.showCaptchaComponent=false;
+
+      //Show appointment request button
+      this.showSendRequestButton = true;
+
+    },
     editSecretary(value) {
-     //hide modify component
+      //hide modify component
       this.showModifyRequestComponent = false;
 
       //show availability
@@ -154,7 +179,7 @@ export default {
     },
     editSubject(value) {
       //show subject component
-     this.showSubjectComponent = true;
+      this.showSubjectComponent = true;
 
       //hide modify component
       this.showModifyRequestComponent = false;
@@ -164,12 +189,10 @@ export default {
       this.$store.dispatch("createAppointment", request);
     },
     availabilitySet(availabilityRequest) {
-
       //Extract data from child component [show availabilitie] & store them in local request object for later POST call.
       this.request.date = availabilityRequest.date;
       this.request.user_id = availabilityRequest.user_id;
       this.request.startsAt = availabilityRequest.startsAt;
-
 
       //hide availability component
       this.showAvailabilityComponent = false;
@@ -218,7 +241,7 @@ export default {
         //this.currentComponent = "show-availabilities"
       }
     },
-    askVerification (){
+    askVerification() {
       //Hide modify-request component.
       this.showModifyRequestComponent = false;
 
@@ -226,8 +249,7 @@ export default {
       this.showVerificationComponent = true;
     },
     subjectSet(chosenSubject) {
-      
-      //Extract data from child component [show availabilitie] & store them in local request object for later POST call 
+      //Extract data from child component [show availabilitie] & store them in local request object for later POST call
       this.request.subject = chosenSubject;
 
       //Hide this component
@@ -236,10 +258,13 @@ export default {
       //Show next component
       this.showModifyRequestComponent = true;
     },
-    showSubmitButton (value) {
+    showCaptcha(value) {
+      //Hide verification code component 
       this.showVerificationComponent = false;
-      this.showSubmitComponent = true;
-    }
+
+      //Show captcha component
+      this.showCaptchaComponent = true;
+    },
   },
   watch: {
     selectedSecretary: function (newSecretary) {

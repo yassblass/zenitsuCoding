@@ -62,6 +62,9 @@ export default {
               "Verification code is already redeemed or student may not exist!"
             );
           }
+          else {
+            console.log(res.data);
+          }
         }).catch(function (error) {
           console.log(error);
         });

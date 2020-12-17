@@ -20,6 +20,7 @@ Vue.component('showAvailabilities', require('./components/student/ShowAvailabili
 Vue.component('showSubjects', require('./components/student/ShowSubjects.vue').default);
 Vue.component('modifyRequest', require('./components/student/ModifyRequest.vue').default);
 Vue.component('verificationCode', require('./components/student/VerificationCode.vue').default);
+Vue.component('captcha', require('./components/student/Captcha.vue').default);
 
 //Secretary components
 Vue.component('appointment', require('./components/secretary/Appointment.vue').default);

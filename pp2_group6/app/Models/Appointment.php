@@ -11,6 +11,7 @@ class Appointment extends Model
 
 
     protected $primaryKey= 'appointmentId';
+    protected $table= 'appointments';
 
     public function students(){
 
