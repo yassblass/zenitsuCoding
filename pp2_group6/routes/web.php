@@ -44,7 +44,7 @@ Route::post('availabilities/', \App\Http\Controllers\AvailabilityController::cla
 Route::post('sendCode/', \App\Http\Controllers\MailController::class . '@sendCode');
 
 //verify code sent by email when making an appointment request.
-Route::post('verifyCode/', \App\Http\Controllers\StudentController::class . '@verifyCode');
+Route::post('verifyCode/', \App\Http\Controllers\VerificationController::class . '@verifyCode');
 
 //Check email
 Route::post('checkEmail', \App\Http\Controllers\AppointmentController::class . '@checkEmail');

@@ -354,8 +354,8 @@ class AppointmentController extends Controller
                         $cancelLink = "http://127.0.0.1:8000/appointment/token/" . $hashedToken;
 
                         $requestForMail = array(
-                            'firstName' => $appointment['firstName'],
-                            'lastName' => $appointment['lastName'],
+                            'firstName' => $secretayFirstName,
+                            'lastName' => $secretaylastName,
                             'date' => $appointment['date'],
                             'startsAt' => $appointment['startsAt'],
                             'subject' => $appointment['subject'],

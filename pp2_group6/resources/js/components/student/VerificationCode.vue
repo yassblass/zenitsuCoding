@@ -45,7 +45,7 @@ export default {
           //This.output gets filled with the response data.
           if (res.data === 1) {
             //Code verification succesfull
-            //this.res = response.data;
+            //this.res = response.data
             //code verification successfull.
             console.log("Code verification successfull");
 
@@ -61,6 +61,9 @@ export default {
             console.log(
               "Verification code is already redeemed or student may not exist!"
             );
+          }
+          else {
+            console.log(res.data);
           }
         }).catch(function (error) {
           console.log(error);

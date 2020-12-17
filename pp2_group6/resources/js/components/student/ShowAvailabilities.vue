@@ -30,7 +30,7 @@
             </b-form-datepicker>
       </b-form-group>
 
-      {{ request.date }}
+      <!-- {{ request.date }} -->
 
 <b-form-group label="Choose between available secretary">
         <b-form-radio-group
@@ -48,16 +48,10 @@
         </b-form-radio-group>
       </b-form-group>
 
-
-
-    <!-- <pre> {{ request }}</pre> -->
+      <!-- <pre> {{ request }}</pre> -->
 
       <b-form-group label="Choose between available hours">
-        <b-form-radio-group
-          
-          buttons
-          button-variant="primary"
-        >
+        <b-form-radio-group buttons button-variant="primary">
           <template v-for="availability in availabilities">
             <b-form-radio
               :value="availability.time"
@@ -69,8 +63,6 @@
           </template>
         </b-form-radio-group>
       </b-form-group>
-
-       
     </div>
   </div>
 </template>
@@ -112,7 +104,7 @@ export default {
     }
   },
   watch: {
-      // time : function(newTime){
+    // time : function(newTime){
 
       //     this.chosenTime = nexTime;
       // },
@@ -127,23 +119,19 @@ export default {
       let secretaryId = newSecretary;
 
       axios
-        .post("availabilities/",{
-            secretaryId : secretaryId,
-            date : this.request.date,
-        } )
-        .then((response) => (
-          this.availabilities = response.data))
+        .post("availabilities/", {
+          secretaryId: secretaryId,
+          date: this.request.date,
+        })
+        .then((response) => (this.availabilities = response.data))
         .catch((error) => console.log(error));
-
-        
 
       // this.availabilities = this.availabilities;
     },
     chosenTime: function (chosenTime) {
-      
       this.request.startsAt = chosenTime;
-      this.$emit('availabilityChosen', this.request);
-    }
+      this.$emit("availabilityChosen", this.request);
+    },
   },
   computed: {
     ...mapGetters(["users"])

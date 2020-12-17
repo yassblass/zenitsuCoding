@@ -127,6 +127,7 @@ class MailController extends Controller
         //insert generated verification code into DB table 'verifications'
 
          $timeNow = Carbon::now()->addMinutes(5);
+         $timeNow = $timeNow->format('Y/m/d H:i:s');
         //$dateNow = date('Y-m-d H:i:s');
 
         if(Verification::create(array(
