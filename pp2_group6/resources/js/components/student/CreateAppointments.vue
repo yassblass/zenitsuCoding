@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <h2>Create an appointment</h2>
+  <div class="d-flex justify-content-center">
+    
+    <div>
+      <h2>Create an appointment</h2>
     <b-form @submit="createAppointment(appointment)">
       <check-email
         v-if="showMailCheckComponent"
@@ -11,6 +13,7 @@
             <pre> {{ request }} </pre> -->
       <transition name="slide-fade">
         <show-availabilities
+        :modify ="modify"
           v-if="showAvailabilityComponent"
           :availabilities="availabilities"
           v-on:availabilityChosen="availabilitySet"
@@ -60,51 +63,9 @@
         >Make appointment</b-button
       >
     </b-form>
+</div>
+    
 
-    <br />
-    <hr />
-    <br />
-
-    <h4 class="text-center font-weight-bold">Confirm an Appointment</h4>
-    <div class="form-group">
-      <input
-        type="text"
-        placeholder="Appointment ID"
-        v-model="appointmentId"
-        class="form-control"
-      />
-    </div>
-    <div class="form-group">
-      <button
-        class="btn btn-block btn-primary"
-        @click.prevent="confirmAppointment(appointmentId)"
-      >
-        Confirm Appointment
-      </button>
-    </div>
-
-    <br />
-    <hr />
-    <br />
-
-    <h4 class="text-center font-weight-bold">Show an Appointment</h4>
-    <div class="form-group">
-      <input
-        type="text"
-        placeholder="Token"
-        v-model="token"
-        class="form-control"
-      />
-    </div>
-    <div class="form-group">
-      <button class="btn btn-block btn-primary" @click="showAppointment(token)">
-        Show Appointment
-      </button>
-
-      <div>
-        <!--<pre> {{ output }} </pre> -->
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -158,6 +119,7 @@ export default {
       showSubmitComponent: false,
       showCaptchaComponent: false,
       showSendRequestButton:false,
+      modify: false,
       
     };
   },
@@ -173,6 +135,7 @@ export default {
     editSecretary(value) {
       //hide modify component
       this.showModifyRequestComponent = false;
+      this.modify = true;
 
       //show availability
       this.showAvailabilityComponent = true;
@@ -284,7 +247,6 @@ export default {
       this.$props.availabilities = this.availabilities;
     },
   },
-
   computed: {
     ...mapGetters(["users", "subjects"]),
   },

@@ -12,7 +12,7 @@
         >
         </b-form-datepicker>
       </b-form-group>
-
+      
       <!-- {{ request.date }} -->
       <div class="container">
         <div v-if="users.length && dateSelected">
@@ -75,6 +75,8 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  props: ['modify'],
+
   data() {
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -101,7 +103,13 @@ export default {
       messageIsDisplayed: null,
     };
   },
-  created() {},
+  mounted() {
+    if(this.$props.modify === true){
+      this.request.date = '';
+      this.request.user_id = '';
+    }
+
+  },
   methods: {
     dateDisabled(ymd, date) {
       const weekday = date.getDay();

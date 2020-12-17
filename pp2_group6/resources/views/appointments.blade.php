@@ -73,16 +73,11 @@
     <body>
     {{--<div class="flex-center position-ref full-height">--}}
 
-    <div id="app">
+    <div id="app" class="container">
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5">
+        <div >
+            <div>
                     <create-appointments></create-appointments>
-                </div>
-                <div class="col-md-7">
-                    <appointments></appointments>
-                </div>
             </div>
         </div>
 

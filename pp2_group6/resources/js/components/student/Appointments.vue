@@ -45,11 +45,6 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Appointments",
-  mounted() {
-    this.$store.dispatch("fetchAppointments");
-    //this.$store.dispatch('fetchUsers');
-    this.$store.dispatch('fetchSubjects')
-  },
   methods: {
     deleteAppointment(appointment) {
       this.$store.dispatch("deleteAppointment", appointment);

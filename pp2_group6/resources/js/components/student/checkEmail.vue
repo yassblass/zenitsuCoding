@@ -17,9 +17,11 @@
                 v-model="student.lastName">
             </b-form-input>
         </b-form-group>
-
-        <b-button v-on:click="checkEmail">Check</b-button>
+    <div class="d-flex justify-content-center" >
+        <b-button class="d-flex justify-content-center" v-on:click="checkEmail">Check</b-button>
+        </div>
     </div>
+    
 </template>
 <script>
 
