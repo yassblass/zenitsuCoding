@@ -47,7 +47,7 @@ export default {
   name: "Appointments",
   mounted() {
     this.$store.dispatch("fetchAppointments");
-    this.$store.dispatch('fetchUsers')
+    //this.$store.dispatch('fetchUsers');
     this.$store.dispatch('fetchSubjects')
   },
   methods: {

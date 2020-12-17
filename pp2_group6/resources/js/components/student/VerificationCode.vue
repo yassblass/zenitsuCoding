@@ -13,7 +13,7 @@
         :formatter="formatNumber"
       ></b-form-input>
     </b-form-group>
-    <button type="button" @click="verifyCode()">Verify Code</button>
+    <b-button type="button" variant="primary" @click="verifyCode()">Verify Code</b-button>
   </div>
 </template>
 

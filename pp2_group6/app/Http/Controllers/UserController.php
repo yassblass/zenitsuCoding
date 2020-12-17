@@ -20,11 +20,11 @@ class UserController extends Controller
         //
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
         //Fetch all users from DB first.
         $users = User::orderBy('created_at', 'desc')->get();
-       
+        $chosenDate = $request['date'];
         //Creat empty array template that will be used to fetch only free users(secretary).
         $usersArray = array( 
 
@@ -42,7 +42,7 @@ class UserController extends Controller
             $matchThese = ['user_id' => $user_id, 'status' => 'free'];
          
             //If availability where 'status' = 'free' count() > 0, push user object to array above.
-            if($availabilityCount = Availability::where($matchThese)->where('date', '>', Carbon::now())->count()) {
+            if($availabilityCount = Availability::where($matchThese)->where('date', $chosenDate)->count()) {
                 if($availabilityCount > 0) {
 
                     //push this user's name into array.

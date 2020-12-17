@@ -1,4 +1,5 @@
 <template>
+<div class ="container">
   <b-form-group label="Choose a subject">
     <b-form-radio-group
       v-model="chosenSubject"
@@ -12,6 +13,7 @@
       </template>
     </b-form-radio-group>
   </b-form-group>
+  </div>
 </template>
 
 <script>
