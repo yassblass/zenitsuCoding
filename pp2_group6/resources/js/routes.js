@@ -6,6 +6,8 @@ import ManageRequest from './components/secretary/ManageRequest.vue';
 import Appointment from './components/secretary/Appointment.vue';
 import setAvailability from './components/secretary/setAvailability.vue';
 import manageAvailability from './components/secretary/ManageAvailability.vue';
+import forgot from './components/secretary/ForgotPassword.vue';
+
 
 
 export default{
@@ -123,10 +125,16 @@ export default{
                 })
             }
         },
+        {
+    
+            path:"/forgot/",
+            component:forgot,
+            name:"forgotPassword",
+           
+        },
        
     
 
     ]
-
 
 }

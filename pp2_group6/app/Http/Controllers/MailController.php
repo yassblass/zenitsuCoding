@@ -5,6 +5,7 @@ use App\Mail\AlMail;
 use App\Mail\cancelMail;
 use App\Mail\AcceptMail;
 use App\Mail\RefuseMail;
+use App\Mail\forgotPasswordMail;
 
 
 
@@ -32,6 +33,24 @@ class MailController extends Controller
        Mail::to("secretary.ehb@gmail.com")->send(new AlMail($details));
        return "Email sent";
    }
+
+   public function forgot(Request $request){
+       
+        $email = $request['email'];
+        $forgot_password = $request['forgot'];
+        $firstName = $request['firstName'];
+
+        $forgot = [
+            'forgot_password' => $forgot_password,
+            'firstName' => $firstName,
+
+        ];
+
+       Mail::to($email)->send(new forgotPasswordMail($forgot));
+        
+       
+      
+    }
    
    //DELETE
 

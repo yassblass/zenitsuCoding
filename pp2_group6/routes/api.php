@@ -29,6 +29,11 @@ Route::post('register', [App\Http\Controllers\RegisterController::class, 'regist
 Route::post('login', [App\Http\Controllers\LoginController::class, 'login']);
 //route to logout the logged in user 
 Route::post('logout', [App\Http\Controllers\LoginController::class, 'logout']);
+//get all users
+Route::get('/allUsers', [App\Http\Controllers\UserController::class,'getAllUsers']);
+
+Route::post('/forgot', [App\Http\Controllers\MailController::class,'forgot']);
+
 
 Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'getConfirmed']);
 Route::post('/cancelAppointment/{id}', [App\Http\Controllers\MailController::class,'cancelAppointment']);

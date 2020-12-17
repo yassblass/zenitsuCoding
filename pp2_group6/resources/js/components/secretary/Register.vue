@@ -33,6 +33,7 @@ export default {
                 email: '',
                 password: '',
                 admin: 0,
+                forgot_password: 25,
                 password_confirmation:''
             },
             errors:[]

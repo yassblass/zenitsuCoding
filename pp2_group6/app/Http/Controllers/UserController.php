@@ -18,6 +18,13 @@ class UserController extends Controller
         //
     }
 
+    public function getAllUsers(){
+
+        $users = User::All();
+
+        return $users;
+    }
+
     public function get(Request $request)
     {
         $users = User::orderBy('created_at', 'desc')->get();
