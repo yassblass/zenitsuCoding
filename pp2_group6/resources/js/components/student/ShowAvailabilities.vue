@@ -24,7 +24,7 @@
         </b-form-input>
       </b-form-group>
 
-<!-- <b-form-group label="Choose between available secretary">
+      <b-form-group label="Choose between available secretary">
         <b-form-radio-group
           v-model="request.user_id"
           buttons
@@ -40,18 +40,12 @@
             </b-form-radio>
           </template>
         </b-form-radio-group>
-      </b-form-group> -->
+      </b-form-group>
 
-
-
-    <!-- <pre> {{ request }}</pre> -->
+      <!-- <pre> {{ request }}</pre> -->
 
       <b-form-group label="Choose between available hours">
-        <b-form-radio-group
-          
-          buttons
-          button-variant="primary"
-        >
+        <b-form-radio-group buttons button-variant="primary">
           <template v-for="availability in availabilities">
             <b-form-radio
               :value="availability.time"
@@ -63,16 +57,12 @@
           </template>
         </b-form-radio-group>
       </b-form-group>
-
-       
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
 export default {
-  
-    
   data() {
     return {
       request: {
@@ -81,42 +71,36 @@ export default {
         startsAt: "",
       },
       availabilities: {},
-      selectedSecretary : '',
-      chosenTime : '',
-
+      selectedSecretary: "",
+      chosenTime: "",
     };
   },
-  created() {
-
-  },
+  created() {},
   watch: {
-      // time : function(newTime){
+    // time : function(newTime){
 
-      //     this.chosenTime = nexTime;
-      // },
-      selectedSecretary: function (newSecretary) {
+    //     this.chosenTime = nexTime;
+    // },
+    selectedSecretary: function (newSecretary) {
       this.selectedSecretary = newSecretary;
       //this.currentComponent = "show-Availabilities";
 
       let secretaryId = newSecretary;
 
       axios
-        .post("availabilities/",{
-            secretaryId : secretaryId,
-            date : this.request.date,
-        } )
+        .post("availabilities/", {
+          secretaryId: secretaryId,
+          date: this.request.date,
+        })
         .then((response) => (this.availabilities = response.data))
         .catch((error) => console.log(error));
-
-        
 
       // this.availabilities = this.availabilities;
     },
     chosenTime: function (chosenTime) {
-      
       this.request.startsAt = chosenTime;
-      this.$emit('availabilityChosen', this.request);
-    }
+      this.$emit("availabilityChosen", this.request);
+    },
   },
   computed: {
     ...mapGetters(["users"]),
