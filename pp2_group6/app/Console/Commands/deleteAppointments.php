@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Appointment;
 use Carbon\Carbon;
+use App\Models\Availability;
 
 class deleteAppointments extends Command
 {
@@ -39,6 +40,7 @@ class deleteAppointments extends Command
      */
     public function handle()
     {
-        Appointment::where('date','<=', Carbon::now())->delete();
+        Appointment::where('date','<', Carbon::now())->delete();
+        Availability::where('date','<', Carbon::now())->delete();
     }
 }

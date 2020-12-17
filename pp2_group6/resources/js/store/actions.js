@@ -94,6 +94,7 @@ let actions = {
         fetchUsers({commit}) {
             axios.get('users/get')
                 .then(res => {
+                    console.log(res.data);
                     commit('FETCH_USERS', res.data)
                 }).catch(err => {
                 console.log(err)

@@ -24,7 +24,7 @@
         </b-form-input>
       </b-form-group>
 
-<b-form-group label="Choose between available secretary">
+<!-- <b-form-group label="Choose between available secretary">
         <b-form-radio-group
           v-model="request.user_id"
           buttons
@@ -40,7 +40,7 @@
             </b-form-radio>
           </template>
         </b-form-radio-group>
-      </b-form-group>
+      </b-form-group> -->
 
 
 
