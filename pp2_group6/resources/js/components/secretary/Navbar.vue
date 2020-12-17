@@ -5,7 +5,7 @@
                 <div class="bg-dark p-4">
                     <div class="flex">
                         <router-link v-if="user.user_id <= 0" class="mr-4" to="/login"><span style="color:white">Login</span></router-link>
-                        <router-link v-if="user.admin== true" to="/register"><span style="color:white">Register</span></router-link>  
+                        <router-link v-if="user.admin == true" to="/register"><span style="color:white">Register</span></router-link>  
                         <button @click.prevent="logout">Logout</button>
                     </div>
                 </div>

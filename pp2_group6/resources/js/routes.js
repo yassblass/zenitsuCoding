@@ -68,6 +68,20 @@ export default{
             path:"/login",
             component:Login,
             name:"login",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then((res)=>{
+
+                    if(res.data == true){
+                    next(false);
+                    return next({name:"dashboard"});
+                        
+                    }else{
+                        next();
+                    }
+                }).catch(()=>{
+                    next()
+                });
+            }
         },
         {
             path:"/register",
@@ -75,7 +89,7 @@ export default{
             name:"register",
             beforeEnter: (to, form, next) =>{
                 Axios.get('/api/user').then((res)=>{
-                    console.log(res);
+                
                     if(res.data.user_id < 1){
                         next(false);
                     return next({name:"login"});
