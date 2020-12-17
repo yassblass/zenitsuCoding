@@ -32,6 +32,7 @@ export default {
                 lastName: '',
                 email: '',
                 password: '',
+                admin: 0,
                 password_confirmation:''
             },
             errors:[]
