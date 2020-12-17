@@ -23,7 +23,7 @@ Route::get('/', \App\Http\Controllers\AppointmentController::class . '@getIndex'
 Route::group(['prefix' => 'users'], function (){
 
     //Fetch all users from DB
-    Route::get('/get', \App\Http\Controllers\UserController::class . '@getAll');
+    Route::post('/get', \App\Http\Controllers\UserController::class . '@getAll');
 
     //Fetch one user's name from DB
     Route::get('/getName/{userId}', \App\Http\Controllers\UserController::class . '@getName');

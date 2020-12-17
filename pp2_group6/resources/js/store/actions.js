@@ -91,8 +91,8 @@ let actions = {
 
 
         //Users
-        fetchUsers({commit}) {
-            axios.get('users/get')
+        fetchUsers({commit}, selectedDate) {
+            axios.post('users/get', selectedDate)
                 .then(res => {
                     console.log(res.data);
                     commit('FETCH_USERS', res.data)

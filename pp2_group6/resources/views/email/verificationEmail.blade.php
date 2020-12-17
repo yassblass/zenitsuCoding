@@ -6,7 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> Hello {{ $verificationCode['firstname'] }} {{ $verificationCode['lastname'] }}, Please verify yourself by filling in this verification code: {{$verificationCode['v_code']}}  </h1>
+    <h1> Hello {{ $verificationCode['firstname'] }} {{ $verificationCode['lastname'] }}! </h1>
+    <p>Please verify yourself by filling in this verification code: {{$verificationCode['v_code']}}</p>
+    <hr>
+    <p>Ehb Secretary Team</p>
   
 
    

@@ -1,6 +1,8 @@
 <template>
+<div class ="d-flex justify-content-center">
   <b-form-group label="Choose a subject">
     <b-form-radio-group
+      stacked
       v-model="chosenSubject"
       buttons
       button-variant="danger"
@@ -12,12 +14,16 @@
       </template>
     </b-form-radio-group>
   </b-form-group>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
 export default {
+  mounted (){
+    this.$store.dispatch('fetchSubjects');
+  },
   data() {
     return {
       subject: {

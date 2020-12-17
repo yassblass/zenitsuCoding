@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class ="container">
     <b-form-group
       label="Are you sure you want to make an appoint with the following data?"
     >
@@ -26,13 +26,13 @@
         <b-form-radio >
           {{ request['startsAt'] }}
         </b-form-radio>
-        <button
+        <b-button
           type="button"
           @click="showAvailabilityEdit"
           class="btn btn-primary"
         >
           Edit
-        </button>
+        </b-button>
       </b-form-radio-group>
       </div>
       <br />
@@ -41,19 +41,19 @@
         <b-form-radio v-model="selectedSecretary">
           {{ request['subject'] }}
         </b-form-radio>
-         <button
+         <b-button
           type="button"
           @click="showSubjectEdit"
           class="btn btn-primary"
         >
           Edit
-        </button> 
+        </b-button> 
       </b-form-radio-group>
       </div>
     </b-form-group>
     
 
-    <b-button type="button" @click="showVerification"> My info is correct </b-button>
+    <b-button type="button" variant="primary" @click="showVerification"> My info is correct </b-button>
 
     <!-- <pre> {{ secretary }}</pre> -->
     <!-- <pre> {{ request }}</pre> -->
