@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <b-alert :show="show" variant="danger" dismissible> {{errors.get('firstName') }} </b-alert>
-        <b-alert :show="show" variant="danger" dismissible> {{errors.get('lastName') }} </b-alert>
+        <b-alert v-model="showFirstName" variant="danger" dismissible> {{errors.get('firstName') }} </b-alert>
+        <b-alert v-model="showLastName" variant="danger" dismissible> {{errors.get('lastName') }} </b-alert>
         <b-form-group label="Insert your first name">
             <b-form-input
                 type="text"
@@ -46,7 +46,9 @@ export default {
             lastName:""
         },
         errors: new Errors(),
-        show: false
+        showFirstName: false,
+        showLastName: false
+
     };
   },
   created() {
@@ -80,7 +82,9 @@ export default {
                     }
                     
                 }).catch(err => {
-                    this.show = true;
+                    this.showFirstName = true;
+                                        this.showLastName = true;
+
                     this.errors.record(err.response.data);           
             })
 
