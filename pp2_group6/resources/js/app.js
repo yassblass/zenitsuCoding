@@ -11,7 +11,6 @@ Vue.use(IconsPlugin);
 Vue.use(VueRouter);
 
 import routes from './routes'
-Vue.component('cancelappointment', require('./components/secretary/Cancel.vue').default);
 Vue.component('alert', require('./components/secretary/Alert.vue').default);
 Vue.component('navbar', require('./components/secretary/Navbar.vue').default);
 

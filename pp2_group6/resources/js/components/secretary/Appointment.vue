@@ -4,16 +4,19 @@
   <div id="titel">
     <h1>{{title}} <b-button pill id="iCall" variant="primary">Add/Import iCal</b-button> </h1>
 </div>
+
     <div id="table">
+    <textarea name='reason' placeholder="Describe the reason why you cancel the appointment" id='reason' cols='125' rows='3' value='description' v-model='description'> Reason why you cancel</textarea>
+                
           <table class="table table-stripped table-bordered">
   
             <tr v-for="appointment in appointments" :key="appointment.appointmentId" >
               <th >{{ appointment.date }} {{ appointment.startsAt }}</th>
               <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>
               <th >{{ appointment.subject }}</th>
-              <th><cancelappointment :id="appointment.appointmentId"></cancelappointment></th>
-              <!--  v-bind:id="appointment.appointmentId" -->
-              </tr>
+              <th><button type="submit" class="btn btn-danger" @click='cancelAppointmentSubmit(appointment.appointmentId)' id="cancel">Delete</button></th>
+            </tr>
+
               <!--<pagination :data="appointments" @pagination-change-page="getResults"></pagination> -->
           </table>
     </div>
@@ -35,19 +38,22 @@
 export default {
 
 
- props: ['id', 'data', 'myId'],
+ //props: ['id', 'data', 'myId'],
  data(){
 
     return{
   
       title : "Manage Appointments",
       appointments: '',
-
+      description: '',
+      output : '',
+      id : '',
     
       
     }
   },
   mounted() {
+    //@click='cancelAppointmentSubmit(appointment.appointmentId)
             axios.get('/api/user').then((res)=>{
                 this.user = res.data;
             })
@@ -59,10 +65,24 @@ export default {
       .catch(error => console.log(error))
     },
     methods : {
-
       backbutton(){
         this.$router.push({name:"dashboard"});
-      },
+    },
+    cancelAppointmentSubmit(id) {
+      let currentObj = this;
+    //call the function 
+      axios.post('/api/cancelAppointment/' + id, {
+      description: this.description
+    })
+     .then(function (response) {
+     currentObj.output = response.data;    
+       window.location.reload()
+
+    })
+      .catch(function (error) {
+      currentObj.output = error;
+    });
+    },
     }
 
   }
@@ -96,6 +116,7 @@ export default {
 #button-alert{
   float: right;
 }
+
 </style>
 
 
