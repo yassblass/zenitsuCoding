@@ -73,6 +73,27 @@ export default{
             path:"/register",
             component:Register,
             name:"register",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/user').then((res)=>{
+                    console.log(res);
+                    if(res.data.user_id < 1){
+                        next(false);
+                    return next({name:"login"});
+                        
+                    }
+                    if(res.data.admin >= 1){
+                        next();
+                    }else{
+                        next(false);
+                        return next({name:"dashboard"});
+    
+                    }
+                }).catch(()=>{
+
+                    return next({name:"dashboard"});
+                })
+            }
+            
         },
         {
     
