@@ -45,7 +45,7 @@ export default {
           //This.output gets filled with the response data.
           if (res.data === 1) {
             //Code verification succesfull
-            //this.res = response.data;
+            //this.res = response.data
             //code verification successfull.
             console.log("Code verification successfull");
 
