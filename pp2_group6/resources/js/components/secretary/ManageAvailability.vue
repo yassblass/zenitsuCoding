@@ -20,13 +20,12 @@
           </table>
     </div>
     <br>
-
-            <div id="button-alert">
-              <alert ></alert>
-            </div>
-            <div id="button-back">
-            <b-button @click="backbutton"  class="button button-close" squared variant="outline-danger">Back</b-button>
-            </div>
+      <div id="button-alert">
+      <alert ></alert>
+      </div>
+      <div id="button-back">
+      <b-button @click="backbutton"  class="button button-close" squared variant="outline-danger">Back</b-button>
+      </div>
             
 </div>
 
@@ -73,6 +72,8 @@ export default {
                 })
                 .then(function (response) {
                     currentObj.output = response.data;
+                    window.location.reload()
+                    
                 })
                 .catch(function (error) {
                     currentObj.output = error;

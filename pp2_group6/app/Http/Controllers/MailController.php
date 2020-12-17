@@ -8,10 +8,9 @@ use App\Mail\RefuseMail;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 use Mail;
-
-
-
 
 class MailController extends Controller
 {
@@ -30,7 +29,6 @@ class MailController extends Controller
        return "Email sent";
    }
    
-   //DELETE
 
     //Deletes an appointment based on the ID
    public function deleteAppointment($appointmentId)
@@ -53,13 +51,19 @@ class MailController extends Controller
 
    }
    // CANCEL
-
    public function cancelAppointment(Request $request)
    {
-        
+       //get User
+         $user = Auth::user();
+         $secretaryFirstName = $user['firstName'];
+         $secretaryLastName = $user['lastName'];
+         $secretaryName = $secretaryFirstName . ' ' . $secretaryLastName;
+
+         //Request
         $description = $request['description'];
         $appointmentId = $request['id'];
 
+        //information of student and appointment
         $information =  Appointment::select('students.firstName', 'students.lastName', 'appointments.startsAt', 'appointments.date') 
         ->join('students', 'students.student_id', '=', 'appointments.student_id')
         ->where('appointments.appointmentId' , $appointmentId)
@@ -84,6 +88,7 @@ class MailController extends Controller
             'description' => $request['description'],
             'name' => $fullName,
             'appointment' => $appointment,
+            'secretary' => $secretaryName,
         ];
 
         //Sent mail with the cancel information
@@ -99,7 +104,13 @@ class MailController extends Controller
     
     public function acceptMail($appointmentId){
 
-    //take data from database
+        //get User
+        $user = Auth::user();
+        $secretaryFirstName = $user['firstName'];
+        $secretaryLastName = $user['lastName'];
+        $secretaryName = $secretaryFirstName . ' ' . $secretaryLastName;
+
+         //take data from database
         
 
         $information =  Appointment::select('students.firstName', 'students.lastName', 'appointments.startsAt', 'appointments.date') 
@@ -136,6 +147,7 @@ class MailController extends Controller
         'name' => $fullName,
         'appointment' => $appointment,
         'token' => $token,
+        'secretary' => $secretaryName,
        ];
 
        //Sent mail with the information
@@ -169,6 +181,11 @@ class MailController extends Controller
  
     public function refuseMail($appointmentId){
 
+        //get User
+        $user = Auth::user();
+        $secretaryFirstName = $user['firstName'];
+        $secretaryLastName = $user['lastName'];
+        $secretaryName = $secretaryFirstName . ' ' . $secretaryLastName;
         
         //take data from database
         $information =  Appointment::select('students.firstName', 'students.lastName', 'appointments.startsAt', 'appointments.date') 
@@ -203,7 +220,8 @@ class MailController extends Controller
             'title' => 'Appointment refused',
             'name' => $fullName,
             'appointment' => $appointment,
-            'token' => $token,
+            'secretary' => $secretaryName,
+
            ];
     
            //Sent mail with the information

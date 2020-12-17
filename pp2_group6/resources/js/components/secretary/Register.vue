@@ -1,22 +1,21 @@
 <template>
 <div>
     <navbar></navbar>
-
-    <div class="register">
         <h1>Register</h1>
+    <div id="page">
         <!--<span v-if="errors.name">{{errors.name[0]}}</span>-->
         
-        <input placeholder="first name" type="text" v-model="form.firstName">
+        <input placeholder="first name" class="form-control" type="text" v-model="form.firstName">
 
-        <input placeholder="last name" type="text" v-model="form.lastName">
+        <input placeholder="last name" class="form-control" type="text" v-model="form.lastName">
 
-        <input placeholder="Email" type="email" v-model="form.email">
+        <input placeholder="Email" class="form-control" type="email" v-model="form.email">
 
-        <input placeholder="Password" type="password" v-model="form.password">
+        <input placeholder="Password" class="form-control" type="password" v-model="form.password">
 
-        <input placeholder="Confirm Password" type="password" v-model="form.password_confirmation">
+        <input placeholder="Confirm Password" class="form-control" type="password" v-model="form.password_confirmation">
 
-        <button @click.prevent="saveForm" type="submit">register</button>
+        <button @click.prevent="saveForm" type="submit" class="btn btn-danger">register</button>
     </div>
 
 </div>
@@ -53,3 +52,30 @@ export default {
     
 }
 </script>
+
+<style>
+#page{
+    position: relative;
+    width: 280px; 
+    height:400px; 
+    top: 0;
+     margin-left: auto;
+  margin-right: auto;
+}
+
+h1{
+    text-align: center;
+    font-size:50px; 
+    font-family:Georgia;
+   
+}
+
+input{
+    margin-top: 18px
+}
+
+button{
+    margin-top:18px;
+    margin-left:90px;
+}
+</style>
