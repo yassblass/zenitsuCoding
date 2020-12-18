@@ -10,7 +10,6 @@
         type="number"
         id="v_code-input"
         v-model="verificationData.v_code"
-        :formatter="formatNumber"
       ></b-form-input>
     </b-form-group>
     <b-button type="button" variant="primary" @click="verifyCode()"

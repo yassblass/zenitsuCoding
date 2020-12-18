@@ -15,22 +15,10 @@ class AvailabilityController extends Controller
         $date = $request['date'];
 
         //Get all secretary availabilities where status = 'free' and store them.
-        
-
         $matchThese = ['user_id' => $secretaryId, 'status' => 'free', 'date' => $date];
 
-    
-        $availabilitiesObject = array(
-            'avId' => '',
-            'user_id' => '',
-            'date' => '',
-            'time' => '',
-            'status' => '',
-    );
-
-        
-
-        if($availabilities = Availability::where($matchThese)->get()){
+        //If query matches, return query result.
+        if($availabilities = Availability::where($matchThese)->orderBy('time', 'ASC')->get()){
 
 
             return response($availabilities);

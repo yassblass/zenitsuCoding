@@ -54,7 +54,7 @@
         <p>Choose between available hours</p>
       </div>
 
-    <div class="container">
+    <div class="container" v-if="secretarySelected && dateSelected">
       <b-form-group>
         <b-form-radio-group buttons button-variant="primary">
           <template v-for="availability in availabilities">
@@ -126,6 +126,7 @@ export default {
       this.state = true;
       this.request.date = this.selectedDate;
       this.dateSelected = true;
+      this.secretarySelected = false;
       this.$store.dispatch("fetchUsers", this.request);
     },
     selectedSecretary: function (newSecretary) {

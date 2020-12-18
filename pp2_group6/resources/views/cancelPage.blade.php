@@ -76,13 +76,11 @@
     <div id="app">
 
         <div class="container">
-            <div class="row">
-                <div class="col-md-5">
-                    <cancel-page  check = "{{ $check }}" appointment-id = "{{ $appointmentId }}" student_id = "{{ $student_id }}" user_id = "{{ $user_id }}"  date ="{{ $date }}"  starts-at = "{{ $startsAt }}" subject = "{{ $subject }}" status = "{{$status}}" cancel-token = "{{ $cancelToken }}"  >
-
+            
+                <div class="d-flex justify-content-center">
+                    <cancel-page  check = "{{ $check }}" appointment-id = "{{ $appointmentId }}" student-name = "{{ $studentName }}" secretary-name = "{{ $secretaryName }}"  date ="{{ $date }}" starts-at = "{{ $startsAt }}" subject = "{{ $subject }}" status = "{{$status}}">
                     </cancel-page>
                 </div>
-            </div>
         </div>
 
 
