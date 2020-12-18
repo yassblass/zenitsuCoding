@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+//Needed Models
+use App\Models\User;
 use App\Models\Appointment;
 use App\Models\Student;
-use Illuminate\Support\Facades\DB;
 use App\Models\Availability;
+
+
+//Mail models
 use App\Mail\requestMail;
+use App\Mail\requestToSecretary;
+
 use Mail;
 
 class AppointmentController extends Controller
@@ -294,7 +301,7 @@ class AppointmentController extends Controller
         //Declare needed varibales.
         //IsolateToken & Appointment object from request.
         $token = $request['token'];
-         $appointment = $request['request'];
+        $appointment = $request['request'];
         $domain = '@student.ehb.be';
         $firstName = $appointment['firstName'];
         $lastName = $appointment['lastName'];
@@ -326,7 +333,6 @@ class AppointmentController extends Controller
                 if($getFlagged[0]->isFlagged === 0)
                 {
 
-                
                     $appointment = Appointment::create(array(
                         'student_id' => $getStudentId[0]->student_id,
                         'user_id' => $appointment['user_id'],
@@ -341,11 +347,7 @@ class AppointmentController extends Controller
                     $takenAvailabilityId = Availability::where($matchThese)->update(['status' => 'taken']);
                     //Availability::find($takenAvailabilityId)->update(['status' => 'taken']);
 
-                        
-                    
-                    
                         //Appointment creation succesful. Send request confirmation as email.
-
                          
                         $secreterayNameQuery = User::select('firstName','lastName')->where('user_id',$appointment['user_id'])->get();
                         $secretayFirstName = $secreterayNameQuery[0]['firstName'];
@@ -353,9 +355,10 @@ class AppointmentController extends Controller
                         $secretaryName = $secretayFirstName . ' ' . $secretaylastName;
                         $cancelLink = "http://127.0.0.1:8000/appointment/token/" . $hashedToken;
 
+                        //Create Mail template with needed data.
                         $requestForMail = array(
-                            'firstName' => $secretayFirstName,
-                            'lastName' => $secretaylastName,
+                            'firstName' => $firstName,
+                            'lastName' => $lastName,
                             'date' => $appointment['date'],
                             'startsAt' => $appointment['startsAt'],
                             'subject' => $appointment['subject'],
@@ -363,9 +366,31 @@ class AppointmentController extends Controller
                             'cancelLink' => $cancelLink,
                         );
 
+                        //Mail to student with request information.
                         Mail::to($email)->send(new requestMail($requestForMail));
+
+                        //Isolate secretary email 
+                        $secretaryEmail = User::select('email')->where('user_id',$appointment['user_id'])->get();
+
+                        //Store link to dahsboard into a variable (Localhost for now)
+                        $dashboardLink = "http://127.0.0.1:8000/";
+
+                        //Create Mail template with needed data.
+                        $requestToSecretary = array(
+                            'firstName' => $firstName,
+                            'lastName' => $lastName,
+                            'date' => $appointment['date'],
+                            'startsAt' => $appointment['startsAt'],
+                            'subject' => $appointment['subject'],
+                            'secretaryName' => $secretaryName,
+                            'dashboardLink' => $dashboardLink,
+                        );
+
+                        //Mail To secretary with request information.
+                        Mail::to($secretaryEmail[0]['email'])->send(new requestToSecretary($requestToSecretary));
                         
-                        return response($takenAvailabilityId);
+                
+                        return response(1);
                 }else{
                     //When the student is flagged
                     return response(2);
@@ -382,8 +407,6 @@ class AppointmentController extends Controller
 
     }
     
-
-
 
     //Update an appointment
     public function updateAppointment(Request $request){
