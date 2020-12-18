@@ -18,10 +18,10 @@ class CreateVerificationsTable extends Migration
             $table->id('vc_id');
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id')->references('student_id')->on('students');
-            $table->integer('vc');
+            $table->unsignedInteger('vc');
+            $table->unsignedInteger('passCounter')->default(0);
             $table->boolean('redeemed')->default(0);
             $table->dateTime('expiresAt');
-            
         });
     }
 

@@ -3,7 +3,7 @@
     
     <div>
       <h2>Create an appointment</h2>
-    <b-form @submit="createAppointment(appointment)">
+    <b-form >
       <check-email
         v-if="showMailCheckComponent"
         v-on:nameChecked="showDateForm"
