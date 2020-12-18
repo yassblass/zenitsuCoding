@@ -20,12 +20,12 @@ class RegisterController extends Controller
         ]);
 
         User::create([
-            'user_id' => 5,
+            'user_id' => 8,
             'firstName'=> $request->firstName,
             'lastName'=> $request->lastName,
             'email' => $request->email,
             'admin' => $request->admin,
-            'forgot_password' => Str::random(25),
+            'forgot_password' => Str::random(50),
             'password'=> Hash::make($request->forgot_password)
         ]);
     }

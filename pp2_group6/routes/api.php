@@ -34,6 +34,8 @@ Route::get('/allUsers', [App\Http\Controllers\UserController::class,'getAllUsers
 
 Route::post('/forgot', [App\Http\Controllers\MailController::class,'forgot']);
 
+Route::post('/changePassword', [App\Http\Controllers\UserController::class,'changePassword']);
+
 
 Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'getConfirmed']);
 Route::post('/cancelAppointment/{id}', [App\Http\Controllers\MailController::class,'cancelAppointment']);

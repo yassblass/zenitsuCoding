@@ -10,8 +10,9 @@
         <img class="center" src="https://st3.depositphotos.com/4111759/13425/v/380/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"  style="width: 100px; height:100px; border-radius:50%; ">
         <p>{{user.firstName+" "+user.lastName+ " "}}</p>
         <router-link to="/setAvailability"><button type="button" class="btn btn-danger" style="margin-top:10px; margin-left: 10px; width:185px; " >Set availability</button></router-link>
-        <router-link to="/manageAppointment"><button type="button" class="btn btn-danger" style="margin-top:10px;  margin-left: 25px;width:185px;" >Manage appointments</button></router-link>
-        <router-link to="/manageRequest"><button type="button" class="btn btn-danger" style="margin-top:30px;  margin-left: 120px; width:185px;" >Manage request</button></router-link>
+        <router-link to="/manageAvailability"><button type="button" class="btn btn-danger" style="margin-top:10px;  margin-left: 25px;width:185px;" >Manage availability</button></router-link>
+        <router-link to="/manageRequest"><button type="button" class="btn btn-danger" style="margin-top:30px;  margin-left: 10px; width:185px;" >Manage request</button></router-link>
+        <router-link to="/manageAppointment"><button type="button" class="btn btn-danger" style="margin-top:30px;  margin-left: 25px; width:185px;" >Manage appointments</button></router-link>
 
             
     </div>

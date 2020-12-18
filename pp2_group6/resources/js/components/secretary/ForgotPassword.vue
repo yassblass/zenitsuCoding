@@ -28,7 +28,6 @@ export default {
     },
     methods:{
         sendEmail(){
-            let currentObj = this;
             axios.post('/api/forgot',  {
 
                     email: this.email,
@@ -39,7 +38,7 @@ export default {
     
 
             }).catch(()=>{
-                console.log("dans le code bg de send Email");
+                console.log("functie email error");
             })
         },
 
@@ -51,25 +50,24 @@ export default {
                 
 
                     if(res.data[a].email == this.email){
-                        console.log("jsui renttrer ");
-                        console.log(res.data[a].email);
+                    
 
                         this.forgot = res.data[a].forgot_password;
                         this.firstName = res.data[a].firstName;
 
-                        console.log(this.forgot);
+                        
 
                         
                         this.sendEmail(this.forgot);
-
-                    }else{
-                        console.log("email not exist");
                     }
                 
                 }
 
+                this.$router.push({name:"login"});
+
+
             }).catch(()=>{
-                console.log("erreur dans le code bg");
+                console.log("functie check error");
             })
         },
         
