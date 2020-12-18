@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use App\Models\Student;
 use App\Models\Verification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VerificationController extends Controller
 {
@@ -35,11 +36,10 @@ class VerificationController extends Controller
                         //Set redeemed status on 1.
                         //Verification::select('vc_id')->where('vc', $request['v_code'])->update(['redeemed' => 1]);
 
-
-
                         //Delete verification code.
                         $vc_id=Verification::select('vc_id')->where('vc', $request['v_code'])->get();
                         Verification::where('vc_id', $vc_id[0]['vc_id'])->delete();
+
 
                         return response(1);
                     }
@@ -55,9 +55,22 @@ class VerificationController extends Controller
             }
             else {
                 
-                //Verification code is incorrect. Code error = 2.
-                        return response(2);
+                //If Wrong password, counter + 1  in DB.
+                Verification::where('student_id', $student_id[0]['student_id'])->update(['passCounter' => DB::raw('passCounter + 1')]);
+
+                //Check if counter >= 3. If yes, user hasRight = 0 and can not take an appointment.
+                if(Verification::select('passCounter')->where('student_id', $student_id[0]['student_id'])->get()[0]['passCounter'] >= 3) {
+
+                    //Change students' hasRight to false.
+                    Student::where('student_id', $student_id[0]['student_id'])->update(['hasRight' => false]);
+                    return response(4);
+                }
+                else {
+                    //Verification code is incorrect. Code error = 2.
+                    
+                }              
             }
+            return response(2);
     
            //return response($verificationCodeQuery);
         }

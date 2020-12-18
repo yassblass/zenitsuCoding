@@ -7,71 +7,72 @@
   </b-navbar>
   <div class="d-flex justify-content-center">
     <div>
-      
-    <b-form @submit="createAppointment(appointment)">
-      <check-email
-        v-if="showMailCheckComponent"
-        v-on:nameChecked="showDateForm"
-      ></check-email>
+      <h2>Create an appointment</h2>
+      <b-form>
+        <check-email
+          v-if="showMailCheckComponent"
+          v-on:nameChecked="showDateForm"
+        ></check-email>
 
-      <!-- <pre> {{ check }} </pre>
-            <pre> {{ request }} </pre> -->
-      <transition name="slide-fade">
-        <show-availabilities
-        :modify ="modify"
-          v-if="showAvailabilityComponent"
-          :availabilities="availabilities"
-          v-on:availabilityChosen="availabilitySet"
-        ></show-availabilities>
-      </transition>
-      <!-- <pre> {{ request }} </pre> -->
+        <transition name="slide-fade">
+          <show-availabilities
+            :modify="modify"
+            v-if="showAvailabilityComponent"
+            :availabilities="availabilities"
+            v-on:availabilityChosen="availabilitySet"
+          ></show-availabilities>
+        </transition>
 
-      <!-- <pre>{{ selectedSecretary }} </pre>
-            <pre>{{ availabilities }} </pre> -->
+        <transition name="slide-fade">
+          <show-subjects
+            v-if="showSubjectComponent"
+            v-on:subjectChosen="subjectSet"
+          ></show-subjects>
+        </transition>
 
-      <transition name="slide-fade">
-        <show-subjects
-          v-if="showSubjectComponent"
-          v-on:subjectChosen="subjectSet"
-        ></show-subjects>
-      </transition>
+        <transition name="slide-fade">
+          <modify-request
+            :student_firstName="request.firstName"
+            :student_lastName="request.lastName"
+            v-if="showModifyRequestComponent"
+            :request="request"
+            v-on:showAvailabilityEdit="editSecretary"
+            v-on:showSubjectEdit="editSubject"
+            v-on:showVerificationComp="askVerification"
+          ></modify-request>
+        </transition>
 
-      <transition name="slide-fade">
-        <modify-request
-          :student_firstName="request.firstName"
-          :student_lastName="request.lastName"
-          v-if="showModifyRequestComponent"
-          :request="request"
-          v-on:showAvailabilityEdit="editSecretary"
-          v-on:showSubjectEdit="editSubject"
-          v-on:showVerificationComp="askVerification"
-        ></modify-request>
-      </transition>
+        <transition name="slide-fade">
+          <verification-code
+            v-if="showVerificationComponent"
+            :student_firstName="request.firstName"
+            :student_lastName="request.lastName"
+            v-on:codeValidated="showCaptcha"
+          >
+          </verification-code>
+        </transition>
 
-      <transition name="slide-fade">
-        <verification-code
-          v-if="showVerificationComponent"
-          :student_firstName="request.firstName"
-          :student_lastName="request.lastName"
-          v-on:codeValidated="showCaptcha"
+        <transition name="slide-fade">
+          <captcha
+            v-if="showCaptchaComponent"
+            v-on:captchaVerified="showSendRequest"
+            >
+          </captcha>
+        </transition>
+
+        <b-button
+          variant="primary"
+          v-if="showSendRequestButton"
+          @click.prevent="createAppointment(request)"
+          >Make appointment</b-button
         >
-        </verification-code>
-      </transition>
-
-      <transition name="slide-fade">
-        <captcha v-if="showCaptchaComponent" v-on:captchaVerified="showSendRequest"> </captcha>
-      </transition>
-
-      <b-button
-        v-if="showSendRequestButton"
-        @click.prevent="createAppointment(request)" style="margin-top: 250px;">
-        
-        Confirm the appointment request
-      </b-button>
-    </b-form>
-</div>
-    
-
+        <b-button
+          v-if="showSendRequestButton"
+          @click.prevent="backToStartPage()"
+          >Cancel</b-button
+        >
+      </b-form>
+    </div>
   </div>
   <footer style="height:50px; background-color:red; position: absolute;left: 0; right: 0; bottom: 0;">
     <p style="padding-top: 13px; color:white; ">&copy; Copyright 2020 | PP2 - Group 6</p>
@@ -128,19 +129,21 @@ export default {
       showModifyRequestComponent: false,
       showSubmitComponent: false,
       showCaptchaComponent: false,
-      showSendRequestButton:false,
+      showSendRequestButton: false,
       modify: false,
-      
     };
   },
   methods: {
-    showSendRequest (){
+    backToStartPage() {
+      //This function redirects the student to the start page.
+      window.location.href = "/";
+    },
+    showSendRequest() {
       //Hide captcha component
-      this.showCaptchaComponent=false;
+      this.showCaptchaComponent = false;
 
       //Show appointment request button
       this.showSendRequestButton = true;
-
     },
     editSecretary(value) {
       //hide modify component
@@ -189,12 +192,6 @@ export default {
         });
       window.location.reload();
     },
-    showAppointment(token) {
-      //Declare needed Variables
-      let currentObj = this;
-
-      window.location.href = "appointment/token/" + token;
-    },
     showDateForm: function (value) {
       if (value[0] === 1) {
         //Maybe implement a check alert on name validation befor making an appointment request.
@@ -232,7 +229,7 @@ export default {
       this.showModifyRequestComponent = true;
     },
     showCaptcha(value) {
-      //Hide verification code component 
+      //Hide verification code component
       this.showVerificationComponent = false;
 
       //Show captcha component
@@ -241,11 +238,14 @@ export default {
   },
   watch: {
     selectedSecretary: function (newSecretary) {
+      //watch the changes on selection of secretary. This function gets executed everytime a different secretary is selected.
+      //Set this secretary equal to the new one.
       this.selectedSecretary = newSecretary;
-      this.currentComponent = "show-Availabilities";
 
+      //Isolate secretary Id from radio buttons. (Button value is not the name but the ID of the secretary.)
       let secretaryId = newSecretary;
 
+      //Axios Call [POST] with secretary Id & selected date, which will return the availabilities of that secretary.
       axios
         .post("availabilities/", {
           secretaryId: secretaryId,
@@ -254,10 +254,12 @@ export default {
         .then((response) => (this.availabilities = response.data))
         .catch((error) => console.log(error));
 
+      //set local property 'availabilities' equal to the axios response (containing all availabilities).
       this.$props.availabilities = this.availabilities;
     },
   },
   computed: {
+    //These are mapgetters returned from the functions (using vueX library) located at store/actions.js
     ...mapGetters(["users", "subjects"]),
   },
 };

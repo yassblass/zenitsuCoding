@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+//Needed Models
+use App\Models\User;
 use App\Models\Appointment;
 use App\Models\Student;
-use Illuminate\Support\Facades\DB;
 use App\Models\Availability;
+
+
+//Mail models
 use App\Mail\requestMail;
+use App\Mail\requestToSecretary;
+
 use Mail;
 
 class AppointmentController extends Controller
@@ -116,7 +123,8 @@ class AppointmentController extends Controller
             Availability::select('avId')->where($matchThese)->update(['status' => 'free']);
             //Delete appointment from DB based on Appointment ID. 
             Appointment::where('appointmentId', $appointmentId)->delete();
- 
+            
+
             return response()->json("Date is not passed -> availability set to free and deleted appointment!");
 
         } else {
@@ -129,24 +137,58 @@ class AppointmentController extends Controller
         }
  }
 
-    
     //Cancel an appointment based on appointment ID.
     public function cancelAppointment($appointmentId)
     {
-        
-        //Performa  check to see if appointment got deleted.
-        if(Appointment::find($appointmentId)->delete()) {
+        //Check if appointment that needs to be deleted was 'confirmed' or 'pending'. If 'confirmed', flagCounter + 1.
+        if($appointment = Appointment::where('appointmentId',$appointmentId)->get()) 
+        {
+            //check if appointment is 'confirmed'.
+            if($appointment[0]['status'] === 'confirmed')
+            {
+            
+                //Isolate student ID
+                $student_id = $appointment[0]['student_id'];
+             
+                //Flagcounter + 1;
+                Student::where('student_id', $student_id)->update(['flagCounter'=> DB::raw('flagCounter + 1')]);
 
-            //If TRUE, returns 1 to AXIOS CALL in Vue component called 'cancelPage'.
-            return response(true);
+                //-----------------------------------------------------
+                //Check if flagCounter >= 5. If yes, set 'isFlagged' to 1.
+                $student = Student::where('student_id', $student_id)->get();
 
-        }else {
+                if($student[0]['flagCounter'] >= 5 ){
 
-            //If FALSE, returns 0 to AXIOS CALL in Vue component called 'cancelPage'.
+                    //Set 'isFlagged' field to 1.
+                    Student::where('student_id', $student_id)->update(['isFlagged' => 1]);
+
+                }
+
+                if(Appointment::where('appointmentId',$appointmentId)->delete()) 
+                {
+                //If TRUE, returns 1 to AXIOS CALL in Vue component called 'cancelPage'.
+                return response(true);
+    
+                }else 
+                {
+                //If FALSE, returns 0 to AXIOS CALL in Vue component called 'cancelPage'.
+                return response(false);
+                }   
+            }
+            else {
+                //If appointment status is not 'confirmed'.
+                return response(false);
+            }
+        }
+        else {
+            //If appointment is not found.
             return response(false);
         }
-    }
 
+    }
+        
+        //Performa  check to see if appointment got deleted.
+        
     //Simple test function to return appointments.blade.php as a view.
     public function returnView(){
         return view('student/appointments');
@@ -158,66 +200,57 @@ class AppointmentController extends Controller
         //8aa32d535944427a88ec2a75fe957aa387509c009cceda69b9a2d0f8450ea46f
         
         //Check if appointment exists with token.
-        if (Appointment::where('cancelToken', '=', $token)) {
+        if (Appointment::where('cancelToken', '=', $token)->exists()) {
 
             //Simple check message for testing purposes.
-            $check = "Appointment exists!";
+            $check = "Appointment Details";
 
             //Make empty appointment array template, will be used below.
             $appointment = array(
-                'appointmentId' => '',
-                'student_id' => '',
-                'user_id' => '',
+                'secretaryName' => '',
+                'studentName' => '',
                 'date' => '',
                 'startsAt' => '',
                 'subject' => '',
                 'status' => '',
-                'cancelToken' => '',
+                'appointmentId' => '',
         );
-
-            
             //Perform querybuilder, get appointment that is linked to given token.
-            $getAppointment = Appointment::where('cancelToken', $token)->get();
+            $getAppointment = Appointment::select('appointmentId','student_id', 'user_id', 'date', 'startsAt', 'subject', 'status')->where('cancelToken', $token)->get();
 
-
-            //Fill in appointment object with input data.
-            $appointment[0] = $getAppointment[0]['appointmentId'];
-            $appointment[1] = $getAppointment[0]['student_id'];
-            $appointment[2] = $getAppointment[0]['user_id'];
-            $appointment[3] = $getAppointment[0]['date'];
-            $appointment[4] = $getAppointment[0]['startsAt'];
-            $appointment[5] = $getAppointment[0]['subject'];
-            $appointment[6] = $getAppointment[0]['status'];
-            $appointment[7] = $getAppointment[0]['cancelToken'];
-
-
-            //Passing appointment array to Vuejs gave errors, until error gets fixed, we send every param individually.
-            $appointmentId = $appointment[0];
-            $student_id = $appointment[1];
-            $user_id = $appointment[2];
-            $date = $appointment[3];
-            $startsAt = $appointment[4];
-            $subject = $appointment[5];
-            $status = $appointment[6];
-            $cancelToken = $appointment[7];
+            //Isolate secretary name
+            $secretaryName = User::select('firstName', 'lastName')->where('user_id', $getAppointment[0]['user_id'])->get();
+            //Isolate student name
+            $studentName = Student::select('firstName', 'lastName')->where('student_id',$getAppointment[0]['student_id'])->get();
             
-
-            //Convert result to JSON
-            //$appointment = json_encode($appointment);
-
-            //$name = $appointment[0]['firstName'] . ' ' . $appointment[0]['lastName'];
-
+            //Fill in appointment object with input data.
+            $appointment[0] = $secretaryName[0]['firstName'] . " " . $secretaryName[0]['lastName'];
+            $appointment[1] = $studentName[0]['firstName'] . " " . $studentName[0]['lastName'];
+            $appointment[2] = $getAppointment[0]['date'];
+            $appointment[3] = $getAppointment[0]['startsAt'];
+            $appointment[4] = $getAppointment[0]['subject'];
+            $appointment[5] = $getAppointment[0]['status'];
+            $appointment[6] = $getAppointment[0]['appointmentId'];
+            
+            
+            //Passing appointment array to Vuejs gave errors, until error gets fixed, we send every param individually.
+            $appointmentId = $appointment[6];
+            $secretaryName = $appointment[0];
+            $studentName= $appointment[1];
+            $date = $appointment[2];
+            $startsAt = $appointment[3];
+            $subject = $appointment[4];
+            $status = $appointment[5];
+            
+            
             //Return view called 'cancelPage' with appointment data.
-            return view("student/cancelPage", compact('check','appointmentId','student_id','user_id','date','startsAt','subject','status','cancelToken'));
+            return view("cancelPage", compact('check','appointmentId','secretaryName','studentName','date','startsAt','subject','status'));
+            
         }
         else{
 
-            //IF appointment doesn't exist.
-            $check = "Appointment doesn't exist!";
-
-
             //return view with only check message.
-            return view("student/cancelPage", compact("check"));
+            return view("wrongToken");
         } 
     }
 
@@ -294,7 +327,7 @@ class AppointmentController extends Controller
         //Declare needed varibales.
         //IsolateToken & Appointment object from request.
         $token = $request['token'];
-         $appointment = $request['request'];
+        $appointment = $request['request'];
         $domain = '@student.ehb.be';
         $firstName = $appointment['firstName'];
         $lastName = $appointment['lastName'];
@@ -326,7 +359,6 @@ class AppointmentController extends Controller
                 if($getFlagged[0]->isFlagged === 0)
                 {
 
-                
                     $appointment = Appointment::create(array(
                         'student_id' => $getStudentId[0]->student_id,
                         'user_id' => $appointment['user_id'],
@@ -341,11 +373,7 @@ class AppointmentController extends Controller
                     $takenAvailabilityId = Availability::where($matchThese)->update(['status' => 'taken']);
                     //Availability::find($takenAvailabilityId)->update(['status' => 'taken']);
 
-                        
-                    
-                    
                         //Appointment creation succesful. Send request confirmation as email.
-
                          
                         $secreterayNameQuery = User::select('firstName','lastName')->where('user_id',$appointment['user_id'])->get();
                         $secretayFirstName = $secreterayNameQuery[0]['firstName'];
@@ -353,9 +381,10 @@ class AppointmentController extends Controller
                         $secretaryName = $secretayFirstName . ' ' . $secretaylastName;
                         $cancelLink = "http://127.0.0.1:8000/appointment/token/" . $hashedToken;
 
+                        //Create Mail template with needed data.
                         $requestForMail = array(
-                            'firstName' => $secretayFirstName,
-                            'lastName' => $secretaylastName,
+                            'firstName' => $firstName,
+                            'lastName' => $lastName,
                             'date' => $appointment['date'],
                             'startsAt' => $appointment['startsAt'],
                             'subject' => $appointment['subject'],
@@ -363,9 +392,31 @@ class AppointmentController extends Controller
                             'cancelLink' => $cancelLink,
                         );
 
+                        //Mail to student with request information.
                         Mail::to($email)->send(new requestMail($requestForMail));
+
+                        //Isolate secretary email 
+                        $secretaryEmail = User::select('email')->where('user_id',$appointment['user_id'])->get();
+
+                        //Store link to dahsboard into a variable (Localhost for now)
+                        $dashboardLink = "http://127.0.0.1:8000/";
+
+                        //Create Mail template with needed data.
+                        $requestToSecretary = array(
+                            'firstName' => $firstName,
+                            'lastName' => $lastName,
+                            'date' => $appointment['date'],
+                            'startsAt' => $appointment['startsAt'],
+                            'subject' => $appointment['subject'],
+                            'secretaryName' => $secretaryName,
+                            'dashboardLink' => $dashboardLink,
+                        );
+
+                        //Mail To secretary with request information.
+                        Mail::to($secretaryEmail[0]['email'])->send(new requestToSecretary($requestToSecretary));
                         
-                        return response($takenAvailabilityId);
+                
+                        return response(1);
                 }else{
                     //When the student is flagged
                     return response(2);
@@ -382,8 +433,6 @@ class AppointmentController extends Controller
 
     }
     
-
-
 
     //Update an appointment
     public function updateAppointment(Request $request){

@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule) 
     {
         $schedule->command('delete-appointments')->everyMinute();
+        $schedule->command('update-student-status')->everyMinute();
     }
 
     /**

@@ -9,10 +9,11 @@
         type="number"
         id="v_code-input"
         v-model="verificationData.v_code"
-        :formatter="formatNumber">
-      </b-form-input>
+      ></b-form-input>
     </b-form-group>
-    <b-button type="button"  @click="verifyCode()">Verify Code</b-button>
+    <b-button type="button" variant="primary" @click="verifyCode()"
+      >Verify Code</b-button
+    >
   </div>
 </template>
 
@@ -31,6 +32,7 @@ export default {
   },
   methods: {
     verifyCode() {
+      //Declaring needed variables.
       let response = "";
 
       //Assign props that came from parent component to this object.
@@ -40,37 +42,39 @@ export default {
       //Axios [POST] with object containing v_code, firstname & lastname. (which will be used to retrieve student_id in backend).
       axios
         .post("verifyCode/", this.verificationData)
-        .then(res => {
-          //This.output gets filled with the response data.
+        .then((res) => {
           if (res.data === 1) {
-            //Code verification succesfull
-            //this.res = response.data
             //code verification successfull.
             console.log("Code verification successfull");
 
+            //Send 1 back to the parent component.
             this.$emit("codeValidated", 1);
           } else if (res.data === 2) {
             //Code incorrect.
-            console.log("Verification code incorrect!");
+            this.alert("Verification code incorrect!");
           } else if (res.data === 3) {
             //Code verification
-            console.log("Oops. Verification code is expired!");
-          } else if (res.data === 0) {
+            this.alert("Oops. Verification code is expired!");
+          } else if (res.data === 4) {
             //Code verification
+            this.alert(
+              "You entered the wrong password 3 times in a row, you can not take an appointment for 15 minutes."
+            );
+
+            //Redirect to start page.
+            window.location.href = "/";
+          } else if (res.data === 0) {
+            //Code verification failed
             console.log(
               "Verification code is already redeemed or student may not exist!"
             );
-          }
-          else {
+          } else {
             console.log(res.data);
           }
-        }).catch(function (error) {
+        })
+        .catch(function (error) {
           console.log(error);
         });
-    },
-
-    formatNumber(e) {
-      return String(e).substring(0, 6);
     },
   },
 };
