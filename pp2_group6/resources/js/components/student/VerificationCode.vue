@@ -51,13 +51,13 @@ export default {
             this.$emit("codeValidated", 1);
           } else if (res.data === 2) {
             //Code incorrect.
-            this.alert("Verification code incorrect!");
+            alert("Verification code incorrect!");
           } else if (res.data === 3) {
             //Code verification
-            this.alert("Oops. Verification code is expired!");
+            alert("Oops. Verification code is expired!");
           } else if (res.data === 4) {
             //Code verification
-            this.alert(
+            alert(
               "You entered the wrong password 3 times in a row, you can not take an appointment for 15 minutes."
             );
 

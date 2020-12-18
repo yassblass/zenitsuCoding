@@ -31,11 +31,13 @@
     </head>
     <body>
    
-        <div id="app" style="text-align:center;">
-            <cancel-page  check = "{{ $check }}" appointment-id = "{{ $appointmentId }}" student_id = "{{ $student_id }}" user_id = "{{ $user_id }}"  date ="{{ $date }}"  starts-at = "{{ $startsAt }}" subject = "{{ $subject }}" status = "{{$status}}" cancel-token = "{{ $cancelToken }}"  >
-
-            </cancel-page>        
-        </div>
+    <div class="container">
+            
+            <div class="d-flex justify-content-center">
+                <cancel-page  check = "{{ $check }}" appointment-id = "{{ $appointmentId }}" student-name = "{{ $studentName }}" secretary-name = "{{ $secretaryName }}"  date ="{{ $date }}" starts-at = "{{ $startsAt }}" subject = "{{ $subject }}" status = "{{$status}}">
+                </cancel-page>
+            </div>
+    </div>
 
         
     <!-- scripts-->
