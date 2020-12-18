@@ -10,7 +10,9 @@
       <template v-for="subject in subjects">
         <b-form-radio :value="subject.name" :key="subject.subjectId" v-model="chosenSubject">
           {{ subject.name }}
+          <br/>
         </b-form-radio>
+        
       </template>
     </b-form-radio-group>
   </b-form-group>
