@@ -4,16 +4,15 @@
       id="v_code"
       label="Enter 6 digits verifictation code"
       label-for="v_code-input"
-      valid-feedback="Press Submit to validate."
-    >
+      valid-feedback="Press Submit to validate.">
       <b-form-input
         type="number"
         id="v_code-input"
         v-model="verificationData.v_code"
-        :formatter="formatNumber"
-      ></b-form-input>
+        :formatter="formatNumber">
+      </b-form-input>
     </b-form-group>
-    <b-button type="button" variant="primary" @click="verifyCode()">Verify Code</b-button>
+    <b-button type="button"  @click="verifyCode()">Verify Code</b-button>
   </div>
 </template>
 
@@ -52,7 +51,7 @@ export default {
             this.$emit("codeValidated", 1);
           } else if (res.data === 2) {
             //Code incorrect.
-            console.log("Verificaiton code incorrect!");
+            console.log("Verification code incorrect!");
           } else if (res.data === 3) {
             //Code verification
             console.log("Oops. Verification code is expired!");

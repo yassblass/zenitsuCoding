@@ -5,10 +5,9 @@
       stacked
       v-model="chosenSubject"
       buttons
-      button-variant="danger"
-    >
+      button-variant="danger">
       <template v-for="subject in subjects">
-        <b-form-radio :value="subject.name" :key="subject.subjectId" v-model="chosenSubject">
+        <b-form-radio style="margin-bottom:5px" :value="subject.name" :key="subject.subjectId" v-model="chosenSubject">
           {{ subject.name }}
         </b-form-radio>
       </template>

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <b-navbar variant="danger" type="dark" style="margin-bottom:10%;" >
+      <b-navbar-brand href="#">
+      <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
+      </b-navbar-brand>
+    </b-navbar>
       <!-- Form for appointment update -->
     <form>
       <h4 class="text-center font-weight-bold">Update an Appointment</h4>
@@ -45,25 +50,27 @@
         />
       </div>
 
-        <!-- Update request button -->
+      <!-- Update request button -->
       <div class="form-group">
         <button
           class="btn btn-block btn-primary"
           type="button"
-          @click="updateRequest(appointment)"
-        >
+          @click="updateRequest(appointment)">
           Update Request
         </button>
 
         <!-- Get back to cancel Page request button -->
-        <button class="btn btn-block btn-primary" @click="hideUpdatePage()">
+        <b-button variant="primary" @click="hideUpdatePage()">
           Back
-        </button>
+        </b-button>
       </div>
     </form>
 
-    <!-- Testing purposes -->
-    <pre> {{ output }} </pre>
+    <!-- Testing purposes
+    <pre> {{ output }} </pre> -->
+    <footer style="height:50px; background-color:red; position: absolute;left: 0; right: 0; bottom: 0;">
+      <p style="padding-top: 13px; color:white; ">&copy; Copyright 2020 | PP2 - Group 6</p>
+    </footer>
   </div>
 </template>
 

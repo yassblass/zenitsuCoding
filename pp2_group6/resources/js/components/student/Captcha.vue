@@ -2,13 +2,16 @@
   <div >
     <vue-recaptcha
       ref="recaptcha"
+      SameSite="none"
+      Secure
       @verify="onVerify"
       sitekey="6LfMNwoaAAAAALzFmSgpp9RRDmBXGiWQQ8GWd-rW"
     >
     </vue-recaptcha>
-    <button type="button" @click="submitCaptcha">
-      I am definitely not a robot :D
-    </button>
+    <br />
+    <b-button type="button" @click="submitCaptcha">
+      I am definitely not a robot &#128517;
+    </b-button>
   </div>
   
 </template>

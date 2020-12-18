@@ -1,32 +1,52 @@
 <template>
     <div :is=currentComponent>
+        <b-navbar variant="danger" type="dark">
+    <b-navbar-brand href="#">
+      <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
+    </b-navbar-brand>
+  </b-navbar>
+        <div>
+            <b-jumbotron>
+                <!-- Message: Says if appointment is found -->
+                <h1> {{ check }}</h1>
+
+                <template>
+                Choose wheter you want to update or cancel your appointment. If all the information is correct just exit the page.
+                </template>
+
+                <hr>
+
+                
+                    
+                <!-- Show appointment data -->
+                <p>Appointment ID: {{ appointmentId }} </p>
+                <p>Student ID: {{ student_id }} </p>
+                <p>Secretary ID: {{ user_id }} </p>
+                <p>Date: {{ date }} </p>
+                <p>Starts At: {{ startsAt }} </p>
+                <p>Subject: {{ subject }} </p>
+                <p>Status: {{ status }} </p>
+
+                <hr />
+
+                <!-- Show update page button -->
+                <b-button type="button"  variant="info" @click="showUpdateComponent()">Update Appointment Request</b-button> <br > <br>
+                <!-- Call to cancel appointment method button-->
+                <b-button type="button"  variant="info" @click="cancelAppointment(appointmentId)">Cancel Appointment </b-button>
+            </b-jumbotron>
+        </div> 
 
         <div>
-        <!-- Message: Says if appointment is found -->
-        <h1> {{ check }}</h1>
         
-        <!-- Show appointment data -->
-        <p>Appointment ID: {{ appointmentId }} </p>
-        <p>Student ID: {{ student_id }} </p>
-        <p>User ID: {{ user_id }} </p>
-        <p>Date: {{ date }} </p>
-        <p>Starts At: {{ startsAt }} </p>
-        <p>Subject: {{ subject }} </p>
-        <p>Status: {{ status }} </p>
-        <p>Token: {{ cancelToken }} </p>
 
     <!-- Update page component, gets called only if property "currentCOmponent" = name of this component -->
     <update-page :is=currentComponent > </update-page>
-
-
-    <pre> {{ output }} </pre>
     
-    <!-- Show update page button -->
-    <button type="button" class="btn btn-block btn-primary" @click="showUpdateComponent()">Update Appointment Request</button>
-    <!-- Call to cancel appointment method button-->
-    <button type="button" class="btn btn-block btn-primary" @click="cancelAppointment(appointmentId)">Cancel Appointment </button>
+    
     </div>
-
+<footer style="height:50px; background-color:red; position: absolute;left: 0; right: 0; bottom: 0;">
+    <p style="padding-top: 13px; color:white; ">&copy; Copyright 2020 | PP2 - Group 6</p>
+</footer>
 
     </div>
 </template>

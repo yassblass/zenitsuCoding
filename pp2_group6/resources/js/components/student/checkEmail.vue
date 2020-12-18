@@ -19,7 +19,7 @@
         </b-form-group>
     <div class="d-flex justify-content-center" >
         <b-button class="d-flex justify-content-center" v-on:click="checkEmail">Check</b-button>
-        </div>
+    </div>
     </div>
     
 </template>
@@ -40,6 +40,7 @@ class Errors {
         this.errors = errors.errors;
     }
 }
+
 export default {
   data() {
     return {
@@ -57,6 +58,7 @@ export default {
      
   },
   methods: {
+      //
       checkEmail (event) {
           let response = "";
             axios.post('checkEmail', this.student)
@@ -84,8 +86,19 @@ export default {
                     }
                     
                 }).catch(err => {
-                    this.showFirstName = true;
-                                        this.showLastName = true;
+                    if(err.response.data.errors['firstName']){
+                        //Attribute show in alert set to true when first name is missing
+                        this.showFirstName = true;
+                        this.showLastName= false;
+
+                    } else if (err.response.data.errors['lastName']){
+                        //Attribute show in alert set true when last name is missing
+                        this.showLastName = true;
+                        this.showFirstName= false;
+                    } 
+                    
+
+                    //console.log(err.response.data.errors['firstName']);
 
                     this.errors.record(err.response.data);           
             })
