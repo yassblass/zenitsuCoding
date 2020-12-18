@@ -4,8 +4,7 @@
       id="v_code"
       label="Enter 6 digits verifictation code"
       label-for="v_code-input"
-      valid-feedback="Press Submit to validate."
-    >
+      valid-feedback="Press Submit to validate.">
       <b-form-input
         type="number"
         id="v_code-input"
@@ -52,13 +51,13 @@ export default {
             this.$emit("codeValidated", 1);
           } else if (res.data === 2) {
             //Code incorrect.
-            this.alert("Verificaiton code incorrect!");
+            alert("Verification code incorrect!");
           } else if (res.data === 3) {
             //Code verification
-            this.alert("Oops. Verification code is expired!");
+            alert("Oops. Verification code is expired!");
           } else if (res.data === 4) {
             //Code verification
-            this.alert(
+            alert(
               "You entered the wrong password 3 times in a row, you can not take an appointment for 15 minutes."
             );
 

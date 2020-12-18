@@ -33,11 +33,15 @@
           v-model="request.user_id"
           buttons
           button-variant="danger"
+          stacked
         >
           <template v-for="user in users">
             <b-form-radio
+              style="margin-bottom:5px"
               :value="user.user_id"
               :key="user.user_id"
+              
+              
               v-model="selectedSecretary"
             >
               {{ user.firstName + " " + user.lastName }}
@@ -56,13 +60,13 @@
 
     <div class="container" v-if="secretarySelected && dateSelected">
       <b-form-group>
-        <b-form-radio-group buttons button-variant="primary">
+        <b-form-radio-group buttons button-variant="primary" stacked>
           <template v-for="availability in availabilities">
             <b-form-radio
               :value="availability.time"
               :key="availability.avId"
               v-model="chosenTime"
-            >
+              style="margin-bottom:5px">
               {{ availability.time }}
             </b-form-radio>
           </template>

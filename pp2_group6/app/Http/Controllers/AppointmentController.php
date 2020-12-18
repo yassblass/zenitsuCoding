@@ -30,7 +30,7 @@ class AppointmentController extends Controller
 
     //Return to appointments page.
     public function getIndex(){
-        return view('appointments');
+        return view('student/appointments');
     }
 
 
@@ -191,7 +191,7 @@ class AppointmentController extends Controller
         
     //Simple test function to return appointments.blade.php as a view.
     public function returnView(){
-        return view('appointments');
+        return view('student/appointments');
     }
 
 
@@ -244,13 +244,13 @@ class AppointmentController extends Controller
             
             
             //Return view called 'cancelPage' with appointment data.
-            return view("cancelPage", compact('check','appointmentId','secretaryName','studentName','date','startsAt','subject','status'));
+            return view("student.cancelPage", compact('check','appointmentId','secretaryName','studentName','date','startsAt','subject','status'));
             
         }
         else{
 
             //return view with only check message.
-            return view("wrongToken");
+            return view("student.wrongToken");
         } 
     }
 

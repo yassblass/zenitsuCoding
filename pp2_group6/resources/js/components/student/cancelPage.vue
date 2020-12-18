@@ -12,7 +12,6 @@
       <p>Subject: {{ subject }}</p>
       <p>Status: {{ status }}</p>
 
-
       <!-- Show update page button -->
       <button
         type="button"

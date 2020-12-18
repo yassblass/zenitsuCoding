@@ -1,4 +1,10 @@
 <template>
+<div>
+  <b-navbar variant="danger" type="dark" style="margin-bottom:10%;" >
+    <b-navbar-brand href="#">
+      <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
+    </b-navbar-brand>
+  </b-navbar>
   <div class="d-flex justify-content-center">
     <div>
       <h2>Create an appointment</h2>
@@ -50,7 +56,7 @@
           <captcha
             v-if="showCaptchaComponent"
             v-on:captchaVerified="showSendRequest"
-          >
+            >
           </captcha>
         </transition>
 
@@ -67,6 +73,10 @@
         >
       </b-form>
     </div>
+  </div>
+  <footer style="height:50px; background-color:red; position: absolute;left: 0; right: 0; bottom: 0;">
+    <p style="padding-top: 13px; color:white; ">&copy; Copyright 2020 | PP2 - Group 6</p>
+  </footer>
   </div>
 </template>
 <script>
@@ -260,7 +270,7 @@ export default {
   transition: all 0.8s ease;
 }
 .slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {

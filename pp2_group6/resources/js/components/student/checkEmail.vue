@@ -15,20 +15,17 @@
       </b-form-input>
     </b-form-group>
 
-    <b-form-group label="Insert your last name">
-      <b-form-input
-        type="text"
-        placeholder="Last name"
-        v-model="student.lastName"
-      >
-      </b-form-input>
-    </b-form-group>
-    <div class="d-flex justify-content-center">
-      <b-button class="d-flex justify-content-center" v-on:click="checkEmail"
-        >Check</b-button
-      >
+        <b-form-group label="Insert your last name">
+            <b-form-input
+                type="text"
+                placeholder="Last name"
+                v-model="student.lastName">
+            </b-form-input>
+        </b-form-group>
+    <div class="d-flex justify-content-center" >
+        <b-button class="d-flex justify-content-center" v-on:click="checkEmail">Check</b-button>
     </div>
-  </div>
+</div>
 </template>
 <script>
 class Errors {
@@ -46,6 +43,7 @@ class Errors {
     this.errors = errors.errors;
   }
 }
+
 export default {
   data() {
     return {
@@ -78,7 +76,7 @@ export default {
             console.log("You have been flagged, try again later.");
           } else if (this.response === 3) {
             //If student has no rights
-            console.log("You have no rights, try again in 15 minutes!");
+            console.log("You have no rights, try again later.");
           } else if (this.response === 0) {
             //If email has not been found in DB
             console.log("Email does not exist in organization!");

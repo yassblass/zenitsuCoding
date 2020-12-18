@@ -1,63 +1,30 @@
 <template>
-  <div class ="container">
-    <b-form-group
-      label="Are you sure you want to make an appoint with the following data?"
-    >
+<div class ="container">
+  <h3>Are you sure you want to make an appointment with this information?</h3> <br />
+  <b-form-group>
     <div>
-      <b-form-radio-group buttons button-variant="danger">
-        <b-form-radio v-model="selectedSecretary">
-          {{ secretary["firstName"] + " " + secretary["lastName"] }}
-        </b-form-radio>
-        
-      </b-form-radio-group>
+      You want an appointment with <strong>{{ secretary["firstName"] + " " + secretary["lastName"] }}</strong> on 
+      <strong>{{ request['date']  }}</strong> at <strong>{{ request['startsAt'] }}</strong> <br />
+      The subject of the appointment is <strong>{{ request['subject'] }}</strong>
+
+      <br /> <br />
+
+      <b-button
+        type="button"
+        @click="showAvailabilityEdit"
+        class="btn btn-primary">
+        Edit the information
+      </b-button>
+      <br />
+    </div>
+
+  </b-form-group>
     
-
-      <br />
-      <b-form-radio-group buttons button-variant="danger">
-        <b-form-radio >
-          {{ request['date']  }}
-        </b-form-radio>
-       
-      </b-form-radio-group>
-
-      <br />
-
-      <b-form-radio-group buttons button-variant="danger">
-        <b-form-radio >
-          {{ request['startsAt'] }}
-        </b-form-radio>
-        <b-button
-          type="button"
-          @click="showAvailabilityEdit"
-          class="btn btn-primary"
-        >
-          Edit
-        </b-button>
-      </b-form-radio-group>
-      </div>
-      <br />
-      <div>
-      <b-form-radio-group buttons button-variant="danger">
-        <b-form-radio v-model="selectedSecretary">
-          {{ request['subject'] }}
-        </b-form-radio>
-         <b-button
-          type="button"
-          @click="showSubjectEdit"
-          class="btn btn-primary"
-        >
-          Edit
-        </b-button> 
-      </b-form-radio-group>
-      </div>
-    </b-form-group>
-    
-
-    <b-button type="button" variant="primary" @click="showVerification"> My info is correct </b-button>
-
+  
+  <b-button type="button" @click="showVerification">All the information is correct</b-button>
     <!-- <pre> {{ secretary }}</pre> -->
     <!-- <pre> {{ request }}</pre> -->
-  </div>
+</div>
   
 </template>
 
