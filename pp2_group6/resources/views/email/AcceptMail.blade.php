@@ -13,7 +13,7 @@
     <p> Here's a confirmation mail that your appointments is confirmed. We're set to meet on {{$accept['appointment']}}.</p>
     <br>
 
-    <p>If you have any questions, or want to cancel your appointment you can do it : localhost:8000/{{$accept['token']}} </p>
+    <p>If you have any questions, or want to cancel your appointment you can do it : {{$accept['token']}} </p>
     <br>
     <br>
 

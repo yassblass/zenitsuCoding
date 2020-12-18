@@ -29,17 +29,23 @@ Route::post('register', [App\Http\Controllers\RegisterController::class, 'regist
 Route::post('login', [App\Http\Controllers\LoginController::class, 'login']);
 //route to logout the logged in user 
 Route::post('logout', [App\Http\Controllers\LoginController::class, 'logout']);
-
-Route::get('/appointmentLists', [App\Http\Controllers\AppointmentController::class,'getConfirmed']);
-Route::post('/cancelAppointment/{id}', [App\Http\Controllers\MailController::class,'cancelAppointment']);
-Route::post('/sendAlert', [App\Http\Controllers\MailController::class,'sendAlert']);
-
-Route::get('/appointmentList', \App\Http\Controllers\AppointmentController::class .'@getPending');
-Route::post('/editAccept/{id}', \App\Http\Controllers\MailController::class .'@updateConfirmed');
-Route::post('/editRefuse/{id}', \App\Http\Controllers\MailController::class .'@updateRefused');
-
+//route to get all appointments that are confirmed
+Route::get('/appointmentListConfirmed', [App\Http\Controllers\AppointmentController::class,'getListConfirmed']);
+//route to cancel an appointment that has been confirmed
+Route::post('/cancelAppointment/{id}', [App\Http\Controllers\MailController::class,'deleteAppointment']);
+//route to get send the mail to signal a problem
+Route::post('/signalRequest', [App\Http\Controllers\MailController::class,'signalRequestMail']);
+//route to get all appointments that are in pending
+Route::get('/appointmentListPending', \App\Http\Controllers\AppointmentController::class .'@getListPending');
+//route to make an appointment in confirmed
+Route::post('/acceptAppointment/{id}', \App\Http\Controllers\MailController::class .'@updateConfirmed');
+//route to make an appointment in refuse
+Route::post('/refuseAppointment/{id}', \App\Http\Controllers\MailController::class .'@updateRefused');
+//route to make a the availabilities
 Route::post('/insertAvailabilities', \App\Http\Controllers\AvailabilityController::class .'@insertAvailabilities');
+//route to get all the availabilities
 Route::get('/getAllAvailabilities', [App\Http\Controllers\AvailabilityController::class,'getAllAvailibility']);
+//route to delete the availability
 Route::post('/deleteAvailability/{id}', [App\Http\Controllers\AvailabilityController::class,'deleteAvailability']);
 
 

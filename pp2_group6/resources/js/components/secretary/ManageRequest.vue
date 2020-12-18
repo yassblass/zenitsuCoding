@@ -1,32 +1,24 @@
 <template>
 <div id="template">
    <navbar></navbar>
-  <div id="titel">
     <h1>{{title}} </h1>
-</div>
-    <br> 
     <br>
-
     <div id="table">
         <table class="table table-stripped table-bordered">
-    
         <tbody>
         <tr v-for="appointment in appointments" :key="appointment.appointmentId" >
           <th >{{ appointment.date }} {{ appointment.startsAt }}</th>
           <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>
           <th >{{ appointment.subject }}</th>
           <th>
-          <b-button variant="primary" @click="editAccept(appointment.appointmentId)">Accept</b-button>
-          <b-button variant="danger"  @click="editRefuse(appointment.appointmentId)">Refuse</b-button>
+          <b-button variant="primary" @click="buttonAcceptAppointment(appointment.appointmentId)">Accept</b-button>
+          <b-button variant="danger"  @click="buttonRefuseAppointment(appointment.appointmentId)">Refuse</b-button>
           </th>
-
-          
-            </tr>
-            </tbody>
+        </tr>
+        </tbody>
 
       </table>
       </div>
-  
             <div id="button-alert">
               <alert ></alert>
             </div>
@@ -41,19 +33,14 @@ export default {
 
     data(){
         return {
-            myStyle:{
-            backgroundColor: "#bababa",
-          
-            },
             title : 'Manage Requests',
-            
             appointments: {},
             appointmentAccepted: ''
             }
     },
     // use function called created to get the appointments in pending
             created(){
-      axios.get('/api/appointmentList')
+      axios.get('/api/appointmentListPending')
       .then(res => {
         this.appointments = res.data;
       })
@@ -66,8 +53,8 @@ export default {
       },
       // update the status to confirmed
       
-        editAccept(id){
-          axios.post('/api/editAccept/' + id)
+        buttonAcceptAppointment(id){
+          axios.post('/api/acceptAppointment/' + id)
           .then(response => console.log(JSON.stringify(response.data)+ ' Done'),
           window.location.reload()
           )
@@ -75,8 +62,8 @@ export default {
         },
      // update the status to refused
 
-        editRefuse(id){
-          axios.post('/api/editRefuse/' + id)
+        buttonRefuseAppointment(id){
+          axios.post('/api/refuseAppointment/' + id)
           .then(response => console.log(JSON.stringify(response.data)+ ' Done'),
           window.location.reload()
           )
@@ -99,7 +86,6 @@ height: 80%;
   margin-right: auto;
   overflow: auto; 
   height:400px;
-
 }
 #button-back{
   text-align: center;

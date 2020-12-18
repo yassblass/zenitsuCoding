@@ -49,47 +49,43 @@ export default {
     }
   },
   mounted() {
-            axios.get('/api/user').then((res)=>{
-                this.user = res.data;
-            })
-            console.log('Component mounted.');
-        },
-  created(){
-      axios.get('/api/getAllAvailabilities')
-      .then(response => this.availabilities = response.data)
-      .catch(error => console.log(error))
+    axios.get('/api/user').then((res)=>{
+      this.user = res.data;
+    })
+     console.log('Component mounted.');
     },
-    methods : {
+  created(){
+    axios.get('/api/getAllAvailabilities')
+    .then(response => this.availabilities = response.data)
+    .catch(error => console.log(error))
+    },
+  methods : {
 
       backbutton(){
         this.$router.push({name:"dashboard"});
       },
-
-       cancelAvailability(id) {
-                let currentObj = this;
-                //call the function 
-                axios.post('/api/deleteAvailability/' + id, {
-                })
-                .then(function (response) {
-                    currentObj.output = response.data;
-                    window.location.reload()
-                    
-                })
-                .catch(function (error) {
-                    currentObj.output = error;
-                });
-    },
+      cancelAvailability(id) {
+        let currentObj = this;
+        //call the function 
+        axios.post('/api/deleteAvailability/' + id, {
+        })
+        .then(function (response) {
+          currentObj.output = response.data;
+          window.location.reload()
+        })
+        .catch(function (error) {
+          currentObj.output = error;
+        });
+      }
     }
 
   }
 
 </script>
-
 <style>
 #template{
   background-color: #bababa;
 }
-
 #table { 
   height: 80%;
   width: 75%;
@@ -99,9 +95,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   overflow: auto; 
-  height:400px;
-
-  
+  height:400px; 
 }
 #buttons{
  margin: 0;

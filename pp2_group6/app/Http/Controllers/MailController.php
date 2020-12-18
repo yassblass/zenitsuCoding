@@ -14,10 +14,9 @@ use Mail;
 
 class MailController extends Controller
 {
-   public function sendAlert(Request $request){
+   public function signalRequestMail(Request $request){
        
         //If there is some problem in the page, the secretary can signal it us
-
         //Get an object with the title and the description 
        $details = [
            'title' => 'Alert in site',
@@ -31,7 +30,7 @@ class MailController extends Controller
    
 
     //Deletes an appointment based on the ID
-   public function deleteAppointment($appointmentId)
+   public function deleteConfirmedAppointment($appointmentId)
    {
        
         //Search in Appointment model where appointmentid = appointmentid 
@@ -51,7 +50,7 @@ class MailController extends Controller
 
    }
    // CANCEL
-   public function cancelAppointment(Request $request)
+   public function deleteAppointment(Request $request)
    {
        //get User
          $user = Auth::user();
@@ -95,7 +94,7 @@ class MailController extends Controller
         Mail::to($mail)->send(new cancelMail($cancel));
 
         //Get delete function that let you delete the appointment if it is cancelled
-        $this->deleteAppointment($appointmentId);
+        $this->deleteConfirmedAppointment($appointmentId);
 
         //Return "Email sent";
         return response($request);
@@ -103,59 +102,49 @@ class MailController extends Controller
 
     
     public function acceptMail($appointmentId){
+      //get User
+      $user = Auth::user();
+      $secretaryFirstName = $user['firstName'];
+      $secretaryLastName = $user['lastName'];
+      $secretaryName = $secretaryFirstName . ' ' . $secretaryLastName;
 
-        //get User
-        $user = Auth::user();
-        $secretaryFirstName = $user['firstName'];
-        $secretaryLastName = $user['lastName'];
-        $secretaryName = $secretaryFirstName . ' ' . $secretaryLastName;
+     //take data from database
+     $information =  Appointment::select('students.firstName', 'students.lastName', 'appointments.startsAt', 'appointments.date', 'appointments.cancelToken' ) 
+     ->join('students', 'students.student_id', '=', 'appointments.student_id')
+     ->where('appointments.appointmentId' , $appointmentId)
+     ->get();
+     $studentFirstName = $information[0]['firstName'];
+     $studentLastName = $information[0]['lastName'];
+     $time = $information[0]['startsAt'];
+     $date = $information[0]['date'];
+     $fullName = $studentFirstName . ' ' . $studentLastName;
+     $appointment = $date . ' at ' . $time;
+     $tokenNumber = $information[0]['cancelToken'];
+     $token = 'localhost:8000/' . $tokenNumber;
 
-         //take data from database
+    //Get mail of the student
+     $mail = DB::table('appointments')
+     ->join('students', 'students.student_id', '=', 'appointments.student_id')
+     ->select('students.email')
+     ->where('appointments.appointmentId' , $appointmentId)
+     ->get();
+
+   
+       
         
+    //Get all the data in a object
+     $accept = [
+     'title' => 'Appointment accepted',
+     'name' => $fullName,
+     'appointment' => $appointment,
+     'token' => $token,
+     'secretary' => $secretaryName,
+     ];
 
-        $information =  Appointment::select('students.firstName', 'students.lastName', 'appointments.startsAt', 'appointments.date') 
-        ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        ->where('appointments.appointmentId' , $appointmentId)
-        ->get();
-        $studentFirstName = $information[0]['firstName'];
-        $studentLastName = $information[0]['lastName'];
-        $time = $information[0]['startsAt'];
-        $date = $information[0]['date'];
-        $fullName = $studentFirstName . ' ' . $studentLastName;
-        $appointment = $date . ' at ' . $time;
+    //Sent mail with the information
+     Mail::to($mail)->send(new AcceptMail($accept));
 
-        //Get mail of the student
-        $mail = DB::table('appointments')
-        ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        ->select('students.email')
-        ->where('appointments.appointmentId' , $appointmentId)
-        ->get();
-
-
-        //get token
-        $token = DB::table('appointments')
-        ->join('students', 'students.student_id', '=', 'appointments.student_id')
-        ->select('appointments.cancelToken')
-        ->where('appointments.appointmentId' , $appointmentId)
-         ->get();
-        
-        
-        //Get all the data in a object
-
-       $accept = [
-        'title' => 'Appointment accepted',
-        'name' => $fullName,
-        'appointment' => $appointment,
-        'token' => $token,
-        'secretary' => $secretaryName,
-       ];
-
-       //Sent mail with the information
-      Mail::to($mail)->send(new AcceptMail($accept));
-
-
-
-      // return "Email sent";
+    // return "Email sent";
       return "Email sent";
     }
 
@@ -204,33 +193,20 @@ class MailController extends Controller
         ->join('students', 'students.student_id', '=', 'appointments.student_id')
         ->select('students.email')
         ->where('appointments.appointmentId' , $appointmentId)
-         ->get();
-
-            //get token
-            $token = DB::table('appointments')
-            ->join('students', 'students.student_id', '=', 'appointments.student_id')
-            ->select('appointments.cancelToken')
-            ->where('appointments.appointmentId' , $appointmentId)
-             ->get();
+         ->get();            
             
-            
-            //Get all the data in a object
-    
-           $refuse = [
-            'title' => 'Appointment refused',
-            'name' => $fullName,
-            'appointment' => $appointment,
-            'secretary' => $secretaryName,
+        //Get all the data in a object
+       $refuse = [
+        'title' => 'Appointment refused',
+        'name' => $fullName,
+        'appointment' => $appointment,
+        'secretary' => $secretaryName,
+        ];
+        //Sent mail with the information
+        Mail::to($mail)->send(new RefuseMail($refuse));
 
-           ];
-    
-           //Sent mail with the information
-          Mail::to($mail)->send(new RefuseMail($refuse));
-    
-    
-     
-          // return "Email sent";
-          return "Email sent";
+        // return "Email sent";
+        return "Email sent";
         }
     
 

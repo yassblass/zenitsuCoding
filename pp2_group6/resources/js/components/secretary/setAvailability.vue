@@ -9,30 +9,25 @@
 
 <div id= "page">
  <div id="calendar">
- 
     <b-calendar :date-format-options="{ day: 'numeric', year: 'numeric' , month: 'numeric'}"
     v-model="value" :min="min" :max="max" locale="fr" ></b-calendar>
-
   </div>
  <div id="time" >
 
 <input type="checkbox" id="1" value=" 09:00:00" v-model="hours">
 <label for="1">09:00 - 09:30 |</label>
-
 <input type="checkbox" id="2" value=" 09:30:00" v-model="hours">
 <label for="2">09:30 - 10:00 |</label>
 <br>
 
 <input type="checkbox" id="3" value=" 10:00:00" v-model="hours">
 <label for="3">10:00 - 10:30 |</label>
-
 <input type="checkbox" id="4" value=" 10:30:00" v-model="hours">
 <label for="4">10:30 - 11:00 |</label>
 <br>
 
 <input type="checkbox" id="5" value=" 11:00:00" v-model="hours">
 <label for="5">11:00 - 11:30 |</label>
-
 <input type="checkbox" id="6" value=" 11:30:00" v-model="hours">
 <label for="6">11:30 - 12:00 |</label>
 <br>
@@ -130,10 +125,9 @@ export default {
   background-color: #bababa;
 }
 #calendar{
-
-text-align: center;
-margin-right: 50%;
-
+/* text-align: center; */
+position: absolute;
+margin-right: 100px;
 }
 #button-back{
 text-align: center;
@@ -142,10 +136,11 @@ text-align: center;
 float: right;
 }
 #time {
-width: 20%;
-  position:absolute;
-   top:38%;
-   margin-left: 60%;
+width: 250px;
+position:absolute;
+top:20%;
+margin-left: 100%;
+border: 2px solid black;
 }
 
 /* #page{

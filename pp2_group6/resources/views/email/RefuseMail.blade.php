@@ -22,6 +22,6 @@
 
 
     <p>The secretary</p>
-    <p>{{$cancel['secretary']}} </p>
+    <p>{{$refuse['secretary']}} </p>
 </body>
 </html>

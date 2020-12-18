@@ -62,18 +62,14 @@ export default {
      margin-left: auto;
   margin-right: auto;
 }
-
 h1{
     text-align: center;
     font-size:50px; 
     font-family:Georgia;
-   
 }
-
 input{
     margin-top: 18px
 }
-
 button{
     margin-top:18px;
     margin-left:90px;

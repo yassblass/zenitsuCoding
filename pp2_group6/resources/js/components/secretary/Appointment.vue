@@ -14,7 +14,9 @@
               <th >{{ appointment.date }} {{ appointment.startsAt }}</th>
               <th >{{ appointment.firstName }} {{ appointment.lastName }}</th>
               <th >{{ appointment.subject }}</th>
-              <th><button type="submit" class="btn btn-danger" @click='cancelAppointmentSubmit(appointment.appointmentId)' id="cancel">Delete</button></th>
+              
+              <b-button variant="danger"  @click="cancelAppointmentSubmit(appointment.appointmentId)">Cancel</b-button> 
+          
             </tr>
 
               <!--<pagination :data="appointments" @pagination-change-page="getResults"></pagination> -->
@@ -30,56 +32,45 @@
             </div>
             
 </div>
-
 </template>
 
 <script>
-
 export default {
 
-
- //props: ['id', 'data', 'myId'],
  data(){
-
     return{
-  
       title : "Manage Appointments",
       appointments: '',
       description: '',
       output : '',
-      id : '',
-    
-      
+      id : '',   
     }
   },
   mounted() {
-    //@click='cancelAppointmentSubmit(appointment.appointmentId)
-            axios.get('/api/user').then((res)=>{
-                this.user = res.data;
-            })
-            console.log('Component mounted.');
-        },
+    axios.get('/api/user').then((res)=>{
+      this.user = res.data;
+      })
+    console.log('Component mounted.');
+      },
   created(){
-      axios.get('/api/appointmentLists')
+      axios.get('/api/appointmentListConfirmed')
       .then(response => this.appointments = response.data)
       .catch(error => console.log(error))
     },
     methods : {
-      backbutton(){
-        this.$router.push({name:"dashboard"});
+    backbutton(){
+      this.$router.push({name:"dashboard"});
     },
     cancelAppointmentSubmit(id) {
       let currentObj = this;
-    //call the function 
       axios.post('/api/cancelAppointment/' + id, {
       description: this.description
     })
-     .then(function (response) {
+    .then(function (response) {
      currentObj.output = response.data;    
-       window.location.reload()
-
-    })
-      .catch(function (error) {
+     window.location.reload()
+     })
+    .catch(function (error) {
       currentObj.output = error;
     });
     },
@@ -93,7 +84,6 @@ export default {
 #template{
   background-color: #bababa;
 }
-
 #table { 
   height: 80%;
   width: 75%;
@@ -103,9 +93,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   overflow: auto; 
-  height:400px;
-
-  
+  height:400px;  
 }
 #buttons{
  margin: 0;

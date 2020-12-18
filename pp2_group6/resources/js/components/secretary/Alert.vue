@@ -19,21 +19,13 @@
 
       <div class="modal-body">
         <form >
-                <label for="reason">Can you describe the problem?</label>
-        
-                <textarea name="reason" id="reason" cols="30" rows="4" value="description" v-model="description"></textarea>
-
-
+          <label for="reason">Can you describe the problem?</label>
+          <textarea name="reason" id="reason" cols="30" rows="4" value="description" v-model="description"></textarea>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" class="btn btn-success" @click="alertClick" >Yes</button>
-
-    
-
+        <button type="submit" class="btn btn-success" @click="buttonSignalRequest" >Yes</button>
          </div>
         </form>
-
-
       </div>
       
     </div>
@@ -44,29 +36,25 @@
 
 <script>
     export default {
-
-        data(){
-            return {
-                description: '',
-          
-            }
-        },
-          methods: {
-            alertClick() {
-                let currentObj = this;
-                axios.post('/api/sendAlert', {
-                    description: this.description
-                })
-                .then(function (response) {
-                    currentObj.output = response.data;
-                })
-                .catch(function (error) {
-                    currentObj.output = error;
-                });
-            }
-        },
-
-
+  data(){
+    return {
+    description: '',
     }
+  },
+  methods: {
+ buttonSignalRequest() {
+      let currentObj = this;
+      axios.post('/api/signalRequest', {
+        description: this.description
+      })
+      .then(function (response) {
+        currentObj.output = response.data;
+      })
+      .catch(function (error) {
+        currentObj.output = error;
+      });
+      }
+    }
+  }
 
 </script>
