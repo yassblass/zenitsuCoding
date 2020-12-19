@@ -29,35 +29,39 @@
       <b-form-input
         type="text"
         placeholder="First name"
-        v-model="student.firstName"
-      >
+        v-model="student.firstName">
       </b-form-input>
     </b-form-group>
 
-        <b-form-group label="Insert your last name">
-            <b-form-input
-                type="text"
-                placeholder="Last name"
-                v-model="student.lastName">
-            </b-form-input>
-        </b-form-group>
+    <b-form-group label="Insert your last name">
+      <b-form-input
+        type="text"
+        placeholder="Last name"
+        v-model="student.lastName">
+      </b-form-input>
+    </b-form-group>
+
     <div class="d-flex justify-content-center" >
         <b-button class="d-flex justify-content-center" v-on:click="checkEmail">Check</b-button>
     </div>
 </div>
 </template>
 <script>
+
+//Class to record error and error message
 class Errors {
   constructor() {
     this.errors = {};
   }
 
+  //Get error message
   get(field) {
     if (this.errors[field]) {
       return this.errors[field][0];
     }
   }
 
+  //Record the error
   record(errors) {
     this.errors = errors.errors;
   }
@@ -88,6 +92,8 @@ export default {
         .then((res) => {
           console.log("Response: " + res.data);
           this.response = res.data;
+
+
           if (this.response === 1) {
             //If email exists
             console.log("Email exists!");
@@ -109,27 +115,27 @@ export default {
             this.showError = true;
             console.log("Something went wrong, try again!");
           }
+
         })
         .catch((err) => {
           
-     
-
+          this.errors.record(err.response.data);
+          
           if(err.response.data.errors['firstName'] && err.response.data.errors['lastName']){
+            //If both errors are triggered show both alerts
             this.showFirstName = true;
-              this.showLastName = true;
+            this.showLastName = true;
           } else if (err.response.data.errors['lastName']){
+            //If only lastName error is triggered show lastName alert
             this.showFirstName = false;
             this.showLastName = true;
           } else {
-              this.showFirstName = true;
-              this.showLastName = false;
+            //If only firstName error is triggered show firstName alert
+            this.showFirstName = true;
+            this.showLastName = false;
           }
-
-          // console.log(err.response.data.errors['firstName']);
-
-          this.errors.record(err.response.data);
         });
     },
   },
-};
+}
 </script>
