@@ -11,7 +11,6 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 //Student components
-Vue.component('appointments', require('./components/student/Appointments.vue').default);
 Vue.component('createAppointments', require('./components/student/CreateAppointments.vue').default);
 Vue.component('cancelPage', require('./components/student/cancelPage.vue').default);
 Vue.component('updatePage', require('./components/student/updatePage.vue').default);
@@ -22,12 +21,7 @@ Vue.component('modifyRequest', require('./components/student/ModifyRequest.vue')
 Vue.component('verificationCode', require('./components/student/VerificationCode.vue').default);
 Vue.component('captcha', require('./components/student/Captcha.vue').default);
 
-//Secretary components
-Vue.component('appointment', require('./components/secretary/Appointment.vue').default);
-Vue.component('managerequest', require('./components/secretary/ManageRequest.vue').default);
-Vue.component('cancelappointment', require('./components/secretary/CancelAppointment.vue').default);
-Vue.component('setavailability', require('./components/secretary/setAvailability.vue').default);
-Vue.component('alert', require('./components/secretary/Alert.vue').default);
+
 
 
 
