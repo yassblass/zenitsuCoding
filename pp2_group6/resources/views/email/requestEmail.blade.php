@@ -6,11 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <h2> Hello {{ $requestForMail['firstName'] }} {{ $requestForMail['lastName'] }} !</h1>
+    <h1>Hello {{ $cancelByStudent['secretaryName'] }} ! </h1>
+    <div>
+    <p>An appointment request has been made by {{ $requestToSecretary['firstName'] }} {{ $requestToSecretary['lastName'] }} on {{ $requestToSecretary['date'] }} at {{ $requestToSecretary['startsAt'] }}.</p>
+    <br>
+    <hr>
+    <p>Please visit your dashboard to accept or decline the request with the following link : "{{ $requestToSecretary['dashboardLink'] }}" </p>
+    </div>
+    
+  
 
-    <p>You have made an appointment request on {{ $requestForMail['date']}} at {{ $requestForMail['startsAt'] }} with {{ $requestForMail['secretaryName'] }}. </p>
-
-    <p> You can still cancel your appointment with following link: {{ $requestForMail['cancelLink'] }}</p>
+   
 
 
 </body>

@@ -13,15 +13,9 @@
       <p>Status: {{ status }}</p>
 
       <!-- Show update page button -->
-      <button
-        type="button"
-        class="btn btn-block btn-primary"
-        @click="showUpdateComponent()"
-      >
-        Update Appointment Request
-      </button>
       <!-- Call to cancel appointment method button-->
       <button
+        v-if="status != 'refused'"
         type="button"
         class="btn btn-block btn-primary"
         @click="cancelAppointment(appointmentId)"

@@ -14,14 +14,14 @@ use App\Models\Availability;
 
 //Mail models
 use App\Mail\requestMail;
+use App\Mail\cancelMailToSecretary;
 use App\Mail\requestToSecretary;
 
+use Carbon\Carbon;
 use Mail;
 
 class AppointmentController extends Controller
 {
-
-
     /**
      * Display a listing of the resource.
      *
@@ -82,15 +82,14 @@ class AppointmentController extends Controller
        return response()->json($appointment);
     }
 
-
-
      //Delete an appointment
      public function delete($appointmentId)
      {
          //Get the date of the appointment 
          $dateAppointment = Appointment::select('date')->where('appointmentId', '=', $appointmentId)->get();
          $dateApp = $dateAppointment[0]->date;
- 
+        
+
  
          //Get data of the availability
          $getAvUserId = Availability::select('user_id')->where('date', '=', $dateApp)->get();
@@ -108,15 +107,7 @@ class AppointmentController extends Controller
          $status = $getAvStatus[0]->status;
 
          $currentDate = date("Y-m-d");
-
-        //  if($dateAppointment[0]->date < $currentDate){
-        //      return response()->json("Date is passed");
-             
-        //  }
-        //  else {
-        //      return response()->json("Date is NOT passed");
-             
-        //  }          
+         
         if($dateApp > $currentDate)
         {
             //Get the availability based on the appointmentId and update the status to free
@@ -143,6 +134,26 @@ class AppointmentController extends Controller
         //Check if appointment that needs to be deleted was 'confirmed' or 'pending'. If 'confirmed', flagCounter + 1.
         if($appointment = Appointment::where('appointmentId',$appointmentId)->get()) 
         {
+            //------------------------------------------------------------------------------------------------------
+                //Set avaialbility back to free if appointment gets canceled and appointment date > date now.
+                //If date is passed, availability should theoretically be deleted by implemented schedulers when Web App bil be hosted on a server.
+                //Store current date using Carbon library.
+                $currentDate = Carbon::now();
+
+                if($appointment[0]['date'] > $currentDate)
+                {
+                    //This query needs to be matched in order to isolate the availability row in DB.
+                    $matchThese = ['user_id' => $appointment[0]['user_id'], 'date' => $appointment[0]['date'], 'time' => $appointment[0]['startsAt']];
+                    //Get the availability based on the appointmentId and update the status to free
+                    Availability::select('avId')->where($matchThese)->update(['status' => 'free']);
+                }       
+                else 
+                {
+                //Delete availability from DB based on Appointment ID, When the date is passed.
+                Availability::where($matchThese)->update(['status' => 'free'])->delete();
+                }
+
+
             //check if appointment is 'confirmed'.
             if($appointment[0]['status'] === 'confirmed')
             {
@@ -164,8 +175,41 @@ class AppointmentController extends Controller
 
                 }
 
+                
+
+
+                //Locally store appointment information in order to be able to send them as an email after it gets deleted.
+                $date= $appointment[0]['date'];
+                $startsAt = $appointment[0]['startsAt'];;
+
+                //Isolate student Name & secretary Name
+                $studentName = Student::select('firstName', 'lastName')->where('student_id', $student_id)->get();
+                $studentName = $studentName[0]['firstName'] . " " . $studentName[0]['lastName'];
+
+                $secretaryName = User::select('firstName', 'lastName')->where('user_id', $appointment[0]['user_id'])->get();
+                $secretaryName = $secretaryName[0]['firstName'] . " " . $secretaryName[0]['lastName'];
+                
+                //Isolate Secretary email.
+                $secretaryId = Appointment::select('user_id')->where('appointmentId',$appointmentId)->get();
+                $secretaryEmail = User::select('email')->where('user_id', $secretaryId[0]['user_id'])->get();
+
+                //Perform delete query, trigger actions accordingly.
                 if(Appointment::where('appointmentId',$appointmentId)->delete()) 
                 {
+
+                //Notify secretary about the canceling by email.
+                $cancelByStudent = array(
+                    'date' => $date,
+                    'startsAt' => $startsAt,
+                    'secretaryName' => $secretaryName,
+                    'studentName' => $studentName,
+                );
+
+                //Send cancel mail to secretary.
+                Mail::to($secretaryEmail[0]['email'])->send(new cancelMailToSecretary($cancelByStudent));
+               
+                
+
                 //If TRUE, returns 1 to AXIOS CALL in Vue component called 'cancelPage'.
                 return response(true);
     
@@ -175,25 +219,30 @@ class AppointmentController extends Controller
                 return response(false);
                 }   
             }
-            else {
-                //If appointment status is not 'confirmed'.
-                return response(false);
+
+            //If appointment status is not 'confirmed' but 'pending'.
+            else if($appointment[0]['status'] === 'pending') {
+               
+                //If appointment status is 'pending' simply delete the appointment without adding +1 to the flagCounter.
+                Appointment::where('appointmentId',$appointmentId)->delete();
+
+                //Return true if delete = success.
+                return response(true);
             }
         }
         else {
             //If appointment is not found.
             return response(false);
         }
-
     }
         
-        //Performa  check to see if appointment got deleted.
         
     //Simple test function to return appointments.blade.php as a view.
     public function returnView(){
         return view('student/appointments');
     }
 
+    
 
     //Show cancel page based on token.
     public function showCancelPage ($token){
@@ -241,6 +290,7 @@ class AppointmentController extends Controller
             $startsAt = $appointment[3];
             $subject = $appointment[4];
             $status = $appointment[5];
+
             
             
             //Return view called 'cancelPage' with appointment data.
@@ -434,24 +484,91 @@ class AppointmentController extends Controller
     }
     
 
-    //Update an appointment
-    public function updateAppointment(Request $request){
+  
+
+
+    //TEMPORARY FUNCTIONS, NOT IN USE YET.
+
+    //temporary function
+    public function encrypt($token) {
+
+        $hashedToken = hash('sha256',$token);
+
+        $appointment = Appointment::create(array(
+        
+            'student_id' => 2,
+            'user_id' => 2,
+            'date' => '2020-12-10',
+            'startsAt' => '2020-12-10 16:02:54',
+            'subject' => 'Subject',
+            'status' => '',
+            'cancelToken' => $hashedToken
+            )
+        );
+
+    
+          //$user = User::select('name')->where('id', 9)->get()->first();
+
+        // $app = Appointment::create(
+        //     array(
+        //         'firstName' =>'Adil',
+        //         'lastName' => 'Travlo',
+        //         'secretary' => $user['name'],
+        //         'day' =>'monday',
+        //         'cancelToken' => $hashedToken
+        //     )
+        //);
+
+        return response()->json($appointment);
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------
+    //Temporary functions
+    public function store(Request $request) {
+        //Here, the $request object containes 2 properties: a Token & an Appointment object containing every needed info to make a request.
+        //That's why we isolate both of them and put them in two different variables for efficienty.
+        $token = $request['token'];
+        $appointment = $request['appointment'];
+    
+        //VALIDATION
+        
+        // $data = request()->validate([
+        //     'student_id' =>'required',
+        //     'user_id' => 'required',
+        //     'date' => 'required',
+        //     'startsAt' =>'required',
+        //     'subject' => 'required',
+        //     'status' => '',
+        //     'canceltoken' => '',
+        // ]);
+
+      
+        //Since a first token is generated at the VueJS side, we hash it once more in the backend. Hashing technique used -> [sha256].
+        $hashedToken = hash('sha256',$token);
+        
+            //Create an appointment in the DB using Laravel eloquent Models.
+            $appointment = Appointment::create(array(
+        
+                'student_id' => $appointment['student_id'],
+                'user_id' => $appointment['user_id'],
+                'date' => $appointment['date'],
+                'startsAt' => $appointment['startsAt'],
+                'subject' => $appointment['subject'],
+                'status' => 'pending',
+                'cancelToken' => $hashedToken,
+                )
+            );
+        
+        //For testing purposes, we return the made object to the axios call in question.
+        return response()->json($appointment);
+    }
+      //Update an appointment
+      public function updateAppointment(Request $request){
 
         //Here, the request contains a JSON object called 'appointment', containing every table entry needed to make a request.
         //Isolate appointment object & appointmentId from request.
         $content = $request['appointment'];
         $appointmentId = $content['appointmentId'];
-        
-        //return response($request);
-
-        //VALIDATION
-        // $data = request()->validate([
-        //     'student_id' => '',
-        //     'user_id' => '',
-        //     'date' => 'date',
-        //     'startsAt' => '',
-        //     'subject' => '',
-        //  ]);
 
         if (Appointment::find($appointmentId))
         {
@@ -493,82 +610,5 @@ class AppointmentController extends Controller
             return response()->json($errorMessage);
         }
         
-    }
-
-
-    //TEMPORARY FUNCTIONS, NOT IN USE YET.
-
-    //temporary function
-    public function encrypt($token) {
-
-        $hashedToken = hash('sha256',$token);
-
-        $appointment = Appointment::create(array(
-        
-            'student_id' => 2,
-            'user_id' => 2,
-            'date' => '2020-12-10',
-            'startsAt' => '2020-12-10 16:02:54',
-            'subject' => 'Subject',
-            'status' => '',
-            'cancelToken' => $hashedToken
-            )
-        );
-
-    
-          //$user = User::select('name')->where('id', 9)->get()->first();
-
-        // $app = Appointment::create(
-        //     array(
-        //         'firstName' =>'Adil',
-        //         'lastName' => 'Travlo',
-        //         'secretary' => $user['name'],
-        //         'day' =>'monday',
-        //         'cancelToken' => $hashedToken
-        //     )
-        //);
-
-        return response()->json($appointment);
-    }
-
-
-    //Temporary function
-    public function store(Request $request) {
-        //Here, the $request object containes 2 properties: a Token & an Appointment object containing every needed info to make a request.
-        //That's why we isolate both of them and put them in two different variables for efficienty.
-        $token = $request['token'];
-        $appointment = $request['appointment'];
-    
-        //VALIDATION
-        
-        // $data = request()->validate([
-        //     'student_id' =>'required',
-        //     'user_id' => 'required',
-        //     'date' => 'required',
-        //     'startsAt' =>'required',
-        //     'subject' => 'required',
-        //     'status' => '',
-        //     'canceltoken' => '',
-        // ]);
-
-      
-        //Since a first token is generated at the VueJS side, we hash it once more in the backend. Hashing technique used -> [sha256].
-        $hashedToken = hash('sha256',$token);
-        
-            //Create an appointment in the DB using Laravel eloquent Models.
-            $appointment = Appointment::create(array(
-        
-                'student_id' => $appointment['student_id'],
-                'user_id' => $appointment['user_id'],
-                'date' => $appointment['date'],
-                'startsAt' => $appointment['startsAt'],
-                'subject' => $appointment['subject'],
-                'status' => 'pending',
-                'cancelToken' => $hashedToken,
-                )
-            );
-        
-        //For testing purposes, we return the made object to the axios call in question.
-        return response()->json($appointment);
     }
 }

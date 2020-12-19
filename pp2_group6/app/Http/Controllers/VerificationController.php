@@ -63,6 +63,9 @@ class VerificationController extends Controller
 
                     //Change students' hasRight to false.
                     Student::where('student_id', $student_id[0]['student_id'])->update(['hasRight' => false]);
+
+                    //Delete newly added verificaiton code of the DB since only one code per student is meant to be there.
+                    Verification::where('student_id', $student_id[0]['student_id'])->delete();
                     return response(4);
                 }
                 else {
