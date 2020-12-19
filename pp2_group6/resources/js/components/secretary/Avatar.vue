@@ -90,6 +90,8 @@ export default {
             }).catch(()=>{
 
             })
+
+            this.$router.push({ name: "dashboard" });
         },
          backbutton() {
          this.$router.push({ name: "dashboard" });

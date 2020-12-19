@@ -13,7 +13,7 @@
 
         <button @click.prevent="loginUser" type="submit" class="btn btn-danger" style="margin-bottom:20px; " >Log in</button>
 
-        <router-link to="/forgot/" id="fpwd">Forgot password?</router-link>
+        <router-link to="/secretary/forgot/" id="fpwd">Forgot password?</router-link>
 
     </div>
 </div>

@@ -18,7 +18,7 @@ export default{
     routes: [
         {
     
-            path:"/",
+            path:"/secretary/dashboard",
             component:Dashboard,
             name:"dashboard",
             //checking if you are logged in and if not it redirect you to the login page
@@ -31,7 +31,7 @@ export default{
             }
         },
         {
-            path:"/setAvailability",
+            path:"/secretary/setAvailability",
             component:setAvailability,
             name:"setAvailability",
             beforeEnter: (to, form, next) =>{
@@ -44,7 +44,7 @@ export default{
 
         },
         {
-            path:"/manageRequest",
+            path:"/secretary/manageRequest",
             component:ManageRequest,
             name:"manageRequest",
             beforeEnter: (to, form, next) =>{
@@ -57,7 +57,7 @@ export default{
 
         },
         {
-            path:"/manageAppointment",
+            path:"/secretary/manageAppointment",
             component:Appointment,
             name:"manageAppointment",
             beforeEnter: (to, form, next) =>{
@@ -69,7 +69,7 @@ export default{
             }
         },
         {
-            path:"/login",
+            path:"/secretary/login",
             component:Login,
             name:"login",
             beforeEnter: (to, form, next) =>{
@@ -88,7 +88,7 @@ export default{
             }
         },
         {
-            path:"/register",
+            path:"/secretary/register",
             component:Register,
             name:"register",
             beforeEnter: (to, form, next) =>{
@@ -115,7 +115,7 @@ export default{
         },
         {
     
-            path:"/manageAvailability",
+            path:"/secretary/manageAvailability",
             component:manageAvailability,
             name:"manageAvailability",
             //checking if you are logged in and if not it redirect you to the login page
@@ -129,21 +129,21 @@ export default{
         },
         {
     
-            path:"/forgot/",
+            path:"/secretary/forgot/",
             component:forgot,
             name:"forgotPassword",
            
         },
         {
     
-            path:"/forgot/:id",
+            path:"/secretary/forgot/:id",
             component:changePassword,
             name:"changePassword",
            
         },
         {
     
-            path:"/avatar",
+            path:"/secretary/avatar",
             component:avatar,
             name:"avatar",
             beforeEnter: (to, form, next) =>{

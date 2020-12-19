@@ -4,11 +4,11 @@
        <div class="collapse" id="navbarToggleExternalContent">
                 <div class="bg-dark p-4">
                     <div class="flex">
-                        <router-link v-if="user.user_id <= 0" class="mr-4" to="/login"><span style="color:white">Login</span></router-link>
-                        <router-link v-if="user.admin == true" to="/register">
+                        <router-link v-if="user.user_id <= 0" class="mr-4" to="/secretary/login"><span style="color:white">Login</span></router-link>
+                        <router-link v-if="user.admin == true" to="/secretary/register">
                         <button class="btn btn-light" style="margin-left: 20px">Register</button>
                         </router-link>  
-                        <router-link  to="/avatar">
+                        <router-link  to="/secretary/avatar">
                         <button class="btn btn-light" style="margin-left: 20px">Avatar</button>
                         </router-link> 
                         <button @click.prevent="logout" class="btn btn-light" style="margin-left: 20px">Logout</button>

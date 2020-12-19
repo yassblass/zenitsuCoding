@@ -143,7 +143,7 @@ class MailController extends Controller
      $fullName = $studentFirstName . ' ' . $studentLastName;
      $appointment = $date . ' at ' . $time;
      $tokenNumber = $information[0]['cancelToken'];
-     $token = 'localhost:8000/' . $tokenNumber;
+     $token = 'localhost:8000/appointment/token/' . $tokenNumber;
 
     //Get mail of the student
      $mail = DB::table('appointments')
