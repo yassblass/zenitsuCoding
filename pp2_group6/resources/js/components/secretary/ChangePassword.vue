@@ -4,6 +4,10 @@
     <div class="container">
         <h1 style="font-size: 40px;">Change Your Password</h1>
 
+        <p v-if="bool == true" style="color : green; font-size:15px;"> Password changed</p>
+
+        <p v-if="bool == false" style="color : red; font-size:15px;"> password not correct</p>
+
         <input type="password" class="form-control" placeholder="Password" v-model="password">
         <input type="password" class="form-control" style="margin-bottom:15px;" placeholder="Confirm password" v-model="confirm_password">
 
@@ -23,6 +27,7 @@ export default {
             password:'',
             confirm_password:'',
             id:'',
+            bool:null,
             
             
 
@@ -32,17 +37,22 @@ export default {
         change(){
 
             if(this.password == this.confirm_password){
+
+                this.bool=true;
             
-            axios.post('/api/changePassword', {
+                axios.post('/api/changePassword', {
 
                 password: this.password,
                 forgot_password : this.forgot_password,
                 id : this.id,
 
-            });
+                });
+
+                this.$router.push({name:"login"});
 
             }else{
                 console.log("password not equal");
+                this.bool = false;
             }
           
         },
@@ -63,11 +73,13 @@ export default {
      
                         this.change();
 
+                  
+
+
                     }
                 
                 }
 
-                this.$router.push({name:"login"});
 
 
             }).catch(()=>{

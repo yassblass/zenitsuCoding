@@ -3,17 +3,27 @@
     <navbar></navbar>
         <h1>Register</h1>
     <div id="page">
-        <!--<span v-if="errors.name">{{errors.name[0]}}</span>-->
         
+
+
         <input placeholder="first name" class="form-control" type="text" v-model="form.firstName">
 
         <input placeholder="last name" class="form-control" type="text" v-model="form.lastName">
 
+        <p v-if="errors" style="color : red; font-size:15px;"> {{errors.email}}</p>
+
+
         <input placeholder="Email" class="form-control" type="email" v-model="form.email">
+
+        <p v-if="errors" style="color : red; font-size:15px;"> {{errors.password}}</p>
+
 
         <input placeholder="Password" class="form-control" type="password" v-model="form.password">
 
         <input placeholder="Confirm Password" class="form-control" type="password" v-model="form.password_confirmation">
+
+        <p v-if="saved" style="color : green; font-size:25px;"> {{saved}}</p>
+
 
         <button @click.prevent="saveForm" type="submit" class="btn btn-danger">register</button>
     </div>
@@ -46,7 +56,8 @@ export default {
                 forgot_password: 25,
                 password_confirmation:''
             },
-            errors:[]
+            errors:null,
+            saved:null,
         }
     },
     methods:{
@@ -55,6 +66,9 @@ export default {
             axios.post('/api/register', this.form).then(() => {
 
                 console.log('saved');
+                this.saved = 'saved';
+                 this.$router.push({ name: "dashboard" });
+
 
             }).catch((error) => {
                 this.errors = error.response.data.errors;

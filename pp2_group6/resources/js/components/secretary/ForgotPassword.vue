@@ -4,6 +4,12 @@
     <div class="container">
         <h1 style="font-size: 40px;">Forgot password</h1>
 
+        <p v-if="bool == true" style="color : green; font-size:15px;"> email sended</p>
+
+        <p v-if="bool == false" style="color : red; font-size:15px;"> email does not existe</p>
+
+
+
         <input type="email" class="form-control" placeholder="Email" v-model="email">
 
        
@@ -31,6 +37,7 @@ export default {
             email:'',
             forgot:'',
             firstName:'',
+            bool:null,
             
             
 
@@ -69,11 +76,21 @@ export default {
 
                         
                         this.sendEmail(this.forgot);
-                    }
+                
+                        this.bool= true;
+
+                        this.$router.push({name:"login"});
+                    }  
+
+
+                
+                    
                 
                 }
 
-                this.$router.push({name:"login"});
+                if(this.bool != true){
+                    this.bool = false;
+                }
 
 
             }).catch(()=>{
