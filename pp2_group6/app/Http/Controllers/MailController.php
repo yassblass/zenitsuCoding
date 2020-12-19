@@ -32,6 +32,7 @@ class MailController extends Controller
        return "Email sent";
    }
 
+   //send a mail with link to change password
    public function forgot(Request $request){
        
         $email = $request['email'];

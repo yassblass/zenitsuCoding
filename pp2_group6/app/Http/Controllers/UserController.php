@@ -22,6 +22,7 @@ class UserController extends Controller
         //
     }
 
+    // find user and change his password
     public function changePassword(Request $request){
        
         $password = $request['password'];
@@ -50,6 +51,7 @@ class UserController extends Controller
         }
     }
 
+    //upload new avatar
     public function uploadAvatar(Request $request){
 
         $id = Auth::user()->user_id;
@@ -76,7 +78,7 @@ class UserController extends Controller
 
     }
 
-    
+    //get all users
     public function getAllUsers(){
 
         $users = User::All();

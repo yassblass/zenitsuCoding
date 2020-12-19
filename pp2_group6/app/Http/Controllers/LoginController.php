@@ -10,6 +10,7 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
+    //log the user in
     public function login(Request $request){
 
         $request->validate([
@@ -28,6 +29,7 @@ class LoginController extends Controller
 
     }
 
+    //functie that logout the user
     public function logout(){
 
        Auth::logout();

@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
+
+    // register new user
     public function register(Request $request)
     {
 

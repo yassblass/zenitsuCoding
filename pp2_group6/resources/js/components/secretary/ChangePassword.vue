@@ -34,6 +34,8 @@ export default {
         }
     },
     methods:{
+
+        // functie that change the password
         change(){
 
             if(this.password == this.confirm_password){
@@ -57,7 +59,7 @@ export default {
           
         },
 
-        
+        //functie that check if the id is real (www.xxx/forgot/id)
         check(){
             axios.get('/api/allUsers').then((res)=>{
 

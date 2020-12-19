@@ -44,6 +44,7 @@ export default {
         }
     },
     methods:{
+        //functie that send an email
         sendEmail(){
             axios.post('/api/forgot',  {
 
@@ -58,6 +59,9 @@ export default {
                 console.log("functie email error");
             })
         },
+
+
+        //functie that check if email exist
 
         check(){
             axios.get('/api/allUsers').then((res)=>{

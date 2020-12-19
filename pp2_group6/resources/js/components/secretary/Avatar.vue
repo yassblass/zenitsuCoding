@@ -61,6 +61,7 @@ export default {
     },
     methods:{
         
+        //show image of selected image
         imageSelected(e){
 
             this.avatar = e.target.files[0];
@@ -77,7 +78,7 @@ export default {
 
         },
 
-
+        // upload selected image
         profileUpload(){
 
             let data = new FormData();
