@@ -140,7 +140,7 @@ width: 250px;
 position:absolute;
 top:20%;
 margin-left: 100%;
-border: 2px solid black;
+/* border: 2px solid black; */
 }
 
 /* #page{

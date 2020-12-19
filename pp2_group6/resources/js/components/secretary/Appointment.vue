@@ -4,7 +4,6 @@
     <div id="titel">
       <h1>
         {{ title }}
-        <b-button pill id="iCall" variant="primary">Add/Import iCal</b-button>
       </h1>
     </div>
     <div id="table">

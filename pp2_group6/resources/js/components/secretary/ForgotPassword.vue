@@ -11,6 +11,16 @@
         <button @click.prevent="check" type="submit" class="btn btn-danger">send Email</button>
 
     </div>
+    <div id="button-back">
+      <b-button
+        @click="backbutton"
+        class="button button-close"
+        squared
+        variant="outline-danger"
+        >Back</b-button
+      >
+    </div>
+    
 </div>
 </template>
 
@@ -70,8 +80,16 @@ export default {
                 console.log("functie check error");
             })
         },
+           backbutton() {
+            this.$router.push({ name: "dashboard" });
+            },
         
     }
     
 }
 </script>
+<style>
+#button-back {
+  text-align: center;
+}
+</style>

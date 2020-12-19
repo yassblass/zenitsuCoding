@@ -17,7 +17,18 @@
 
         <button @click.prevent="saveForm" type="submit" class="btn btn-danger">register</button>
     </div>
-
+    <div id="button-alert">
+      <alert></alert>
+    </div>
+    <div id="button-back">
+      <b-button
+        @click="backbutton"
+        class="button button-close"
+        squared
+        variant="outline-danger"
+        >Back</b-button
+      >
+    </div>
 </div>
 </template>
 
@@ -49,7 +60,10 @@ export default {
                 this.errors = error.response.data.errors;
 
             })
-        }
+        },
+         backbutton() {
+            this.$router.push({ name: "dashboard" });
+        },
     }
     
 }
@@ -75,5 +89,11 @@ input{
 button{
     margin-top:18px;
     margin-left:90px;
+}
+#button-back {
+  text-align: center;
+}
+#button-alert {
+  float: right;
 }
 </style>

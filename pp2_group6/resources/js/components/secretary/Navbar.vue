@@ -5,9 +5,13 @@
                 <div class="bg-dark p-4">
                     <div class="flex">
                         <router-link v-if="user.user_id <= 0" class="mr-4" to="/login"><span style="color:white">Login</span></router-link>
-                        <router-link v-if="user.admin == true" to="/register"><span style="color:white">Register</span></router-link>  
-                        <router-link  to="/avatar"><span style="color:white ; margin-left: 20px">Avatar</span></router-link>  
-                        <button @click.prevent="logout" style="margin-left: 20px">Logout</button>
+                        <router-link v-if="user.admin == true" to="/register">
+                        <button class="btn btn-light" style="margin-left: 20px">Register</button>
+                        </router-link>  
+                        <router-link  to="/avatar">
+                        <button class="btn btn-light" style="margin-left: 20px">Avatar</button>
+                        </router-link> 
+                        <button @click.prevent="logout" class="btn btn-light" style="margin-left: 20px">Logout</button>
                     </div>
                 </div>
         </div>

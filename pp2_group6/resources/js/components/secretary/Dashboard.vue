@@ -16,6 +16,9 @@
 
             
     </div>
+    <div id="button-alert">
+      <alert></alert>
+    </div>
 </div>   
 </template>
 
@@ -62,6 +65,8 @@ p{
     font-family:Georgia;
     font-size:30px;
 }
-
+#button-alert {
+  float: right;
+}
 
 </style>
