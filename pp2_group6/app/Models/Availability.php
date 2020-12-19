@@ -12,7 +12,6 @@ class Availability extends Model
 
     public $timestamps = false;
     protected $dateFormat = 'H:i:s';
-    protected $primaryKey = 'avId';
     public function users () {
 
         return $this->belongsTo(User::class);
