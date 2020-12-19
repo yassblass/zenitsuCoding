@@ -25,11 +25,9 @@ class LoginController extends Controller
                 'email'=>['the provided credentials are incorect']
             ]);
         }
-        
-
     }
 
-    //functie that logout the user
+    //function that logs the user out.
     public function logout(){
 
        Auth::logout();

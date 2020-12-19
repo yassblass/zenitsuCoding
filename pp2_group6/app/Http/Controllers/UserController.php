@@ -34,18 +34,9 @@ class UserController extends Controller
 
         if (User::find($id))
         {
-
-
             $newPassToken = Str::random(50);
-
-
             User::find($id)->update(['forgot_password' => $newPassToken]);
-
             User::find($id)->update(['password' => Hash::make($password)]);
-
-            
-
-            
         }
         else
         {
@@ -59,8 +50,6 @@ class UserController extends Controller
 
         $id = Auth::user()->user_id;
         $firstName = Auth::user()->firstName;
-
-
 
         $this->validate($request,[
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,jfif',
@@ -76,20 +65,16 @@ class UserController extends Controller
 
         User::find($id)->update(['avatar' => $imageName]);
 
-
-
-
     }
 
     //get all users
     public function getAllUsers(){
 
         $users = User::All();
-
         return $users;
     }
 
-   
+   //Fetch all users with at least one availability on the day chosen by the student.
     public function getAll(Request $request)
     {
         //Fetch all users from DB first.
@@ -98,11 +83,10 @@ class UserController extends Controller
         //Creat empty array template that will be used to fetch only free users(secretary).
         $usersArray = array();
 
-        //For each user, check if at least one availability starting from today. If yes, push in array.
+        //For each user, check if at least one availability for the chosen day. If yes, push in array.
         foreach ($users as $user) {
 
-            //Each user represents full data fiels of that user particularly.
-
+            //Each user object represents full data fields of that user particularly.
             //Isolate user ID.
             $user_id = $user['user_id'];
 
@@ -124,76 +108,11 @@ class UserController extends Controller
         return response($usersArray);
     }
 
+
     //Get user name.
     public function getName($userId)
     {
         $userName = User::select('firstName', 'lastName')->where('user_id', $userId)->get();
         return response()->json($userName[0]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }

@@ -1,4 +1,6 @@
 <template>
+
+  
   <div>
     <div>
       <!-- Code is incorrect -->
@@ -18,12 +20,27 @@
         Verification code is already redeemed or student may not exist!
       </b-alert>
     </div>
+    <!-- Countdown -->
+    <b-alert
+      :show="dismissCountDown"
+      variant="dark"
+      @dismissed="dismissCountDown=0"
+      @dismiss-count-down="countDownChanged"
+    >
+      <p>The verification code will expire in {{ dismissCountDown }} seconds...</p>
+      <b-progress
+        variant="dark"
+        :max="dismissSecs"
+        :value="dismissCountDown"
+        height="4px"
+      ></b-progress>
+    </b-alert>
 
     <b-form-group
       id="v_code"
       label-for="v_code-input"
       valid-feedback="Press Submit to validate.">
-      <p><strong>Enter 6 digits verifictation code</strong></p>
+      <p><strong>Enter 6 digits verifictation code sent by email</strong></p>
       <b-form-input
         type="number"
         :formatter="formatCode"
@@ -35,6 +52,7 @@
       >Verify Code</b-button
     >
   </div>
+
 </template>
 
 <script>
@@ -51,11 +69,21 @@ export default {
       showIncorrect: false,
       showExpired: false,
       showThree: false,
-      showUsed: false
-    };
+      showUsed: false,
+      dismissSecs: 300,
+      dismissCountDown: 0
+    }
+  },
+  mounted() {
+    this.dismissCountDown = this.dismissSecs;
   },
   methods: {
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
+
     formatCode (e){
+      //Limit verification code input to 6 digits.
       return String(e).substring(0,6);
     },
     verifyCode() {
@@ -80,10 +108,12 @@ export default {
             //Code incorrect.
             this.showIncorrect = true;
             //alert("Verification code incorrect!");
+
           } else if (res.data === 3) {
             //Code verification
             this.showExpired = true;
             //alert("Oops. Verification code is expired!");
+
           } else if (res.data === 4) {
             //Code verification 3 times wrong
             //this.showThree = true;
@@ -93,10 +123,7 @@ export default {
             window.location.href = "/";
           } else if (res.data === 0) {
             //Code verification failed
-            this.showUsed = true;
-            //console.log(
-            //   "Verification code is already redeemed or student may not exist!"
-            // );
+            this.showUsed = true; 
           } else {
             console.log(res.data);
           }

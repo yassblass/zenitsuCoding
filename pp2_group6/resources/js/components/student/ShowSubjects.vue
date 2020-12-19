@@ -1,4 +1,5 @@
 <template>
+
 <div class ="d-flex justify-content-center">
   <b-form-group>
     <p><strong>Choose a subject</strong></p>
@@ -17,6 +18,7 @@
     </b-form-radio-group>
   </b-form-group>
   </div>
+
 </template>
 
 <script>
@@ -24,6 +26,7 @@ import { mapGetters } from "vuex";
 
 export default {
   mounted (){
+    //When component is loaded, fetch all subjects from DB.
     this.$store.dispatch('fetchSubjects');
   },
   data() {

@@ -64,14 +64,12 @@ class AppointmentController extends Controller
        return response()->json($users);
     }
     
-    
 
     //Return to appointments page.
     public function getIndex()
     {
         return view('student/appointments');
     }
-
 
     public function index()
     {
@@ -98,6 +96,7 @@ class AppointmentController extends Controller
         }
     }
 
+    //Refuse an appointment
     public function refuseAppointment($appointmentId)
     {
         if (Appointment::find($appointmentId)) {
@@ -110,6 +109,7 @@ class AppointmentController extends Controller
         }
     }
 
+    //Get all appointments in 'pending' state.
     public function getPendingAppointments()
     {
         $appointment = Appointment::where('status', '=', 'pending')->get();
@@ -500,133 +500,5 @@ class AppointmentController extends Controller
             //When the email does not exist in the organization
             return response(0);
         }
-    }
-
-
-  
-
-
-    //TEMPORARY FUNCTIONS, NOT IN USE YET.
-
-    //temporary function
-    public function encrypt($token)
-    {
-
-        $hashedToken = hash('sha256', $token);
-
-        $appointment = Appointment::create(array(
-
-            'student_id' => 2,
-            'user_id' => 2,
-            'date' => '2020-12-10',
-            'startsAt' => '2020-12-10 16:02:54',
-            'subject' => 'Subject',
-            'status' => '',
-            'cancelToken' => $hashedToken
-        ));
-
-
-        //$user = User::select('name')->where('id', 9)->get()->first();
-
-        // $app = Appointment::create(
-        //     array(
-        //         'firstName' =>'Adil',
-        //         'lastName' => 'Travlo',
-        //         'secretary' => $user['name'],
-        //         'day' =>'monday',
-        //         'cancelToken' => $hashedToken
-        //     )
-        //);
-
-        return response()->json($appointment);
-    }
-
-    //----------------------------------------------------------------------------------------------------------------------------------------
-    //Temporary functions
-    public function store(Request $request) {
-        //Here, the $request object containes 2 properties: a Token & an Appointment object containing every needed info to make a request.
-        //That's why we isolate both of them and put them in two different variables for efficienty.
-        $token = $request['token'];
-        $appointment = $request['appointment'];
-
-        //VALIDATION
-
-        // $data = request()->validate([
-        //     'student_id' =>'required',
-        //     'user_id' => 'required',
-        //     'date' => 'required',
-        //     'startsAt' =>'required',
-        //     'subject' => 'required',
-        //     'status' => '',
-        //     'canceltoken' => '',
-        // ]);
-
-
-        //Since a first token is generated at the VueJS side, we hash it once more in the backend. Hashing technique used -> [sha256].
-        $hashedToken = hash('sha256', $token);
-
-        //Create an appointment in the DB using Laravel eloquent Models.
-        $appointment = Appointment::create(array(
-
-            'student_id' => $appointment['student_id'],
-            'user_id' => $appointment['user_id'],
-            'date' => $appointment['date'],
-            'startsAt' => $appointment['startsAt'],
-            'subject' => $appointment['subject'],
-            'status' => 'pending',
-            'cancelToken' => $hashedToken,
-        ));
-
-        //For testing purposes, we return the made object to the axios call in question.
-        return response()->json($appointment);
-    }
-      //Update an appointment
-      public function updateAppointment(Request $request){
-
-        //Here, the request contains a JSON object called 'appointment', containing every table entry needed to make a request.
-        //Isolate appointment object & appointmentId from request.
-        $content = $request['appointment'];
-        $appointmentId = $content['appointmentId'];
-
-        if (Appointment::find($appointmentId))
-        {
-            $appointment=Appointment::find($appointmentId)->update($content);
-
-            return response(true);
-        }
-        else
-        {
-            $errorMessage = "Appointment Not Found!";
-            return response(false);
-        }
-        
-        
-
-        return response()->json($content);
-    }
-
-
-    //Confirm an appointment based on id, changes the appointment status.
-    public function confirmAppointment($appointmentId){
-        
-
-        //Check if appoint exists, then perform query.
-        if (Appointment::find($appointmentId))
-        {
-            //Change appointment status to 'confirmed'.
-            $appointment=Appointment::find($appointmentId)->update(['status' => 'confirmed']);
-            
-            //For testing purposes, we return the updated appointment.
-            return response()->json($appointment);
-        }
-        else
-        {
-            //temporary error message variable.
-            $errorMessage = "Appointment Not Found!";
-
-            //Return eroor message to axios.
-            return response()->json($errorMessage);
-        }
-        
     }
 }

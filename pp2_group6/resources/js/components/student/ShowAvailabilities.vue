@@ -1,5 +1,6 @@
 <template>
-  <div >
+
+  <div>
     <div>
       <b-form-group>
         <p><strong>Choose a date</strong></p>
@@ -9,76 +10,79 @@
           :date-disabled-fn="dateDisabled"
           :state="state"
           reset-button
-          close-button>
+          close-button
+        >
         </b-form-datepicker>
       </b-form-group>
-      
+
       <!-- {{ request.date }} -->
       <div>
         <div v-if="users.length && dateSelected">
           <p><strong>Choose between available secretaries</strong></p>
-          <hr/>
+          <hr />
         </div>
 
         <div v-if="dateSelected && !users.length">
-          <p>No secretary available on <strong>{{ selectedDate }}<strong> !</p>
-          <hr/>
+          <p>No secretary available on <strong>{{ selectedDate }}</strong> !</p>
+          <hr />
         </div>
       </div>
 
-      
-<div v-if="dateSelected">
-      <b-form-group>
-        <b-form-radio-group
-          v-model="request.user_id"
-          buttons
-          button-variant="danger"
-          stacked>
-          <template v-for="user in users">
-            <b-form-radio
-              style="margin-bottom:5px"
-              :value="user.user_id"
-              :key="user.user_id"
-              
-              
-              v-model="selectedSecretary"
-            >
-              {{ user.firstName + " " + user.lastName }}
-            </b-form-radio>
-          </template>
-        </b-form-radio-group>
-      </b-form-group> 
-
+      <div v-if="dateSelected">
+        <b-form-group>
+          <b-form-radio-group
+            v-model="request.user_id"
+            buttons
+            button-variant="danger"
+            stacked
+          >
+            <template v-for="user in users">
+              <b-form-radio
+                style="margin-bottom: 5px"
+                :value="user.user_id"
+                :key="user.user_id"
+                v-model="selectedSecretary"
+              >
+                {{ user.firstName + " " + user.lastName }}
+              </b-form-radio>
+            </template>
+          </b-form-radio-group>
+        </b-form-group>
       </div>
 
       <!-- <pre> {{ request }}</pre> -->
-      <hr v-if="secretarySelected" />
-      <div v-if="secretarySelected" >
-        <p><strong>Choose between available hours<strong></p>
+      <div v-if="secretarySelected && dateSelected && users.length">
+      <hr />
+      <p>Choose between available hours</p>
       </div>
 
-    <div  v-if="secretarySelected && dateSelected">
-      <b-form-group>
-        <b-form-radio-group buttons button-variant="primary" stacked>
-          <template v-for="availability in availabilities">
-            <b-form-radio
-              :value="availability.time"
-              :key="availability.avId"
-              v-model="chosenTime"
-              style="margin-bottom:5px">
-              {{ availability.time }}
-            </b-form-radio>
-          </template>
-        </b-form-radio-group>
-      </b-form-group>
+     
+      
+
+      <div v-if="secretarySelected && dateSelected">
+        <b-form-group>
+          <b-form-radio-group buttons button-variant="primary" stacked>
+            <template v-for="availability in availabilities">
+              <b-form-radio
+                :value="availability.time"
+                :key="availability.avId"
+                v-model="chosenTime"
+                style="margin-bottom: 5px"
+              >
+                {{ availability.time }}
+              </b-form-radio>
+            </template>
+          </b-form-radio-group>
+        </b-form-group>
       </div>
     </div>
   </div>
+
 </template>
 <script>
 import { mapGetters } from "vuex";
 export default {
-  props: ['modify'],
+  props: ["modify"],
 
   data() {
     const now = new Date();
@@ -107,11 +111,10 @@ export default {
     };
   },
   mounted() {
-    if(this.$props.modify === true){
-      this.request.date = '';
-      this.request.user_id = '';
+    if (this.$props.modify === true) {
+      this.request.date = "";
+      this.request.user_id = "";
     }
-
   },
   methods: {
     dateDisabled(ymd, date) {
@@ -121,17 +124,20 @@ export default {
     },
   },
   watch: {
-    // time : function(newTime){
-
-    //     this.chosenTime = nexTime;
-    // },
     selectedDate: function () {
+      //Change status of some variable in order to show only needed parts of the component.
+      
       this.state = true;
-      this.request.date = this.selectedDate;
       this.dateSelected = true;
+      
       this.secretarySelected = false;
-      this.request.user_id = "",
+      //Set the new date equal to local date variable.
+      this.request.date = this.selectedDate;
+      //Empty the old secretary name on front end.
+      this.request.user_id = "";
+        //Fetch all Secretary members which are available on selected date.
       this.$store.dispatch("fetchUsers", this.request);
+      this.secretarySelected = false;
     },
     selectedSecretary: function (newSecretary) {
       this.selectedSecretary = newSecretary;
@@ -140,7 +146,6 @@ export default {
       //Displayavailability message
       this.secretarySelected = true;
       let secretaryId = newSecretary;
-
       axios
         .post("availabilities/", {
           secretaryId: secretaryId,
@@ -148,9 +153,14 @@ export default {
         })
         .then((response) => (this.availabilities = response.data))
         .catch((error) => console.log(error));
+        
     },
     chosenTime: function (chosenTime) {
+      //Every time the time is chosen.
+      //Put the chosen time in local variable.
       this.request.startsAt = chosenTime;
+
+      //Send the request object containing 'user_id','startsAt' & 'date' to parent in order to fulfill appointment request flow.
       this.$emit("availabilityChosen", this.request);
     },
   },

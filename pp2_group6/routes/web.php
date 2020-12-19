@@ -65,14 +65,7 @@ Route::group(['prefix' => 'appointment'], function () {
 
     //Get all appointments [GET]
     Route::get('get', \App\Http\Controllers\AppointmentController::class . '@get');
-
-    //Update an appointment [POST]
-    Route::post('update/', \App\Http\Controllers\AppointmentController::class . '@updateAppointment');
-
-    //Confirm an appointment [GET]
-    Route::get('confirm/{appointmentId}', \App\Http\Controllers\AppointmentController::class . '@confirmAppointment');
     
-
     //Show Cancel Page based on TOKEN [GET]
     Route::get('token/{token}', \App\Http\Controllers\AppointmentController::class . '@showCancelPage')->name('showCancelPage');
 

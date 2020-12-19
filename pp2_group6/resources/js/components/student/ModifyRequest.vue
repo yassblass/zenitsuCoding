@@ -1,36 +1,47 @@
 <template>
-<div class ="container">
-  <h3>Are you sure you want to make an appointment with this information?</h3> <br />
-  <b-form-group>
-    <div>
-      You want an appointment with <strong>{{ secretary["firstName"] + " " + secretary["lastName"] }}</strong> on 
-      <strong>{{ request['date']  }}</strong> at <strong>{{ request['startsAt'] }}</strong> <br />
-      The subject of the appointment is <strong>{{ request['subject'] }}</strong>
 
-      <br /> <br />
+  <div>
+    <h3>Are you sure you want to make an appointment with this information?</h3>
+    <br />
 
-      <b-button
-        type="button"
-        @click="showAvailabilityEdit"
-        class="btn btn-primary">
-        Edit the information
-      </b-button>
-      <br />
-    </div>
+    <b-form-group>
+      <div>
+        You want an appointment with
+        <strong>{{
+          secretary["firstName"] + " " + secretary["lastName"]
+        }}</strong>
+        on <strong>{{ request["date"] }}</strong> at
+        <strong>{{ request["startsAt"] }}</strong> <br />
+        The subject of the appointment is
+        <strong>{{ request["subject"] }}</strong>
 
-  </b-form-group>
-    
-  
-  <b-button type="button" @click="showVerification">All the information is correct</b-button>
+        <br />
+        <br />
+
+        <b-button
+          type="button"
+          @click="showAvailabilityEdit"
+          class="btn btn-primary"
+        >
+          Edit the information
+        </b-button>
+
+        <br />
+      </div>
+    </b-form-group>
+
+    <b-button type="button" @click="showVerification"
+      >All the information is correct</b-button
+    >
     <!-- <pre> {{ secretary }}</pre> -->
     <!-- <pre> {{ request }}</pre> -->
-</div>
-  
+  </div>
+
 </template>
 
 <script>
 export default {
-  props: ['request','student_firstName','student_lastName'],
+  props: ["request", "student_firstName", "student_lastName"],
   data() {
     return {
       secretary: "",
@@ -39,41 +50,40 @@ export default {
   },
   methods: {
     showAvailabilityEdit() {
+      //Show edit page of availability in the parent component.
       let dateChecked = false;
       let nameChecked = true;
 
-      this.$emit("showAvailabilityEdit", { 'dateChecked' : dateChecked, 'nameChecked': nameChecked});
+      //Call parent component, which will show the availability component next.
+      this.$emit("showAvailabilityEdit", {
+        dateChecked: dateChecked,
+        nameChecked: nameChecked,
+      });
     },
-    showSubjectEdit (){
-        let dateChecked = true;
-        let subjectChecked = false;
-        
-        this.$emit('showSubjectEdit',{ 'dateChecked' : dateChecked, 'subjectChecked': subjectChecked} )
-    },
-    showVerification (){
-
+    showVerification() {
       //Send Verification code by email
-        
-
-        axios
-        .post("sendCode/" , {
+      axios
+        .post("sendCode/", {
           student_firstName: this.$props.student_firstName,
           student_lastName: this.$props.student_lastName,
         })
         .then(function (response) {
-          //This.output gets filled with the response data.
-          console.log(response.data);
+          if (response.data === 1) {
+            console.log("Verification code status: ", true);
+          }
         })
         .catch(function (error) {
-          //This output gets filled with error message.
-          //currentObj.output = error;
+          console.log(error);
         });
-        
-        this.$emit('showVerificationComp', 1);
-  }, 
+
+      //Call verificationCode component in parent component.
+      this.$emit("showVerificationComp", 1);
+    },
   },
-  
+
   mounted() {
+    //When this component is mounted:
+    //Get user Name based on user_id that the parent gave us as a prop 'request'.
     axios
       .get("users/getName/" + this.request["user_id"])
       .then((response) => (this.secretary = response.data))

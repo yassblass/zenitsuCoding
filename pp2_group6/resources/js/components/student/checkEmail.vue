@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <!-- First name error -->
     <b-alert v-model="showFirstName" variant="danger" dismissible>
       {{ errors.get("firstName") }}
