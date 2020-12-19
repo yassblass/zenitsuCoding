@@ -1,19 +1,22 @@
 <template>
   <div >
+    <!-- Incorrect captcha error -->
+    <b-alert v-model="showIncorrect" variant="danger" dismissible>
+      Captcha incorrect or not filed!
+    </b-alert>
+
     <vue-recaptcha
       ref="recaptcha"
       SameSite="none"
       Secure
       @verify="onVerify"
-      sitekey="6LfMNwoaAAAAALzFmSgpp9RRDmBXGiWQQ8GWd-rW"
-    >
+      sitekey="6LfMNwoaAAAAALzFmSgpp9RRDmBXGiWQQ8GWd-rW">
     </vue-recaptcha>
     <br />
     <b-button type="button" @click="submitCaptcha">
       I am definitely not a robot &#128517;
     </b-button>
   </div>
-  
 </template>
 
 <script>
@@ -24,6 +27,7 @@ export default {
       form: {
         robot: false,
       },
+      showIncorrect: false
     };
   },
   components: {
@@ -35,7 +39,8 @@ export default {
       if (this.form.robot) {
         this.$emit("captchaVerified", true);
       } else {
-        alert("Captcha incorrect or not filed!");
+        //Show error alert when captcha is filled incorrectly
+        this.showIncorrect = true;
       }
     },
     onVerify(response) {
