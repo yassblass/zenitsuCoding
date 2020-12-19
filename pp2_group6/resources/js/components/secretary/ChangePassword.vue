@@ -2,14 +2,14 @@
 <div>
     <navbar></navbar> 
     <div class="container">
-        <h1>Change Your Password</h1>
+        <h1 style="font-size: 40px;">Change Your Password</h1>
 
         <input type="password" class="form-control" placeholder="Password" v-model="password">
-        <input type="password" class="form-control" placeholder="Confirm password" v-model="confirm_password">
+        <input type="password" class="form-control" style="margin-bottom:15px;" placeholder="Confirm password" v-model="confirm_password">
 
        
 
-        <button @click.prevent="check" type="submit" class="btn btn-danger">change Password</button>
+        <button @click.prevent="check" type="submit" class="btn btn-danger" style="margin-left:50px;">change Password</button>
 
     </div>
 </div>

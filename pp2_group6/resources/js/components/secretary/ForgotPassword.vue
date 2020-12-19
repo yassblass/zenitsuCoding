@@ -2,16 +2,16 @@
 <div>
     <navbar></navbar> 
     <div class="container">
-        <h1>Forgot password</h1>
+        <h1 style="font-size: 40px;">Forgot password</h1>
 
         <input type="email" class="form-control" placeholder="Email" v-model="email">
 
        
 
-        <button @click.prevent="check" type="submit" class="btn btn-danger">send Email</button>
+        <button @click.prevent="check" type="submit" class="btn btn-danger" style="margin-left:80px;">send Email</button>
 
     </div>
-    <div id="button-back">
+    <div id="dbutton">
       <b-button
         @click="backbutton"
         class="button button-close"
@@ -89,7 +89,9 @@ export default {
 }
 </script>
 <style>
-#button-back {
-  text-align: center;
+#dbutton {
+  margin-left: 660px;
 }
+
+
 </style>

@@ -19,10 +19,6 @@
             </div>
                 <button class="btn btn-outline-secondary" id="upload" value="Upload Image" name="submit" type="submit">Upload</button>
 
-<!--             
-            <input type="file" @change="imageSelected" name="fileToUpload" class="custom-file-input" id="inputGroupFile02" >
-             <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
-            <button type="submit" value="Upload Image" name="submit">Upload image</button> -->
         </form>
 
    <div id="button-alert">
@@ -130,7 +126,7 @@ form{
     margin-right: auto; 
 }
 #upload{
-    margin-left: 600px;
+    margin-left: 725px;
     
 }
 #img{
