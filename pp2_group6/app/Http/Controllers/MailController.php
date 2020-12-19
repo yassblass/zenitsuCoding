@@ -249,6 +249,49 @@ class MailController extends Controller
         }
     }
  
+    public function sendCode(Request $request)
+    {
+
+        //generate random 6 digits code
+        $v_code = mt_rand(100000, 999999);
+
+        //isolate student name based on id.
+        $firstname = $request['student_firstName'];
+        $lastname = $request['student_lastName'];
+
+        //isolate student ID based on full name.
+        $matchTese = ['firstName' => $firstname, 'lastName' => $lastname];
+        $student = Student::select('student_id', 'email')->where($matchTese)->get();
+        $student_id = $student[0]['student_id'];
+        $student_email = $student[0]['email'];
+
+
+        //insert generated verification code into DB table 'verifications'
+
+        $timeNow = Carbon::now()->addMinutes(5);
+        $timeNow = $timeNow->format('Y/m/d H:i:s');
+        //$dateNow = date('Y-m-d H:i:s');
+
+        if (Verification::create(array(
+            'student_id' => $student_id,
+            'vc' => $v_code,
+            'expiresAt' => $timeNow,
+        ))) {
+            $verificationCode = array(
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'v_code' => $v_code,
+            );
+
+            //Send mail to student containing generated verification code which will be deleted after it expires.
+            Mail::to($student_email)->send(new verificationCode($verificationCode));
+        }
+
+
+
+        //return response for testing purposes.
+        return response($student);
+    }
 
 
 

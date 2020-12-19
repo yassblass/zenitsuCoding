@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\DB;
+use App\Models\Availability;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -86,10 +89,46 @@ class UserController extends Controller
         return $users;
     }
 
-    public function get(Request $request)
+   
+    public function getAll(Request $request)
     {
+        //Fetch all users from DB first.
         $users = User::orderBy('created_at', 'desc')->get();
-        return response()->json($users);
+        $chosenDate = $request['date'];
+        //Creat empty array template that will be used to fetch only free users(secretary).
+        $usersArray = array();
+
+        //For each user, check if at least one availability starting from today. If yes, push in array.
+        foreach ($users as $user) {
+
+            //Each user represents full data fiels of that user particularly.
+
+            //Isolate user ID.
+            $user_id = $user['user_id'];
+
+            //Check if count('status' = free) > 0
+            $matchThese = ['user_id' => $user_id, 'status' => 'free'];
+
+            //If availability where 'status' = 'free' count() > 0, push user object to array above.
+            if ($availabilityCount = Availability::where($matchThese)->where('date', $chosenDate)->count()) {
+                if ($availabilityCount > 0) {
+
+                    //push this user's name into array.
+                    $freeUser = User::find($user_id);
+                    array_push($usersArray, $freeUser);
+                }
+            }
+        }
+
+        //Return array of free users which will be displayed on the front-end.
+        return response($usersArray);
+    }
+
+    //Get user name.
+    public function getName($userId)
+    {
+        $userName = User::select('firstName', 'lastName')->where('user_id', $userId)->get();
+        return response()->json($userName[0]);
     }
 
     /**
