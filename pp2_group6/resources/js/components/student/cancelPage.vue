@@ -1,35 +1,45 @@
 <template>
-  <div>
-    <div>
-      <!-- Message: Says if appointment is found -->
-      <h1>{{ check }}</h1>
+<div>
+  <b-navbar variant="danger" type="dark" style="margin-bottom:10%; margin-bottom:0px;">
+    <b-navbar-brand href="#">
+      <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
+    </b-navbar-brand>
+  </b-navbar>
+  <b-jumbotron style="height: 100%;">
+    <h2>{{ check }}</h2>
 
-      <!-- Show appointment data -->
-      <p>With: {{ secretaryName }}</p>
-      <p>Took by : {{ studentName }}</p>
-      <p>Date: {{ date }}</p>
-      <p>Starts At: {{ startsAt }}</p>
-      <p>Subject: {{ subject }}</p>
-      <p>Status: {{ status }}</p>
+    <template #lead>
+      Choose wheter you want to update or cancel your appointment. If all the information is correct just exit the page.
+    </template>
 
-      <!-- Show update page button -->
-      <button
+    <hr class="my-4">
+
+    <!-- Show appointment data -->
+    <p>With: {{ secretaryName }}</p>
+    <p>Took by : {{ studentName }}</p>
+    <p>Date: {{ date }}</p>
+    <p>Starts At: {{ startsAt }}</p>
+    <p>Subject: {{ subject }}</p>
+    <p>Status: {{ status }}</p>
+
+     <!-- Show update page button -->
+      <b-button
         type="button"
-        class="btn btn-block btn-primary"
-        @click="showUpdateComponent()"
-      >
+        @click="showUpdateComponent()">
         Update Appointment Request
-      </button>
+      </b-button>
+      <br /> <br />
       <!-- Call to cancel appointment method button-->
-      <button
+      <b-button
         type="button"
-        class="btn btn-block btn-primary"
-        @click="cancelAppointment(appointmentId)"
-      >
+        @click="cancelAppointment(appointmentId)">
         Cancel Appointment
-      </button>
-    </div>
-  </div>
+      </b-button>
+  </b-jumbotron>
+  <footer style="height:50px; background-color:red; position: absolute;left: 0; right: 0; bottom: 0;">
+    <p style="padding-top: 13px; color:white; ">&copy; Copyright 2020 | PP2 - Group 6</p>
+  </footer>
+</div>
 </template>
 
 <script>

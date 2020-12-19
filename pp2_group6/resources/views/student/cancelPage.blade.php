@@ -29,17 +29,12 @@
             }
         </style>
     </head>
-    <body>
+    <body style="background-color: #FFF9F7; color:#767676;">
    
-    <div class="container">
-            
-            <div class="d-flex justify-content-center">
-                <cancel-page  check = "{{ $check }}" appointment-id = "{{ $appointmentId }}" student-name = "{{ $studentName }}" secretary-name = "{{ $secretaryName }}"  date ="{{ $date }}" starts-at = "{{ $startsAt }}" subject = "{{ $subject }}" status = "{{$status}}">
-                </cancel-page>
-            </div>
-    </div>
+        <div id="app" style="text-align:center;">       
+            <cancel-page  check = "{{ $check }}" appointment-id = "{{ $appointmentId }}" student-name = "{{ $studentName }}" secretary-name = "{{ $secretaryName }}"  date ="{{ $date }}" starts-at = "{{ $startsAt }}" subject = "{{ $subject }}" status = "{{$status}}"></cancel-page>    
+        </div>
 
-        
     <!-- scripts-->
     <script src="https://unpkg.com/vue@latest/dist/vue.js" defer></script>
     <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>

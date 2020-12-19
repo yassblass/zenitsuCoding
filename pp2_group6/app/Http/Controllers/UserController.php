@@ -26,12 +26,10 @@ class UserController extends Controller
         $users = User::orderBy('created_at', 'desc')->get();
         $chosenDate = $request['date'];
         //Creat empty array template that will be used to fetch only free users(secretary).
-        $usersArray = array( 
-
-        );
+        $usersArray = array();
 
         //For each user, check if at least one availability starting from today. If yes, push in array.
-        foreach($users as $user) {
+        foreach ($users as $user) {
 
             //Each user represents full data fiels of that user particularly.
 
@@ -40,10 +38,10 @@ class UserController extends Controller
 
             //Check if count('status' = free) > 0
             $matchThese = ['user_id' => $user_id, 'status' => 'free'];
-         
+
             //If availability where 'status' = 'free' count() > 0, push user object to array above.
-            if($availabilityCount = Availability::where($matchThese)->where('date', $chosenDate)->count()) {
-                if($availabilityCount > 0) {
+            if ($availabilityCount = Availability::where($matchThese)->where('date', $chosenDate)->count()) {
+                if ($availabilityCount > 0) {
 
                     //push this user's name into array.
                     $freeUser = User::find($user_id);
@@ -51,7 +49,7 @@ class UserController extends Controller
                 }
             }
         }
-    
+
         //Return array of free users which will be displayed on the front-end.
         return response($usersArray);
     }

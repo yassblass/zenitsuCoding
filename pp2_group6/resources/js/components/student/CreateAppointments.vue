@@ -5,9 +5,9 @@
       <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
     </b-navbar-brand>
   </b-navbar>
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center" style="margin-top:10%;">
     <div>
-      <h2>Create an appointment</h2>
+      
       <b-form>
         <check-email
           v-if="showMailCheckComponent"
@@ -77,7 +77,7 @@
   <footer style="height:50px; background-color:red; position: absolute;left: 0; right: 0; bottom: 0;">
     <p style="padding-top: 13px; color:white; ">&copy; Copyright 2020 | PP2 - Group 6</p>
   </footer>
-  </div>
+</div>
 </template>
 <script>
 import { mapGetters } from "vuex";
