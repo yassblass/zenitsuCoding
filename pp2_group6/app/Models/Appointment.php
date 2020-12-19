@@ -9,7 +9,9 @@ class Appointment extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'appointmentId';
+
+    protected $primaryKey= 'appointmentId';
+    protected $table= 'appointments';
 
     public function students(){
 
