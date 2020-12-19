@@ -71,10 +71,10 @@
 </template>
 
 <script>
-import updatePage from "./updatePage.vue";
+
 
 export default {
-  components: { updatePage },
+  
   props: [
     "appointmentId",
     "check",

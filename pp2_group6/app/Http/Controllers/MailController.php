@@ -49,9 +49,6 @@ class MailController extends Controller
         ];
 
        Mail::to($email)->send(new forgotPasswordMail($forgot));
-        
-       
-      
     }
    
 
@@ -59,7 +56,7 @@ class MailController extends Controller
    public function deleteConfirmedAppointment($appointmentId)
    {
        
-        //Search in Appointment model where appointmentid = appointmentid 
+    //Search in Appointment model where appointmentid = appointmentid 
     if (Appointment::find($appointmentId) )
     {
         //If you find the ID, delete the appointment
@@ -73,8 +70,9 @@ class MailController extends Controller
         $errorMessage = "Appointment Not Found!";
         return response()->json($errorMessage);
     }
+    }
 
-   }
+
    // CANCEL
    public function deleteAppointment(Request $request)
    {
@@ -128,11 +126,11 @@ class MailController extends Controller
 
     
     public function acceptMail($appointmentId){
-      //get User
-      $user = Auth::user();
-      $secretaryFirstName = $user['firstName'];
-      $secretaryLastName = $user['lastName'];
-      $secretaryName = $secretaryFirstName . ' ' . $secretaryLastName;
+    //get User
+    $user = Auth::user();
+    $secretaryFirstName = $user['firstName'];
+    $secretaryLastName = $user['lastName'];
+    $secretaryName = $secretaryFirstName . ' ' . $secretaryLastName;
 
      //take data from database
      $information =  Appointment::select('students.firstName', 'students.lastName', 'appointments.startsAt', 'appointments.date', 'appointments.cancelToken' ) 
@@ -156,8 +154,6 @@ class MailController extends Controller
      ->get();
 
    
-       
-        
     //Get all the data in a object
      $accept = [
      'title' => 'Appointment accepted',
@@ -173,6 +169,7 @@ class MailController extends Controller
     // return "Email sent";
       return "Email sent";
     }
+
 
  //Change status of appointment to 'confirmed'
  public function updateConfirmed($appointmentId){
@@ -251,7 +248,8 @@ class MailController extends Controller
             return response()->json($errorMessage);
         }
     }
- 
+
+    //Send the student a randomly generated verification code.
     public function sendCode(Request $request)
     {
 
@@ -270,10 +268,8 @@ class MailController extends Controller
 
 
         //insert generated verification code into DB table 'verifications'
-
         $timeNow = Carbon::now()->addMinutes(5);
         $timeNow = $timeNow->format('Y/m/d H:i:s');
-        //$dateNow = date('Y-m-d H:i:s');
 
         if (Verification::create(array(
             'student_id' => $student_id,
@@ -290,12 +286,6 @@ class MailController extends Controller
             Mail::to($student_email)->send(new verificationCode($verificationCode));
         }
 
-
-
-        //return response for testing purposes.
         return response($student);
     }
-
-
-
 }

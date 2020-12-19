@@ -23,6 +23,7 @@ import { mapGetters } from "vuex";
 
 export default {
   mounted (){
+    //When component is loaded, fetch all subjects from DB.
     this.$store.dispatch('fetchSubjects');
   },
   data() {

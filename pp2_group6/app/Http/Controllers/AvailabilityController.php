@@ -38,22 +38,19 @@ class AvailabilityController extends Controller
         //take the user that is connected
         $user = Auth::user();
         
-        
         $availibilities = DB::table('availabilities')
         ->where('status', 'free')
         ->where('date', '>=', $today)
         ->where('user_id', '=', $user->user_id)
         ->get();
 
-      
-    
        return response()->json($availibilities);
     }
 
     public function deleteAvailability($avId)
    {
        
-        //Search in Appointment model where appointmentid = appointmentid 
+    //Search in Appointment model where appointmentid = appointmentid 
     if (Availability::find($avId) )
     {
         //If you find the ID, delete the appointment
@@ -69,10 +66,9 @@ class AvailabilityController extends Controller
     }
    }
 
+   //Get secretary availabilities.
     public function getAvailabilities(Request $request)
     {
-
-
         //Isolate date & secretary ID (user_id) from request.
         $secretaryId = $request['secretaryId'];
         $date = $request['date'];
@@ -83,17 +79,11 @@ class AvailabilityController extends Controller
         //If query matches, return query result.
         if ($availabilities = Availability::where($matchThese)->orderBy('time', 'ASC')->get()) {
 
+            //If Availabilities found, return them.
             return response($availabilities);
         } else {
+            //If no availability found.
             return response(false);
         }
-
-
-
-
-        // return response($request);
     }
 }
-
-
-

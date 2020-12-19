@@ -20,7 +20,6 @@ Vue.component('navbar', require('./components/secretary/Navbar.vue').default);
 //Student components
 Vue.component('createAppointments', require('./components/student/CreateAppointments.vue').default);
 Vue.component('cancelPage', require('./components/student/cancelPage.vue').default);
-Vue.component('updatePage', require('./components/student/updatePage.vue').default);
 Vue.component('checkEmail', require('./components/student/checkEmail.vue').default);
 Vue.component('showAvailabilities', require('./components/student/ShowAvailabilities.vue').default);
 Vue.component('showSubjects', require('./components/student/ShowSubjects.vue').default);

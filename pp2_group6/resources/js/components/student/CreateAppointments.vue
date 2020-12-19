@@ -1,7 +1,7 @@
 <template>
 <div>
   <b-navbar variant="danger" type="dark" style="margin-bottom:10%;" >
-    <b-navbar-brand href="#">
+    <b-navbar-brand href="#" >
       <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
     </b-navbar-brand>
   </b-navbar>
@@ -191,10 +191,9 @@ export default {
     },
     showDateForm: function (value) {
       if (value[0] === 1) {
-        //Maybe implement a check alert on name validation befor making an appointment request.
-        //this.check = "NAME HAS BEEN VALIDATED";
 
-        console.log(value[1].firstName);
+        //console.log(value[1].firstName);
+        //Store first name & last name locally.
         this.request.firstName = value[1].firstName;
         this.request.lastName = value[1].lastName;
 
