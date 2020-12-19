@@ -6,6 +6,10 @@ import ManageRequest from './components/secretary/ManageRequest.vue';
 import Appointment from './components/secretary/Appointment.vue';
 import setAvailability from './components/secretary/setAvailability.vue';
 import manageAvailability from './components/secretary/ManageAvailability.vue';
+import forgot from './components/secretary/ForgotPassword.vue';
+import changePassword from './components/secretary/ChangePassword.vue';
+import avatar from './components/secretary/Avatar.vue';
+
 
 
 export default{
@@ -68,11 +72,46 @@ export default{
             path:"/login",
             component:Login,
             name:"login",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then((res)=>{
+
+                    if(res.data == true){
+                    next(false);
+                    return next({name:"dashboard"});
+                        
+                    }else{
+                        next();
+                    }
+                }).catch(()=>{
+                    next()
+                });
+            }
         },
         {
             path:"/register",
             component:Register,
             name:"register",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/user').then((res)=>{
+                
+                    if(res.data.user_id < 1){
+                        next(false);
+                    return next({name:"login"});
+                        
+                    }
+                    if(res.data.admin >= 1){
+                        next();
+                    }else{
+                        next(false);
+                        return next({name:"dashboard"});
+    
+                    }
+                }).catch(()=>{
+
+                    return next({name:"dashboard"});
+                })
+            }
+            
         },
         {
     
@@ -88,10 +127,37 @@ export default{
                 })
             }
         },
+        {
+    
+            path:"/forgot/",
+            component:forgot,
+            name:"forgotPassword",
+           
+        },
+        {
+    
+            path:"/forgot/:id",
+            component:changePassword,
+            name:"changePassword",
+           
+        },
+        {
+    
+            path:"/avatar",
+            component:avatar,
+            name:"avatar",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then(()=>{
+                    next();
+                }).catch(()=>{
+                    return next({name:"login"});
+                })
+            }
+           
+        },
        
     
 
     ]
-
 
 }

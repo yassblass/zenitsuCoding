@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
@@ -16,6 +20,68 @@ class UserController extends Controller
     public function index()
     {
         //
+    }
+
+    public function changePassword(Request $request){
+       
+        $password = $request['password'];
+        $forgot_password = $request['forgot_password'];
+        $id = $request['id'];
+
+        if (User::find($id))
+        {
+
+
+            $newPassToken = Str::random(50);
+
+
+            User::find($id)->update(['forgot_password' => $newPassToken]);
+
+            User::find($id)->update(['password' => Hash::make($password)]);
+
+            
+
+            
+        }
+        else
+        {
+            $errorMessage = "User Not Found!";
+            return response()->json($errorMessage);
+        }
+    }
+
+    public function uploadAvatar(Request $request){
+
+        $id = Auth::user()->user_id;
+        $firstName = Auth::user()->firstName;
+
+
+
+        $this->validate($request,[
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,jfif',
+        ]);
+
+        $image= request()->file('image');
+
+        $imageName = $image->getClientOriginalName();
+
+        $imageName = "{$id}_".$firstName.'_'.$imageName;
+
+        $image->move(public_path('uploads/avatars'), $imageName);
+
+        User::find($id)->update(['avatar' => $imageName]);
+
+
+
+
+    }
+
+    
+    public function getAllUsers(){
+
+        $users = User::All();
+
+        return $users;
     }
 
     public function get(Request $request)

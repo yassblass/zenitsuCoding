@@ -29,6 +29,14 @@ Route::post('register', [App\Http\Controllers\RegisterController::class, 'regist
 Route::post('login', [App\Http\Controllers\LoginController::class, 'login']);
 //route to logout the logged in user 
 Route::post('logout', [App\Http\Controllers\LoginController::class, 'logout']);
+//get all users
+Route::get('/allUsers', [App\Http\Controllers\UserController::class,'getAllUsers']);
+//route to send mail to change the password
+Route::post('/forgot', [App\Http\Controllers\MailController::class,'forgot']);
+//route to change the password
+Route::post('/changePassword', [App\Http\Controllers\UserController::class,'changePassword']);
+//route to change the user avatar
+Route::post('/uploadAvatar', [App\Http\Controllers\UserController::class,'uploadAvatar']);
 //route to get all appointments that are confirmed
 Route::get('/appointmentListConfirmed', [App\Http\Controllers\AppointmentController::class,'getListConfirmed']);
 //route to cancel an appointment that has been confirmed
@@ -47,6 +55,12 @@ Route::post('/insertAvailabilities', \App\Http\Controllers\AvailabilityControlle
 Route::get('/getAllAvailabilities', [App\Http\Controllers\AvailabilityController::class,'getAllAvailibility']);
 //route to delete the availability
 Route::post('/deleteAvailability/{id}', [App\Http\Controllers\AvailabilityController::class,'deleteAvailability']);
+
+
+
+
+
+
 
 
 

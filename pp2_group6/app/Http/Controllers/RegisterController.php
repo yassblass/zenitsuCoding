@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -19,11 +20,12 @@ class RegisterController extends Controller
         ]);
 
         User::create([
-            'user_id' => 5,
             'firstName'=> $request->firstName,
             'lastName'=> $request->lastName,
             'email' => $request->email,
-            'password'=> Hash::make($request->password)
+            'admin' => $request->admin,
+            'forgot_password' => Hash::make(Str::random(50)),
+            'password'=> Hash::make($request->forgot_password)
         ]);
     }
 }

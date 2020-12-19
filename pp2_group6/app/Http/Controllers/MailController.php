@@ -5,6 +5,10 @@ use App\Mail\AlMail;
 use App\Mail\cancelMail;
 use App\Mail\AcceptMail;
 use App\Mail\RefuseMail;
+use App\Mail\forgotPasswordMail;
+
+
+
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +31,24 @@ class MailController extends Controller
        Mail::to("secretary.ehb@gmail.com")->send(new AlMail($details));
        return "Email sent";
    }
+
+   public function forgot(Request $request){
+       
+        $email = $request['email'];
+        $forgot_password = $request['forgot'];
+        $firstName = $request['firstName'];
+
+        $forgot = [
+            'forgot_password' => $forgot_password,
+            'firstName' => $firstName,
+
+        ];
+
+       Mail::to($email)->send(new forgotPasswordMail($forgot));
+        
+       
+      
+    }
    
 
     //Deletes an appointment based on the ID

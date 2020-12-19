@@ -7,10 +7,12 @@
         <input type="email" class="form-control" placeholder="Email" v-model="form.email">
 
         
-        <input type="password" class="form-control" placeholder="Password" v-model="form.password">
+        <input type="password" class="form-control" style="margin-bottom:10px; " placeholder="Password" v-model="form.password">
        
 
-        <button @click.prevent="loginUser" type="submit" class="btn btn-danger">Log in</button>
+        <button @click.prevent="loginUser" type="submit" class="btn btn-danger" style="margin-bottom:20px; " >Log in</button>
+
+        <router-link to="/forgot/" id="fpwd">Forgot password?</router-link>
 
     </div>
 </div>
@@ -48,7 +50,7 @@ export default {
     position: relative;
     width: 280px; 
     height:400px; 
-    margin-top: 100px
+    margin-top: 100px;
 }
 
 h1{
@@ -64,5 +66,10 @@ input{
 button{
     margin-top:18px;
     margin-left:90px;
+}
+
+#fpwd{
+    margin-left:65px;
+    color: red;
 }
 </style>
