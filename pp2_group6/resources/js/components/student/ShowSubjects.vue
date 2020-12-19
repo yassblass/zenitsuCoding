@@ -1,6 +1,7 @@
 <template>
 <div class ="d-flex justify-content-center">
-  <b-form-group label="Choose a subject">
+  <b-form-group>
+    <p><strong>Choose a subject</strong></p>
     <b-form-radio-group
       stacked
       v-model="chosenSubject"

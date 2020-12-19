@@ -22,7 +22,6 @@
             }
 
             body {
-               
                 min-height:100%; 
                 position: relative; 
                 padding-bottom: 50px;

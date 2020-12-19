@@ -1,7 +1,8 @@
 <template>
   <div >
     <div>
-      <b-form-group label="Choose a date">
+      <b-form-group>
+        <p><strong>Choose a date</strong></p>
         <b-form-datepicker
           v-model="selectedDate"
           :min="min"
@@ -15,12 +16,12 @@
       <!-- {{ request.date }} -->
       <div>
         <div v-if="users.length && dateSelected">
-          <p>Choose between available secretaries</p>
+          <p><strong>Choose between available secretaries</strong></p>
           <hr/>
         </div>
 
         <div v-if="dateSelected && !users.length">
-          <p>No secretary available on {{ selectedDate }} !</p>
+          <p>No secretary available on <strong>{{ selectedDate }}<strong> !</p>
           <hr/>
         </div>
       </div>
@@ -53,7 +54,7 @@
       <!-- <pre> {{ request }}</pre> -->
       <hr v-if="secretarySelected" />
       <div v-if="secretarySelected" >
-        <p>Choose between available hours</p>
+        <p><strong>Choose between available hours<strong></p>
       </div>
 
     <div  v-if="secretarySelected && dateSelected">

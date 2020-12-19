@@ -42,7 +42,7 @@
     </b-form-group>
 
     <div class="d-flex justify-content-center" >
-        <b-button class="d-flex justify-content-center" v-on:click="checkEmail">Check</b-button>
+        <b-button class="d-flex justify-content-center" v-on:click="checkEmail">Next</b-button>
     </div>
 </div>
 </template>

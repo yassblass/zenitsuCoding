@@ -21,9 +21,9 @@
 
     <b-form-group
       id="v_code"
-      label="Enter 6 digits verifictation code"
       label-for="v_code-input"
       valid-feedback="Press Submit to validate.">
+      <p><strong>Enter 6 digits verifictation code</strong></p>
       <b-form-input
         type="number"
         :formatter="formatCode"

@@ -1,10 +1,12 @@
 <template>
 <div>
+  
   <b-navbar variant="danger" type="dark" style="margin-bottom:10%;" >
-    <b-navbar-brand href="#">
+    <b-navbar-brand href="#" class="mx-auto">
       <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
     </b-navbar-brand>
-  </b-navbar>
+  </b-navbar> 
+ 
   <div class="d-flex justify-content-center" style="margin-top:10%;">
     <div>
       <b-form>
@@ -273,5 +275,11 @@ export default {
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateX(10px);
   opacity: 0;
+}
+
+#navbar .navbar-logo{
+   
+    width: 150px;
+  
 }
 </style>
