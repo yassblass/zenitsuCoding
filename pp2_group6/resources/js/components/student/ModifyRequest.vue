@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h3>Are you sure you want to make an appointment with this information?</h3>
     <br />
 

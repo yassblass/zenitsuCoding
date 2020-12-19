@@ -26,7 +26,8 @@ Vue.component('showSubjects', require('./components/student/ShowSubjects.vue').d
 Vue.component('modifyRequest', require('./components/student/ModifyRequest.vue').default);
 Vue.component('verificationCode', require('./components/student/VerificationCode.vue').default);
 Vue.component('captcha', require('./components/student/Captcha.vue').default);
-
+Vue.component('requestSummary', require('./components/student/RequestSummary.vue').default);
+Vue.component('showEndMessage', require('./components/student/ShowEndMessage.vue').default);
 
 
 

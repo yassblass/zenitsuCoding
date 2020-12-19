@@ -21,7 +21,7 @@
 
     <b-form-group
       id="v_code"
-      label="Enter 6 digits verifictation code"
+      label="Enter 6 digits verifictation code sent by email"
       label-for="v_code-input"
       valid-feedback="Press Submit to validate.">
       <b-form-input
@@ -81,7 +81,7 @@ export default {
             //Code incorrect.
             this.showIncorrect = true;
             //alert("Verification code incorrect!");
-            
+
           } else if (res.data === 3) {
             //Code verification
             this.showExpired = true;

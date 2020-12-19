@@ -1,80 +1,114 @@
 <template>
-<div>
-  <b-navbar variant="danger" type="dark" style="margin-bottom:10%;" >
-    <b-navbar-brand href="#" >
-      <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
-    </b-navbar-brand>
-  </b-navbar>
-  <div class="d-flex justify-content-center" style="margin-top:10%;">
-    <div>
-      <b-form>
-        <check-email
-          v-if="showMailCheckComponent"
-          v-on:nameChecked="showDateForm"
-        ></check-email>
+  <div>
+    <b-navbar variant="danger" type="dark" style="margin-bottom: 10%">
+      <b-navbar-brand href="#">
+        <img
+          src="/images/ehb_logo_white_horizontal.png"
+          class="d-inline-block align-top"
+          style="width: 100px; height: 25px"
+        />
+      </b-navbar-brand>
+    </b-navbar>
+    <div class="d-flex justify-content-center" style="margin-top: 10%">
+      <div>
+        <b-form>
+          <check-email
+            v-if="showMailCheckComponent"
+            v-on:nameChecked="showDateForm"
+          ></check-email>
 
-        <transition name="slide-fade">
-          <show-availabilities
-            :modify="modify"
-            v-if="showAvailabilityComponent"
-            :availabilities="availabilities"
-            v-on:availabilityChosen="availabilitySet"
-          ></show-availabilities>
-        </transition>
+          <transition name="slide-fade">
+            <show-availabilities
+              :modify="modify"
+              v-if="showAvailabilityComponent"
+              :availabilities="availabilities"
+              v-on:availabilityChosen="availabilitySet"
+            ></show-availabilities>
+          </transition>
 
-        <transition name="slide-fade">
-          <show-subjects
-            v-if="showSubjectComponent"
-            v-on:subjectChosen="subjectSet"
-          ></show-subjects>
-        </transition>
+          <transition name="slide-fade">
+            <show-subjects
+              v-if="showSubjectComponent"
+              v-on:subjectChosen="subjectSet"
+            ></show-subjects>
+          </transition>
 
-        <transition name="slide-fade">
-          <modify-request
-            :student_firstName="request.firstName"
-            :student_lastName="request.lastName"
-            v-if="showModifyRequestComponent"
-            :request="request"
-            v-on:showAvailabilityEdit="editSecretary"
-            v-on:showSubjectEdit="editSubject"
-            v-on:showVerificationComp="askVerification"
-          ></modify-request>
-        </transition>
+          <transition name="slide-fade">
+            <modify-request
+              :student_firstName="request.firstName"
+              :student_lastName="request.lastName"
+              v-if="showModifyRequestComponent"
+              :request="request"
+              v-on:showAvailabilityEdit="editSecretary"
+              v-on:showSubjectEdit="editSubject"
+              v-on:showVerificationComp="askVerification"
+            ></modify-request>
+          </transition>
 
-        <transition name="slide-fade">
-          <verification-code
-            v-if="showVerificationComponent"
-            :student_firstName="request.firstName"
-            :student_lastName="request.lastName"
-            v-on:codeValidated="showCaptcha"
+          <transition name="slide-fade">
+            <verification-code
+              v-if="showVerificationComponent"
+              :student_firstName="request.firstName"
+              :student_lastName="request.lastName"
+              v-on:codeValidated="showCaptcha"
+            >
+            </verification-code>
+          </transition>
+
+          <transition name="slide-fade">
+            <captcha
+              v-if="showCaptchaComponent"
+              v-on:captchaVerified="showSummary()"
+            >
+            </captcha>
+          </transition>
+
+          <transition name="slide-fade">
+            <request-summary
+              :student_firstName="request.firstName"
+              :student_lastName="request.lastName"
+              :request="request"
+              v-if="showSummaryComponent"
+            ></request-summary>
+          </transition>
+
+          <transition name="slide-fade">
+            <show-end-message
+            v-if="showEndMessageComponent"
+            > 
+             
+            </show-end-message>
+          </transition>
+
+          <b-button
+            variant="primary"
+            v-if="showSummaryComponent"
+            @click.prevent="createAppointment(request)"
+            >Make appointment</b-button
           >
-          </verification-code>
-        </transition>
-
-        <transition name="slide-fade">
-          <captcha
-            v-if="showCaptchaComponent"
-            v-on:captchaVerified="showSendRequest">
-          </captcha>
-        </transition>
-
-        <b-button
-          variant="primary"
-          v-if="showSendRequestButton"
-          @click.prevent="createAppointment(request)"
-          >Make appointment</b-button>
-        <b-button
-          v-if="showSendRequestButton"
-          @click.prevent="backToStartPage()"
-          >Cancel</b-button
-        >
-      </b-form>
+          <b-button
+            v-if="showSummaryComponent"
+            @click.prevent="backToStartPage()"
+            >Cancel</b-button
+          >
+        </b-form>
+      </div>
     </div>
+    <footer
+      style="
+        height: 50px;
+        background-color: red;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      "
+    >
+      <p style="padding-top: 13px; color: white">
+        &copy; Copyright 2020 | PP2 - Group 6
+      </p>
+    </footer>
   </div>
-  <footer style="height:50px; background-color:red; position: absolute;left: 0; right: 0; bottom: 0;">
-    <p style="padding-top: 13px; color:white;">&copy; Copyright 2020 | PP2 - Group 6</p>
-  </footer>
-</div>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -84,6 +118,7 @@ import VerificationCode from "./VerificationCode.vue";
 import ModifyRequest from "./ModifyRequest.vue";
 import VueRecaptcha from "vue-recaptcha";
 import Captcha from "./Captcha.vue";
+import requestSummary from "./RequestSummary.vue";
 export default {
   components: {
     checkEmail,
@@ -128,6 +163,8 @@ export default {
       showCaptchaComponent: false,
       showSendRequestButton: false,
       modify: false,
+      showSummaryComponent: false,
+      showEndMessageComponent: false,
     };
   },
   methods: {
@@ -135,12 +172,12 @@ export default {
       //This function redirects the student to the start page.
       window.location.href = "/";
     },
-    showSendRequest() {
+    showSummary() {
       //Hide captcha component
       this.showCaptchaComponent = false;
 
       //Show appointment request button
-      this.showSendRequestButton = true;
+      this.showSummaryComponent = true;
     },
     editSecretary(value) {
       //hide modify component
@@ -159,6 +196,10 @@ export default {
     },
     createAppointment(request) {
       let currentObj = this;
+      
+      this.showEndMessageComponent = true;
+      this.showCaptchaComponent = false;
+      this.showSummaryComponent = false;
       this.$store.dispatch("createAppointment", request);
     },
     availabilitySet(availabilityRequest) {
@@ -172,26 +213,8 @@ export default {
       //Show next component.
       this.showSubjectComponent = true;
     },
-    confirmAppointment(appointmentId) {
-      //Declare needed Variables
-      let currentObj = this;
-
-      //Axios call [POST]
-      axios
-        .get("appointment/confirm/" + appointmentId)
-        .then(function (response) {
-          //This.output gets filled with the response data.
-          currentObj.output = response.data;
-        })
-        .catch(function (error) {
-          //This output gets filled with error message.
-          currentObj.output = error;
-        });
-      window.location.reload();
-    },
     showDateForm: function (value) {
       if (value[0] === 1) {
-
         //console.log(value[1].firstName);
         //Store first name & last name locally.
         this.request.firstName = value[1].firstName;
