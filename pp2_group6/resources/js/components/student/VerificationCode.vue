@@ -1,5 +1,24 @@
 <template>
   <div>
+    <div>
+      <!-- Code is incorrect -->
+      <b-alert v-model="showIncorrect" variant="danger" dismissible>
+        Verification code incorrect!
+      </b-alert>
+      <!-- Code is expired -->
+      <b-alert v-model="showExpired" variant="danger" dismissible>
+        Oops! Verification code is expired, click on resend code. 
+      </b-alert>
+      <!-- Code insered 3 times wrong -->
+      <b-alert v-model="showThree" variant="danger" dismissible>
+        You entered the wrong code 3 times in a row, you can not take an appointment for 15 minutes. 
+      </b-alert>
+      <!-- Code is already redeemed -->
+      <b-alert v-model="showUsed" variant="danger" dismissible>
+        Verification code is already redeemed or student may not exist!
+      </b-alert>
+    </div>
+
     <b-form-group
       id="v_code"
       label="Enter 6 digits verifictation code"
@@ -11,7 +30,7 @@
         v-model="verificationData.v_code"
       ></b-form-input>
     </b-form-group>
-    <b-button type="button" variant="primary" @click="verifyCode()"
+    <b-button type="button"  @click="verifyCode()"
       >Verify Code</b-button
     >
   </div>
@@ -28,6 +47,10 @@ export default {
         student_firstName: "",
         student_lastName: "",
       },
+      showIncorrect: false,
+      showExpired: false,
+      showThree: false,
+      showUsed: false
     };
   },
   methods: {
@@ -51,23 +74,25 @@ export default {
             this.$emit("codeValidated", 1);
           } else if (res.data === 2) {
             //Code incorrect.
-            alert("Verification code incorrect!");
+            this.showIncorrect = true;
+            //alert("Verification code incorrect!");
           } else if (res.data === 3) {
             //Code verification
-            alert("Oops. Verification code is expired!");
+            this.showExpired = true;
+            //alert("Oops. Verification code is expired!");
           } else if (res.data === 4) {
-            //Code verification
-            alert(
-              "You entered the wrong password 3 times in a row, you can not take an appointment for 15 minutes."
-            );
+            //Code verification 3 times wrong
+            this.showThree = true;
+            //alert("You entered the wrong password 3 times in a row, you can not take an appointment for 15 minutes.");
 
             //Redirect to start page.
-            window.location.href = "/";
+            //window.location.href = "/";
           } else if (res.data === 0) {
             //Code verification failed
-            console.log(
-              "Verification code is already redeemed or student may not exist!"
-            );
+            this.showUsed = true;
+            //console.log(
+            //   "Verification code is already redeemed or student may not exist!"
+            // );
           } else {
             console.log(res.data);
           }
