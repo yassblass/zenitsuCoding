@@ -48,7 +48,7 @@
             </b-form-radio>
           </template>
         </b-form-radio-group>
-      </b-form-group>
+      </b-form-group> 
 
       </div>
 
