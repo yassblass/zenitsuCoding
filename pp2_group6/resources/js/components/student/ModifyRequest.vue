@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <h3>Are you sure you want to make an appointment with this information?</h3>
     <br />
@@ -35,6 +36,7 @@
     <!-- <pre> {{ secretary }}</pre> -->
     <!-- <pre> {{ request }}</pre> -->
   </div>
+
 </template>
 
 <script>
