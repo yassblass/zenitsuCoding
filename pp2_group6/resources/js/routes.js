@@ -8,6 +8,7 @@ import setAvailability from './components/secretary/setAvailability.vue';
 import manageAvailability from './components/secretary/ManageAvailability.vue';
 import forgot from './components/secretary/ForgotPassword.vue';
 import changePassword from './components/secretary/ChangePassword.vue';
+import avatar from './components/secretary/Avatar.vue';
 
 
 
@@ -138,6 +139,20 @@ export default{
             path:"/forgot/:id",
             component:changePassword,
             name:"changePassword",
+           
+        },
+        {
+    
+            path:"/avatar",
+            component:avatar,
+            name:"avatar",
+            beforeEnter: (to, form, next) =>{
+                Axios.get('/api/authenticated').then(()=>{
+                    next();
+                }).catch(()=>{
+                    return next({name:"login"});
+                })
+            }
            
         },
        

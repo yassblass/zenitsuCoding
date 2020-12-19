@@ -1,5 +1,5 @@
 <template>
-<div v-if="user != ''">
+<div v-if="user">
     
     <navbar></navbar> 
     
@@ -7,7 +7,7 @@
             
           
         <h1 style="text-align: center; font-size:50px; font-family:Georgia Pro">Welcome</h1>
-        <img class="center" src="https://st3.depositphotos.com/4111759/13425/v/380/depositphotos_134255626-stock-illustration-avatar-male-profile-gray-person.jpg"  style="width: 100px; height:100px; border-radius:50%; ">
+        <img class="center" :src="src"  style="width: 100px; height:100px; border-radius:50%; ">
         <p>{{user.firstName+" "+user.lastName+ " "}}</p>
         <router-link to="/setAvailability"><button type="button" class="btn btn-danger" style="margin-top:10px; margin-left: 10px; width:185px; " >Set availability</button></router-link>
         <router-link to="/manageAvailability"><button type="button" class="btn btn-danger" style="margin-top:10px;  margin-left: 25px;width:185px;" >Manage availability</button></router-link>
@@ -23,7 +23,8 @@
     export default {
         data(){
              return {
-                user:'',
+                user:null,
+                src:"/uploads/avatars/",
             
             }
         },
@@ -31,6 +32,8 @@
         mounted() {
             axios.get('/api/user').then((res)=>{
                 this.user = res.data;
+                this.src= this.src+res.data.avatar;
+               
             })
             
         },
