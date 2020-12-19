@@ -27,7 +27,7 @@
       </div>
 
       
-<div class="container">
+<div class="container" v-if="dateSelected">
       <b-form-group>
         <b-form-radio-group
           v-model="request.user_id"
@@ -48,7 +48,7 @@
             </b-form-radio>
           </template>
         </b-form-radio-group>
-      </b-form-group>
+      </b-form-group> 
 
       </div>
 

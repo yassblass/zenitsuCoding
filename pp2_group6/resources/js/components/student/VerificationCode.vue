@@ -82,11 +82,11 @@ export default {
             //alert("Oops. Verification code is expired!");
           } else if (res.data === 4) {
             //Code verification 3 times wrong
-            this.showThree = true;
-            //alert("You entered the wrong password 3 times in a row, you can not take an appointment for 15 minutes.");
+            //this.showThree = true;
+            alert("You entered the wrong password 3 times in a row, you can not take an appointment for 15 minutes.");
 
             //Redirect to start page.
-            //window.location.href = "/";
+            window.location.href = "/";
           } else if (res.data === 0) {
             //Code verification failed
             this.showUsed = true;
