@@ -5,15 +5,18 @@ use App\Mail\AlMail;
 use App\Mail\cancelMail;
 use App\Mail\AcceptMail;
 use App\Mail\RefuseMail;
+use App\Mail\VerificationCode;
 use App\Mail\forgotPasswordMail;
 
 
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Verification;
+use App\Models\Student;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use carbon\Carbon;
 use Mail;
 
 class MailController extends Controller

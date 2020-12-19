@@ -26,6 +26,7 @@
       valid-feedback="Press Submit to validate.">
       <b-form-input
         type="number"
+        :formatter="formatCode"
         id="v_code-input"
         v-model="verificationData.v_code"
       ></b-form-input>
@@ -54,6 +55,9 @@ export default {
     };
   },
   methods: {
+    formatCode (e){
+      return String(e).substring(0,6);
+    },
     verifyCode() {
       //Declaring needed variables.
       let response = "";

@@ -83,7 +83,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #page{
     position: relative;
     width: 280px; 

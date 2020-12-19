@@ -2,7 +2,7 @@
   <div>
     <b-navbar variant="danger" type="dark" style="margin-bottom:10%;" >
       <b-navbar-brand href="#">
-      <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
+        <img src="/images/ehb_logo_white_horizontal.png" class="d-inline-block align-top" style="width:100px; height:25px;">
       </b-navbar-brand>
     </b-navbar>
       <!-- Form for appointment update -->

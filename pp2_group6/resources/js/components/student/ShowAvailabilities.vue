@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div >
     <div>
       <b-form-group label="Choose a date">
         <b-form-datepicker
@@ -8,13 +8,12 @@
           :date-disabled-fn="dateDisabled"
           :state="state"
           reset-button
-          close-button
-        >
+          close-button>
         </b-form-datepicker>
       </b-form-group>
       
       <!-- {{ request.date }} -->
-      <div class="container">
+      <div>
         <div v-if="users.length && dateSelected">
           <p>Choose between available secretaries</p>
           <hr/>
@@ -27,14 +26,13 @@
       </div>
 
       
-<div class="container" v-if="dateSelected">
+<div v-if="dateSelected">
       <b-form-group>
         <b-form-radio-group
           v-model="request.user_id"
           buttons
           button-variant="danger"
-          stacked
-        >
+          stacked>
           <template v-for="user in users">
             <b-form-radio
               style="margin-bottom:5px"
@@ -54,11 +52,11 @@
 
       <!-- <pre> {{ request }}</pre> -->
       <hr v-if="secretarySelected" />
-      <div v-if="secretarySelected" class="container">
+      <div v-if="secretarySelected" >
         <p>Choose between available hours</p>
       </div>
 
-    <div class="container" v-if="secretarySelected && dateSelected">
+    <div  v-if="secretarySelected && dateSelected">
       <b-form-group>
         <b-form-radio-group buttons button-variant="primary" stacked>
           <template v-for="availability in availabilities">
@@ -131,6 +129,7 @@ export default {
       this.request.date = this.selectedDate;
       this.dateSelected = true;
       this.secretarySelected = false;
+      this.request.user_id = "",
       this.$store.dispatch("fetchUsers", this.request);
     },
     selectedSecretary: function (newSecretary) {

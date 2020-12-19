@@ -109,7 +109,7 @@ export default {
     
 }
 </script>
-<style>
+<style scoped>
 #dbutton {
   margin-left: 660px;
 }

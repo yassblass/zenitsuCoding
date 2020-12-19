@@ -7,7 +7,6 @@
   </b-navbar>
   <div class="d-flex justify-content-center" style="margin-top:10%;">
     <div>
-      
       <b-form>
         <check-email
           v-if="showMailCheckComponent"
@@ -55,8 +54,7 @@
         <transition name="slide-fade">
           <captcha
             v-if="showCaptchaComponent"
-            v-on:captchaVerified="showSendRequest"
-            >
+            v-on:captchaVerified="showSendRequest">
           </captcha>
         </transition>
 
@@ -64,8 +62,7 @@
           variant="primary"
           v-if="showSendRequestButton"
           @click.prevent="createAppointment(request)"
-          >Make appointment</b-button
-        >
+          >Make appointment</b-button>
         <b-button
           v-if="showSendRequestButton"
           @click.prevent="backToStartPage()"
@@ -75,7 +72,7 @@
     </div>
   </div>
   <footer style="height:50px; background-color:red; position: absolute;left: 0; right: 0; bottom: 0;">
-    <p style="padding-top: 13px; color:white; ">&copy; Copyright 2020 | PP2 - Group 6</p>
+    <p style="padding-top: 13px; color:white;">&copy; Copyright 2020 | PP2 - Group 6</p>
   </footer>
 </div>
 </template>

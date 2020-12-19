@@ -48,7 +48,7 @@
    
 </script>
 
-<style>
+<style scoped>
 .container{
     position: relative;
 

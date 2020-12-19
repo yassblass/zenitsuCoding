@@ -17,7 +17,7 @@
       <h2>{{ check }}</h2>
 
       <template #lead>
-        Choose wheter you want to update or cancel your appointment. If all the
+        You can cancel the appointment below. If all the
         information is correct just exit the page.
       </template>
       <!-- Show appointment data -->

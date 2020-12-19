@@ -1,4 +1,5 @@
 require('./bootstrap');
+import routes from './routes'
 import Vue from 'vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -12,7 +13,7 @@ Vue.use(IconsPlugin);
 
 Vue.use(VueRouter);
 
-import routes from './routes'
+
 Vue.component('alert', require('./components/secretary/Alert.vue').default);
 Vue.component('navbar', require('./components/secretary/Navbar.vue').default);
 
