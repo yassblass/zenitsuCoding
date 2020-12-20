@@ -10,12 +10,12 @@
 
         <input placeholder="last name" class="form-control" type="text" v-model="form.lastName">
 
-        <p v-if="errors" style="color : red; font-size:15px;"> {{errors.email}}</p>
+        <p v-if="errors" style="color : red; font-size:15px; text-align: center;"> {{errors.email}}</p>
 
 
         <input placeholder="Email" class="form-control" type="email" v-model="form.email">
 
-        <p v-if="errors" style="color : red; font-size:15px;"> {{errors.password}}</p>
+        <p v-if="errors" style="color : red; font-size:15px; text-align: center;"> {{errors.password}}</p>
 
 
         <input placeholder="Password" class="form-control" type="password" v-model="form.password">

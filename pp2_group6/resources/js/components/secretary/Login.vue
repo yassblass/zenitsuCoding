@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Login</h1>
 
-        <p v-if="errors" style="color : red; font-size:15px;"> password or email not correct</p>
+        <p v-if="errors" style="color : red; font-size:15px; text-align: center;"> password or email not correct</p>
         <input type="email" class="form-control" placeholder="Email" v-model="form.email">
 
         

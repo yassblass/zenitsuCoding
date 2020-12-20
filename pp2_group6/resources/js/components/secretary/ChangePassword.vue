@@ -4,9 +4,9 @@
     <div class="container">
         <h1 style="font-size: 40px;">Change Your Password</h1>
 
-        <p v-if="bool == true" style="color : green; font-size:15px;"> Password changed</p>
+        <p v-if="bool == true" style="color : green; font-size:15px; text-align: center;"> Password changed</p>
 
-        <p v-if="bool == false" style="color : red; font-size:15px;"> password not correct</p>
+        <p v-if="bool == false" style="color : red; font-size:15px; text-align: center;"> password not correct</p>
 
         <input type="password" class="form-control" placeholder="Password" v-model="password">
         <input type="password" class="form-control" style="margin-bottom:15px;" placeholder="Confirm password" v-model="confirm_password">
@@ -33,6 +33,7 @@ export default {
 
         }
     },
+    
     methods:{
 
         // functie that change the password

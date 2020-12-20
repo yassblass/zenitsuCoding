@@ -4,9 +4,9 @@
     <div class="container">
         <h1 style="font-size: 40px;">Forgot password</h1>
 
-        <p v-if="bool == true" style="color : green; font-size:15px;"> email sent</p>
+        <p v-if="bool == true" style="color : green; font-size:15px; text-align: center;"> email sent</p>
 
-        <p v-if="bool == false" style="color : red; font-size:15px;"> email does not exist</p>
+        <p v-if="bool == false" style="color : red; font-size:15px; text-align: center;"> email does not exist</p>
 
 
 
@@ -95,7 +95,7 @@ export default {
 
 
             }).catch(()=>{
-                //console.log("functie check error");
+                //console.log("check error");
             })
         },
            backbutton() {
