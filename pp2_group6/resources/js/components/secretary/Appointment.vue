@@ -130,9 +130,16 @@ export default {
 }
 #button-back {
   text-align: center;
+  margin-left:60px;
+
 }
 #button-alert {
   float: right;
+}
+h1{
+    text-align: center;
+    font-size:50px; 
+    font-family:Georgia;
 }
 </style>
 

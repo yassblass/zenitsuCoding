@@ -2,7 +2,7 @@
     <div v-if="user">
 
         <navbar></navbar>
-        <form @submit.prevent="profileUpload" methode="POST">
+        <form id="form" @submit.prevent="profileUpload" methode="POST">
 
             <div v-if="preview == null">
                 <img id="img" class="center" :src="src" style="width: 100px; height:100px; border-radius:50%; ">
@@ -107,17 +107,24 @@ export default {
 </script>
 
 <style scoped>
-form{
+#form{
     margin-top: 50px;
     margin-left: auto; 
     margin-right: auto; 
 
 }
 #button-back {
- margin-left: 42px;
+
+    margin-left: 609px;
+    margin-top: 35px;
+
+
+
 }
 #button-alert {
   float: right;
+    margin-top: 35px;
+
 }
 
 #inputGroupFile04{
@@ -129,10 +136,14 @@ form{
     margin-right: auto; 
 }
 #upload{
-    margin-left: 725px;
+    margin-left: 599px;
+    margin-top: 35px;
+
     
 }
 #img{
     margin-bottom: 50px;
+    margin-left: 585px; 
+    /* margin-right: auto; */
 }
 </style>

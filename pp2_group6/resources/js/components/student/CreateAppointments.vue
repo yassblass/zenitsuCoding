@@ -299,4 +299,10 @@ export default {
   transform: translateX(10px);
   opacity: 0;
 }
+
+#navbar .navbar-logo{
+   
+    width: 150px;
+  
+}
 </style>

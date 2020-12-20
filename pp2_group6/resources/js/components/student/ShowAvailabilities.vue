@@ -53,7 +53,7 @@
       <!-- <pre> {{ request }}</pre> -->
       <div v-if="secretarySelected && dateSelected && users.length">
       <hr />
-      <p>Choose between available hours</p>
+      <p><strong>Choose between available hours</strong></p>
       </div>
 
      
