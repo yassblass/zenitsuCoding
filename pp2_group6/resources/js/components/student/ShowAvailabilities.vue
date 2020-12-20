@@ -1,7 +1,9 @@
 <template>
+
   <div>
     <div>
-      <b-form-group label="Choose a date">
+      <b-form-group>
+        <p><strong>Choose a date</strong></p>
         <b-form-datepicker
           v-model="selectedDate"
           :min="min"
@@ -16,12 +18,12 @@
       <!-- {{ request.date }} -->
       <div>
         <div v-if="users.length && dateSelected">
-          <p>Choose between available secretaries</p>
+          <p><strong>Choose between available secretaries</strong></p>
           <hr />
         </div>
 
         <div v-if="dateSelected && !users.length">
-          <p>No secretary available on {{ selectedDate }} !</p>
+          <p>No secretary available on <strong>{{ selectedDate }}</strong> !</p>
           <hr />
         </div>
       </div>
@@ -49,10 +51,13 @@
       </div>
 
       <!-- <pre> {{ request }}</pre> -->
-      <hr v-if="secretarySelected" />
-      <div v-if="secretarySelected">
-        <p>Choose between available hours</p>
+      <div v-if="secretarySelected && dateSelected && users.length">
+      <hr />
+      <p><strong>Choose between available hours</strong></p>
       </div>
+
+     
+      
 
       <div v-if="secretarySelected && dateSelected">
         <b-form-group>
@@ -72,6 +77,7 @@
       </div>
     </div>
   </div>
+
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -120,16 +126,18 @@ export default {
   watch: {
     selectedDate: function () {
       //Change status of some variable in order to show only needed parts of the component.
+      
       this.state = true;
       this.dateSelected = true;
+      
       this.secretarySelected = false;
-
       //Set the new date equal to local date variable.
       this.request.date = this.selectedDate;
       //Empty the old secretary name on front end.
-      (this.request.user_id = ""),
+      this.request.user_id = "";
         //Fetch all Secretary members which are available on selected date.
-        this.$store.dispatch("fetchUsers", this.request);
+      this.$store.dispatch("fetchUsers", this.request);
+      this.secretarySelected = false;
     },
     selectedSecretary: function (newSecretary) {
       this.selectedSecretary = newSecretary;
@@ -138,7 +146,6 @@ export default {
       //Displayavailability message
       this.secretarySelected = true;
       let secretaryId = newSecretary;
-
       axios
         .post("availabilities/", {
           secretaryId: secretaryId,
@@ -146,6 +153,7 @@ export default {
         })
         .then((response) => (this.availabilities = response.data))
         .catch((error) => console.log(error));
+        
     },
     chosenTime: function (chosenTime) {
       //Every time the time is chosen.

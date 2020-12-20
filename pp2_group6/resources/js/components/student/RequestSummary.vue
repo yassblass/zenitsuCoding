@@ -1,6 +1,6 @@
 <template>
-  <div >
-   
+
+  <div>
     <br />
 
     <b-form-group>
