@@ -8,12 +8,10 @@
 <body>
     <h3>Dear {{$cancel['name']}},</h3>
 
-<br>
-    <p> I have an appointment scheduled on {{$cancel['appointment']}}. </p>
+    <p> I have an appointment with you scheduled on <strong>{{$cancel['appointment']}}</strong>. </p>
 
-    <br>
-   <p>Unfortunately, I must cancel the appointment for the next reason : {{$cancel['description']}}
-   <br>
+   <p>Unfortunately, I must cancel the appointment for the next reason : <strong>{{$cancel['description']}}</strong> 
+   <br><br>
 
    I will be grateful if we can reschedule for a future date. 
    You can schedule a new appointment on this website : www.localhost:8000/

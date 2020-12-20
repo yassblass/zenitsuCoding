@@ -2,7 +2,7 @@
 
   <div>
     <b-navbar variant="danger" type="dark" style="margin-bottom: 10%">
-      <b-navbar-brand href="#" class="mx-auto">
+      <b-navbar-brand href="http://127.0.0.1:8000/" class="mx-auto">
         <img
           src="/images/ehb_logo_white_horizontal.png"
           class="d-inline-block align-top"
@@ -100,7 +100,7 @@
     <footer
       style="
         height: 50px;
-        background-color: red;
+        background-color: #dc3545;
         position: absolute;
         left: 0;
         right: 0;

@@ -5,7 +5,7 @@
       type="dark"
       style="margin-bottom: 10%; margin-bottom: 0px"
     >
-      <b-navbar-brand href="#">
+      <b-navbar-brand href="http://127.0.0.1:8000/">
         <img
           src="/images/ehb_logo_white_horizontal.png"
           class="d-inline-block align-top"

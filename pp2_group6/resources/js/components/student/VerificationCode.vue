@@ -80,7 +80,7 @@ export default {
   methods: {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
-    },
+  },
 
     formatCode (e){
       //Limit verification code input to 6 digits.
