@@ -42,6 +42,7 @@ class AvailabilityController extends Controller
         ->where('status', 'free')
         ->where('date', '>=', $today)
         ->where('user_id', '=', $user->user_id)
+        ->orderBy('date', 'ASC')
         ->get();
 
        return response()->json($availibilities);
