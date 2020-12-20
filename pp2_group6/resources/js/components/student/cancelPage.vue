@@ -111,12 +111,12 @@ export default {
           console.log("cancel response:", response.data);
           if (response.data === 1) {
             //If delete query returned true, alert the user & redirect to home page.
-            alert("Appointment has beend canceled successfulyl!");
+            alert("Appointment has been canceled successfully!");
             window.location.href = "/";
           } else {
             //Appointment doesn't exist.
             console.log(
-              "Error. Maybe the appoint you are trying to cancel doesn't exist anymore ?"
+              "Error. The appointment you are trying to cancel may not exist anymore."
             );
           }
         })

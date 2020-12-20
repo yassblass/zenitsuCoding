@@ -10,11 +10,11 @@
     </b-alert>
     <!-- Flagged error -->
     <b-alert v-model="showFlagged" variant="danger" dismissible>
-      Your email is flagged, try again later!
+      You are flagged and can not take an appointment, try again later!
     </b-alert>
     <!-- hasRight error -->
     <b-alert v-model="showHasRight" variant="danger" dismissible>
-      Your email has no rights, try again later!
+      You are temporarily restricted from taking an appointment, try again later!
     </b-alert>
     <!-- Email does not exist in organization error -->
     <b-alert v-model="showUnknown" variant="danger" dismissible>
