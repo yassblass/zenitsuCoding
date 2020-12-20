@@ -19,8 +19,10 @@
         <nav class="navbar navbar-dark bg-dark ">
             <div class="container-fluid">
                 <button v-if="user.user_id > 0" class="navbar-toggler" id="navButton" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>  
                 </button>
+
+                <img  src="/images/logo_ehb.jpg" style="width: 50px; height:50px; ">
             </div>             
         </nav>
 
@@ -55,3 +57,11 @@ export default {
     
 }
 </script>
+
+<style scoped>
+img{
+
+    margin-left:auto;
+    margin-right:auto;
+}
+</style>
