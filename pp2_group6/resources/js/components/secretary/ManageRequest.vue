@@ -88,10 +88,15 @@ height: 80%;
   height:400px;
 }
 #button-back{
+  margin-left:60px;
   text-align: center;
 }
 #button-alert{
   float: right;
 }
-
+h1{
+    text-align: center;
+    font-size:50px; 
+    font-family:Georgia;
+}
 </style>

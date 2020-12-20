@@ -38,9 +38,6 @@ export default {
             forgot:'',
             firstName:'',
             bool:null,
-            
-            
-
         }
     },
     methods:{
@@ -111,8 +108,33 @@ export default {
 </script>
 <style scoped>
 #dbutton {
-  margin-left: 660px;
+  margin-left: 540px;
 }
+.container{
+    position: relative;
+    width: 280px; 
+    height:400px; 
+    margin-top: 100px;
+}
+h1{
+    text-align: center; 
+    font-size:50px; 
+    font-family:Georgia
+}
+
+input{
+    margin-top: 18px;
+}
+
+button{
+    margin-top:18px;
+    margin-left:90px;
+}
+#button-back {
+    margin-left: 609px;
+    margin-top: 35px;
+}
+
 
 
 </style>

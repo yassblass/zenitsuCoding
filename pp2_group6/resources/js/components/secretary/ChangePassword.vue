@@ -96,3 +96,27 @@ export default {
     
 }
 </script>
+<style scoped>
+.container{
+    position: relative;
+    width: 280px; 
+    height:400px; 
+    margin-top: 50px;
+}
+h1{
+    text-align: center; 
+    font-size:50px; 
+    font-family:Georgia
+}
+
+input{
+    margin-top: 18px;
+}
+
+button{
+    margin-top:18px;
+    margin-left:90px;
+}
+
+
+</style>
