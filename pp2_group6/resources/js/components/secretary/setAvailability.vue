@@ -5,66 +5,67 @@
   
     <form @submit.prevent="insertAvailabilities">
 
-<h1>{{title}}</h1>
+      <h1>{{title}}</h1>
 
-<div id= "page">
- <div id="calendar">
-    <b-calendar :date-format-options="{ day: 'numeric', year: 'numeric' , month: 'numeric'}"
-    v-model="value" :min="min" :max="max" locale="fr" ></b-calendar>
-  </div>
- <div id="time" >
 
-<input type="checkbox" id="1" value=" 09:00:00" v-model="hours">
-<label for="1">09:00 - 09:30 |</label>
-<input type="checkbox" id="2" value=" 09:30:00" v-model="hours">
-<label for="2">09:30 - 10:00 |</label>
-<br>
+    <div id="calendar">
+        <b-calendar :date-format-options="{ day: 'numeric', year: 'numeric' , month: 'numeric'}"
+        v-model="value" :min="min" :max="max" locale="fr" ></b-calendar>
+    </div>
 
-<input type="checkbox" id="3" value=" 10:00:00" v-model="hours">
-<label for="3">10:00 - 10:30 |</label>
-<input type="checkbox" id="4" value=" 10:30:00" v-model="hours">
-<label for="4">10:30 - 11:00 |</label>
-<br>
 
-<input type="checkbox" id="5" value=" 11:00:00" v-model="hours">
-<label for="5">11:00 - 11:30 |</label>
-<input type="checkbox" id="6" value=" 11:30:00" v-model="hours">
-<label for="6">11:30 - 12:00 |</label>
-<br>
+      <div id="time" >
 
-<input type="checkbox" id="7" value=" 13:00:00" v-model="hours">
-<label for="7">13:00 - 13:30 |</label>
-<input type="checkbox" id="8" value=" 13:30:00" v-model="hours">
-<label for="8">13:30 - 14:00 |</label>
-<br>
+        <input type="checkbox" id="1" value=" 09:00:00" v-model="hours">
+        <label for="1">09:00 - 09:30 |</label>
+        <input type="checkbox" id="2" value=" 09:30:00" v-model="hours">
+        <label for="2">09:30 - 10:00 |</label>
+        <br>
 
-<input type="checkbox" id="9" value=" 14:00:00" v-model="hours">
-<label for="9">14:00 - 14:30 |</label>
-<input type="checkbox" id="10" value=" 14:30:00" v-model="hours">
-<label for="10">14:30 - 15:00 |</label>
-<br>
+        <input type="checkbox" id="3" value=" 10:00:00" v-model="hours">
+        <label for="3">10:00 - 10:30 |</label>
+        <input type="checkbox" id="4" value=" 10:30:00" v-model="hours">
+        <label for="4">10:30 - 11:00 |</label>
+        <br>
 
-<input type="checkbox" id="11" value=" 15:00:00" v-model="hours">
-<label for="11">15:00 - 15:30 |</label>
-<input type="checkbox" id="12" value=" 15:30:00" v-model="hours">
-<label for="12">15:30 - 16:00 |</label> 
- </div>
+        <input type="checkbox" id="5" value=" 11:00:00" v-model="hours">
+        <label for="5">11:00 - 11:30 |</label>
+        <input type="checkbox" id="6" value=" 11:30:00" v-model="hours">
+        <label for="6">11:30 - 12:00 |</label>
+        <br>
+
+        <input type="checkbox" id="7" value=" 13:00:00" v-model="hours">
+        <label for="7">13:00 - 13:30 |</label>
+        <input type="checkbox" id="8" value=" 13:30:00" v-model="hours">
+        <label for="8">13:30 - 14:00 |</label>
+        <br>
+
+        <input type="checkbox" id="9" value=" 14:00:00" v-model="hours">
+        <label for="9">14:00 - 14:30 |</label>
+        <input type="checkbox" id="10" value=" 14:30:00" v-model="hours">
+        <label for="10">14:30 - 15:00 |</label>
+        <br>
+
+        <input type="checkbox" id="11" value=" 15:00:00" v-model="hours">
+        <label for="11">15:00 - 15:30 |</label>
+        <input type="checkbox" id="12" value=" 15:30:00" v-model="hours">
+        <label for="12">15:30 - 16:00 |</label> 
+        </div>
+          
+          <div id="button-back">
+            <b-button @click="backbutton"  class="button button-close" squared variant="outline-danger">Back</b-button>
+            <b-button squared variant="danger" type="submit">Save</b-button>
+            <div id="button-alert">
+              <alert ></alert>
+            </div>
+          </div>
+</form>
   
-  </div>
- <br>
-
- <br>
-
-  <div id="button-back">
-  <b-button @click="backbutton"  class="button button-close" squared variant="outline-danger">Back</b-button>
-  <b-button squared variant="danger" type="submit">Save</b-button>
-  <div id="button-alert">
-       <alert ></alert>
-      </div>
-  </div>
+  
+  
  
   
-    </form>
+    
      
             
     
@@ -123,29 +124,48 @@ export default {
 <style scoped>
 #template{
   background-color: #bababa;
+  height: 720px;
+  
+
 }
 #calendar{
-/* text-align: center; */
-position: absolute;
-margin-right: 100px;
+
+  position: absolute;
+  left: 30%;
+  width: 20%;
+  margin-top:80px;
+  
+
 }
 #button-back{
-text-align: center;
+  
+  text-align: center;
+  margin-top:35%;
 }
 #button-alert{
 float: right;
 }
 #time {
-width: 250px;
-position:absolute;
-top:20%;
-margin-left: 100%;
-/* border: 2px solid black; */
+
+  position: absolute;
+  margin-top:150px;
+  left: 50%;
+  width: 40%;
+  width: 250px;
+  
+
+ 
 }
 
-/* #page{
-  width: 100%;
-  height: 50%
-  
-} */
+form{
+
+  height: 580px;
+}
+
+h1{
+  text-align: center;
+  font-size: 50px;
+  font-family: Georgia;
+}
+
 </style>
