@@ -147,7 +147,7 @@ export default {
       this.secretarySelected = true;
       let secretaryId = newSecretary;
       axios
-        .post("availabilities/", {
+        .post("availabilities", {
           secretaryId: secretaryId,
           date: this.request.date,
         })

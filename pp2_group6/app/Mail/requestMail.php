@@ -30,6 +30,4 @@ class requestMail extends Mailable
     {
         return $this->subject('Appointment Request Confirmation [EHB]')->view('email.requestEmail');
     }
-
-    
 }
