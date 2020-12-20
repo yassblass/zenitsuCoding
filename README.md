@@ -15,6 +15,10 @@ There is no hesitation in saying that the secretariat is very important in a sch
 * **Laravel** for the back-end
 * **Docker**
 
+### Docker 
+You can access our web application via this link : https://10.3.50.14/ (Make sure the school VPN is on) 
+* See "Sprint Retrospective" in deliverables folder to understand Docker problems
+
 ### Launch our Web Application on your localhost
 * `composer install` => Downloads all the libraries and dependencies for composer
 * `npm install` => Downloads a package and it's dependencies
