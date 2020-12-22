@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # zenitsuCoding
 This is where all the magic happens.
 =======
