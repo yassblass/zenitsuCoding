@@ -20,12 +20,14 @@ class LoginController extends Controller
 
         if (Auth::attempt($request->only('email','password'))){
             return response()->json(Auth::user(),200);
+            //return redirect()->intended('/secretary/dashboard');
         }else{
             throw ValidationException::withMessages([
                 'email'=>['the provided credentials are incorect']
             ]);
         }
     }
+
 
     //function that logs the user out.
     public function logout(){

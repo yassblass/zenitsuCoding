@@ -27,7 +27,8 @@ class RegisterController extends Controller
             'email' => $request->email,
             'admin' => $request->admin,
             'forgot_password' => Hash::make(Str::random(50)),
-            'password'=> Hash::make($request->forgot_password)
+            //'password'=> Hash::make($request->forgot_password)
+            'password'=> Hash::make($request->password),
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <template>
 <div>
-    <navbar></navbar> 
+    <navbar :onLoginPage= true ></navbar> 
     <div class="container">
         <h1>Login</h1>
 
@@ -14,8 +14,9 @@
         <button @click.prevent="loginUser" type="submit" class="btn btn-danger" style="margin-bottom:20px; " >Log in</button>
 
         <router-link to="/secretary/forgot/" id="fpwd">Forgot password?</router-link>
-
+        <button @click="logout"> LOG OUT</button>
     </div>
+    
 </div>
 </template>
 
@@ -29,18 +30,31 @@ export default {
                 password:''
             },
             errors:null,
+            userIsLoggedIn: false,
+            check : '',
 
         }
+    },
+    mounted () {
+        
     },
     methods:{
         //method send object to controller and if ok send to dashboard
         loginUser(){
-            axios.post('/api/login', this.form).then(()=>{
-                this.$router.push({name:"dashboard"});
+            axios.post('/api/login', this.form).then(res =>{
+                    console.log('login res:', res)
+                    this.$router.push({name:"dashboard"});
+                
+                
             }).catch((error)=>{
                 this.errors = error.response.data.errors;
             })
-        }
+        },
+        logout() {
+      axios.post("/api/logout").then(() => {
+        this.check = "LOGGED OUT";
+      });
+    },
     }
     
 }

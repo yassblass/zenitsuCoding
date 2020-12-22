@@ -23,7 +23,7 @@ export default{
             name:"dashboard",
             //checking if you are logged in and if not it redirect you to the login page
             beforeEnter: (to, form, next) =>{
-                Axios.get('/api/authenticated').then(()=>{
+                Axios.get('/api/authenticated').then(() =>{
                     next();
                 }).catch(()=>{
                     return next({name:"login"});
@@ -72,20 +72,7 @@ export default{
             path:"/secretary/login",
             component:Login,
             name:"login",
-            beforeEnter: (to, form, next) =>{
-                Axios.get('/api/authenticated').then((res)=>{
-
-                    if(res.data == true){
-                    next(false);
-                    return next({name:"dashboard"});
-                        
-                    }else{
-                        next();
-                    }
-                }).catch(()=>{
-                    next()
-                });
-            }
+           
         },
         {
             path:"/secretary/register",
