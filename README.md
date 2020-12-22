@@ -1,2 +1,2 @@
 # zenitsuCoding
-Thisis where all the magic happens.
+This is where all the magic happens.
