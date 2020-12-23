@@ -5,7 +5,7 @@ use App\Mail\AlMail;
 use App\Mail\cancelMail;
 use App\Mail\AcceptMail;
 use App\Mail\RefuseMail;
-use App\Mail\VerificationCode;
+use App\Mail\verificationCode;
 use App\Mail\forgotPasswordMail;
 
 

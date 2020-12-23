@@ -46,10 +46,9 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <img src="/images/logo_ehb.jpg" style="width: 50px; height: 50px" />
+        <img src="/images/ehb_logo_white_horizontal.png" style="width: 100px; height: 25px" />
       </div>
     </nav>
-    <pre> {{ check }}</pre>
   </div>
 </template>
 
@@ -60,7 +59,6 @@ export default {
     return {
       user: "",
       userIsLoggedIn: false,
-      check: "user not logged in",
     };
   },
   methods: {
@@ -74,23 +72,20 @@ export default {
   // when component is mountend get user who is logged in to show on page
   mounted() {
     //Get call to verify if user is logged in.
-    if(!this.$props.onLoginPage) {
-        axios.get("/api/authenticated").then((res) => {
+    if (!this.$props.onLoginPage) {
+      axios.get("/api/authenticated").then((res) => {
         //Set local response variable equal to axios response.
-        console.log("Authenticated response:", res.data);
+        //console.log("Authenticated response:", res.data);
         if (res.data === 1) {
-          this.check = "User logged in!";
           this.userIsLoggedIn = true;
 
           axios.get("/api/user").then((res) => {
-            console.log("user info:", res.data);
+            //console.log("user info:", res.data);
             this.user = res.data;
           });
         }
       });
     }
-      
-    
   },
 };
 </script>

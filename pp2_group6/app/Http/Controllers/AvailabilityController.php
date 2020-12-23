@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Availability;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,25 +11,98 @@ use Illuminate\Support\Facades\DB;
 
 class AvailabilityController extends Controller
 {
+
+    //Sets a secretary free from 09AM -12PM
+    public function setMorningFree (Request $request) {
+        $startTime = new Carbon('09:00:00');
+        $date=$request['date'];
+        $user = Auth::user();
+
+        for ($x = 0; $x <=5; $x++) {
+
+            $matchThese = ['user_id' => $user->user_id, 'time' => $startTime];
+            if(Availability::where($matchThese)->count() > 0){
+                Availability::find($user->user_id)->delete();
+            };
+
+            Availability::create(array(
+                'user_id' => $user->user_id,
+                'date' => $date,
+                'time' =>$startTime,
+            ));
+
+            $startTime = $startTime->addMinutes(30);
+          }
+
+        return response(1);
+    }
+
+    public function setAfternoonFree (Request $request) {
+        $startTime = new Carbon('13:30:00');
+        $date=$request['date'];
+        $user = Auth::user();
+
+        for ($x = 0; $x <=4; $x++) {
+
+            $matchThese = ['user_id' => $user->user_id, 'time' => $startTime];
+            if(Availability::where($matchThese)->count() > 0){
+                Availability::find($user->user_id)->delete();
+            };
+
+            Availability::create(array(
+                'user_id' => $user->user_id,
+                'date' => $date,
+                'time' =>$startTime,
+            ));
+
+            $startTime = $startTime->addMinutes(30);
+          }
+          return response(1);   
+    }
+
+
     public function insertAvailabilities(Request $request){
         // Put the array of hours in another array variable
-        $hours = $request['hours'];
+        $time = $request['time'];
+        $date = $request['date'];
         $user = Auth::user();
-    
-        foreach($hours as $hour){ 
-            // Make a string wtih de date and time
-            $string = $request['date'] . $hour;
-            // Convert the string to datetime
-            $date = strtotime($string); 
-            // Insert the availabilities to the database
-            DB::table('availabilities')->insert([
-                ['user_id' => $user->user_id, 
-                'date' => $request['date'], 
-                'time' => date('Y-m-d H:i:s', $date), 
-                'status' => 'free']
-            ]);
+
+
+        $matchThese = ['date' => $date, 'time' => $time];
+
+        //Check if availability doesn't exist already.
+        if(Availability::where($matchThese)->count() > 0){
+            //Availability already exists
+            return response (0);
         }
+        else {
+            //Availability can be added
+            Availability::create(array(
+                'user_id' => $user->user_id,
+                'date' => $date,
+                'time' =>$time
+            ));
+
+            return response(1);
+
+        }
+    
+        // foreach($hours as $hour){ 
+        //     // Make a string wtih de date and time
+        //     $string = $request['date'] . $hour;
+        //     // Convert the string to datetime
+        //     $date = strtotime($string); 
+        //     // Insert the availabilities to the database
+        //     DB::table('availabilities')->insert([
+        //         ['user_id' => $user->user_id, 
+        //         'date' => $request['date'], 
+        //         'time' => date('Y-m-d H:i:s', $date), 
+        //         'status' => 'free']
+        //     ]);
+        // }
             
+
+        //Check
     }
 
     public function getAllAvailibility()

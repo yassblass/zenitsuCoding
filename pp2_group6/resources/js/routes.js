@@ -133,30 +133,18 @@ export default{
                 axios.get('/api/allUsers').then((res)=>{
 
                     for(let a in res.data){
-    
-                    
-    
                         if(res.data[a].forgot_password == to.params.id){
-                    
                             next();
-
                             bool = true;
-    
                         }
-                    
                     }
-
                     if(bool == false){
                     return next({name:"login"});
                     }
-    
-    
                 }).catch(()=>{
                     return next({name:"login"});
                 })
-            }
-            
-           
+            } 
         },
         {
     
@@ -170,11 +158,6 @@ export default{
                     return next({name:"login"});
                 })
             }
-           
         },
-       
-    
-
     ]
-
 }

@@ -55,6 +55,12 @@ Route::post('verifyCode/', \App\Http\Controllers\VerificationController::class .
 Route::post('checkEmail', \App\Http\Controllers\AppointmentController::class . '@checkEmail');
 
 
+//--------------------------------------------------------------------------------------------------------------------
+//SET SECRETARY FREE FOR AFTERNOON/MORNING
+Route::post('/secretary/freeMorning', \App\Http\Controllers\AvailabilityController::class . '@setMorningFree');
+
+Route::post('/secretary/freeAfternoon', \App\Http\Controllers\AvailabilityController::class . '@setAfternoonFree');
+
 
 
 //ALL ROUTES WITH 'appointment' PREFIX.

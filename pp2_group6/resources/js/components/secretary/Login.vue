@@ -16,6 +16,8 @@
         <router-link to="/secretary/forgot/" id="fpwd">Forgot password?</router-link>
         <button @click="logout"> LOG OUT</button>
     </div>
+
+    <footer></footer>
     
 </div>
 </template>
@@ -42,7 +44,7 @@ export default {
         //method send object to controller and if ok send to dashboard
         loginUser(){
             axios.post('/api/login', this.form).then(res =>{
-                    console.log('login res:', res)
+                    //console.log('login res:', res)
                     this.$router.push({name:"dashboard"});
                 
                 
