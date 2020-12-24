@@ -127,9 +127,7 @@
         </div>
       </form>
     </div>
-    <div>
-      <foot></foot>
-    </div>
+   
   </div>
 </template>
 

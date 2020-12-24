@@ -17,13 +17,14 @@
       </div>
 
 
-      <div class="modal-body">
-        <form >
-          <label for="reason">Can you describe the problem?</label>
+      <div class="modal-body mx-auto">
+        <form>
+          <label for="reason">Can you describe the problem?</label> <br />
           <textarea name="reason" id="reason" cols="30" rows="4" value="description" v-model="description"></textarea>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
         <button type="submit" class="btn btn-success" @click="buttonSignalRequest" >Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+      
          </div>
         </form>
       </div>

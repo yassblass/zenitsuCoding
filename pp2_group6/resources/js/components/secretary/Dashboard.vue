@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import Foot from './Footer.vue'
+
     export default {
         data(){
      

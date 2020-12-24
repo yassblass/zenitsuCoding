@@ -16,7 +16,7 @@ Vue.use(VueRouter);
 
 Vue.component('alert', require('./components/secretary/Alert.vue').default);
 Vue.component('navbar', require('./components/secretary/Navbar.vue').default);
-Vue.component('foot', require('./components/secretary/Footer.vue').defautl);
+
 
 //Student components
 Vue.component('createAppointments', require('./components/student/CreateAppointments.vue').default);

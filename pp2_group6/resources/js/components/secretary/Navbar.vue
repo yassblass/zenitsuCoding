@@ -1,14 +1,38 @@
 <template>
-  <div>
-    <div class="collapse" id="navbarToggleExternalContent">
+    <b-navbar  type="dark" variant="dark">
+      <b-navbar-brand href="#"> 
+        <img
+          src="/images/ehb_logo_white_horizontal.png"
+          style="width: 100px; height: 25px"/>
+      </b-navbar-brand>
+
+      <b-navbar-nav>
+        <b-nav-item v-if="user.user_id <= 0" to="/secretary/login">
+            Login
+          </b-nav-item>
+          <b-nav-item v-if="user.admin == true" to="/secretary/register">
+            Register a secretary
+          </b-nav-item>
+          <b-nav-item to="/secretary/avatar">
+            Change profile picture
+          </b-nav-item>
+      </b-navbar-nav> 
+
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item  right @click.prevent="logout">
+          <span style="color:red;">Logout</span>
+        </b-nav-item> 
+      </b-navbar-nav>   
+    </b-navbar>
+    <!-- <div class="collapse" id="navbarToggleExternalContent">
       <div class="bg-dark p-4">
         <div class="flex">
           <router-link
             v-if="user.user_id <= 0"
             class="mr-4"
             to="/secretary/login"
-            ><span style="color: white">Login</span></router-link
-          >
+            ><span style="color: white">Login</span>
+          </router-link>
           <router-link v-if="user.admin == true" to="/secretary/register">
             <button class="btn btn-light" style="margin-left: 20px">
               Register
@@ -22,8 +46,7 @@
           <button
             @click.prevent="logout"
             class="btn btn-light"
-            style="margin-left: 20px"
-          >
+            style="margin-left: 20px">
             Logout
           </button>
         </div>
@@ -48,8 +71,7 @@
 
         <img src="/images/ehb_logo_white_horizontal.png" style="width: 100px; height: 25px" />
       </div>
-    </nav>
-  </div>
+    </nav> -->
 </template>
 
 <script>
@@ -91,8 +113,4 @@ export default {
 </script>
 
 <style scoped>
-img {
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>
