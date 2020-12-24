@@ -7,7 +7,7 @@
 
         
 
-        <h1 style="text-align: center; font-size:50px; font-family:Georgia Pro">My Dashboard</h1> <br />
+        <h1 style="text-align: center; font-size:50px; font-family:Georgia Pro">Dashboard</h1> <br />
         <img :src="src"  style="width: 100px; height:100px; border-radius:50%; ">
         <h3>{{user.firstName+" "+user.lastName+ " "}}</h3>
 
