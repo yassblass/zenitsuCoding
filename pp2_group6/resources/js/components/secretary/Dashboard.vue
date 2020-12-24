@@ -22,10 +22,9 @@
     </b-container>
 
     <b-container style="text-align:right; position: absolute; bottom: 0; right:0; margin-bottom: 80px; margin-right: 25px;">
-    <div>
-      <alert></alert>
-    </div>
-
+        <div>
+            <alert></alert>
+        </div>
     </b-container>
 
     <div class="text-center">

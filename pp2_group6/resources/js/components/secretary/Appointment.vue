@@ -1,12 +1,21 @@
 <template>
-  <div id="template">
+  <div class="text-center">
     <navbar></navbar>
-    <div id="titel">
-      <h1>
-        {{ title }}
-      </h1>
-    </div>
-    <div id="table">
+    <br />
+    <br />
+    <h1>{{ title }}</h1>
+
+    <b-container style="text-align:left; position: absolute; top: 0; left:0; margin-top: 80px; margin-left: 25px;">
+      <div>
+        <b-button @click="backbutton" class="button button-close" variant="outline-danger">Back</b-button>
+      </div>
+    </b-container> 
+
+    <b-container> 
+      
+  
+      <br /> <br />
+      
       <div v-if="cancelIsClicked">
         <textarea name="reason" placeholder="Describe the reason why you cancel the appointment" id="reason" cols="125" rows="3" value="description" v-model="description">
           Reason why you cancel
@@ -15,39 +24,44 @@
       <div v-if="cancelIsClicked">
         <b-button id="confirm" type="button" @click="cancelAppointmentSubmit()">
           Confirm cancel
-        </b-button>
+        </b-button> <br />
+    </div>
+
+        
+      <div>
+        <table class="table">
+          <thead>
+            <th scope="col">Date and time</th>
+            <th scope="col">Name</th>
+            <th scope="col">Subject</th>
+          </thead>
+          <tr v-for="appointment in appointments" :key="appointment.appointmentId">
+            <th>{{ appointment.date }} {{ appointment.startsAt }}</th>
+            <th>{{ appointment.firstName }} {{ appointment.lastName }}</th>
+            <th>{{ appointment.subject }}</th>
+            <b-button variant="danger" @click="showTextArea(appointment.appointmentId)">Cancel</b-button>
+          </tr> 
+      
+          <!-- <pagination :data="appointments" @pagination-change-page="getResults"></pagination> -->
+        </table>
       </div>
+    </b-container>
 
-      <table class="table table-stripped table-bordered">
-        <tr
-          v-for="appointment in appointments"
-          :key="appointment.appointmentId"
-        >
-          <th>{{ appointment.date }} {{ appointment.startsAt }}</th>
-          <th>{{ appointment.firstName }} {{ appointment.lastName }}</th>
-          <th>{{ appointment.subject }}</th>
-          <b-button
-            variant="danger"
-            @click="showTextArea(appointment.appointmentId)"
-            >Cancel</b-button
-          >
-        </tr>
-        <!--<pagination :data="appointments" @pagination-change-page="getResults"></pagination> -->
-      </table>
-    </div>
-    <br />
 
-    <div id="button-alert">
-      <alert></alert>
-    </div>
-    <div id="button-back">
-      <b-button
-        @click="backbutton"
-        class="button button-close"
-        squared
-        variant="outline-danger"
-        >Back</b-button
-      >
+
+    
+   
+
+    <b-container style="text-align:right; position: absolute; bottom: 0; right:0; margin-bottom: 80px; margin-right: 25px;">
+        <div>
+            <alert></alert>
+        </div>
+    </b-container>
+
+    <div class="text-center">
+        <footer style="height: 50px; background-color: #343a40; position: absolute; left: 0; right: 0; bottom: 0;">
+            <p style="padding-top: 13px; color: white">&copy; Copyright 2020 | PP2 - Group 6</p>
+        </footer>
     </div>
   </div>
 </template>
@@ -108,39 +122,6 @@ export default {
 </script>
 
 <style scoped>
-#confirm{
-  float: right;
-}
-#template {
-  background-color: #bababa;
-}
-#table {
-  height: 80%;
-  width: 75%;
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 12px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: auto;
-  height: 400px;
-}
-#buttons {
-  margin: 0;
-}
-#button-back {
-  text-align: center;
-  margin-left:60px;
-
-}
-#button-alert {
-  float: right;
-}
-h1{
-    text-align: center;
-    font-size:50px; 
-    font-family:Georgia;
-}
 </style>
 
 
