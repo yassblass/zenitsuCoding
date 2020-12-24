@@ -9,6 +9,8 @@
         <hr />
         <br />
         <div class="d-flex justify-content-center">
+
+          <!-- [ALERT] Availability inserted successfully! -->
           <transition name="slide-fade">
             <b-alert
               :show="dismissCountDown"
@@ -20,9 +22,27 @@
             </b-alert>
           </transition>
 
-          <b-alert v-model="availabilityExists" variant="danger" dismissible>
-            Availability already exists, please choose another date!
-          </b-alert>
+          <!-- [ALERT] Availability already exists! -->
+          <transition name="slide-fade">
+            <b-alert v-model="availabilityExists" variant="danger" dismissible>
+              Availability already exists, please choose another date!
+            </b-alert>
+          </transition>
+
+          <!-- [ALERT] Afternoon availability set successfully -->
+          <transition name="slide-fade">
+            <b-alert v-model="afternoonSet" variant="success" >
+              You are now free for the afternoon on {{ selectedDate }}!
+            </b-alert>
+          </transition>
+          <!-- [ALERT] Morning availability set successfully -->
+          <transition name="slide-fade">
+            <b-alert v-model="morningSet" variant="success" >
+              You are now free for the morning on {{ selectedDate }}!
+            </b-alert>
+          </transition>
+
+         
         </div>
 
         <div id="calendar" class="d-flex justify-content-center">
@@ -40,50 +60,53 @@
           ></b-calendar>
         </div>
         <br />
+
         <div class="d-flex justify-content-center">
           <pre id="dateMessage" v-if="dateNotGiven">
         <strong>Date is required! Please choose a date.</strong></pre>
         </div>
 
-        <!-- <div id="time" >
+        <div v-if="dateSelected && !selectHours" class="container">
+          <div class="d-flex justify-content-center">
+            <strong>Set me free for </strong>
+          </div>
 
-        <input type="checkbox" id="1" value=" 09:00:00" v-model="hours">
-        <label for="1">09:00 - 09:30 |</label>
-        <input type="checkbox" id="2" value=" 09:30:00" v-model="hours">
-        <label for="2">09:30 - 10:00 |</label>
-        <br>
+          <div class="d-flex justify-content-center">
+            <div class="row col-md-4">
+              <b-button
+                type="button"
+                variant="primary"
+                @click="setMeFreeMorning"
+              >
+                The morning
+              </b-button>
+              <b-button
+                type="button"
+                variant="danger"
+                @click="setMeFreeAfternoon"
+              >
+                The afternoon
+              </b-button>
+            </div>
+            <br />
+            <hr />
+          </div>
 
-        <input type="checkbox" id="3" value=" 10:00:00" v-model="hours">
-        <label for="3">10:00 - 10:30 |</label>
-        <input type="checkbox" id="4" value=" 10:30:00" v-model="hours">
-        <label for="4">10:30 - 11:00 |</label>
-        <br>
+          <div class="d-flex justify-content-center">
+            <strong>OR </strong>
+          </div>
 
-        <input type="checkbox" id="5" value=" 11:00:00" v-model="hours">
-        <label for="5">11:00 - 11:30 |</label>
-        <input type="checkbox" id="6" value=" 11:30:00" v-model="hours">
-        <label for="6">11:30 - 12:00 |</label>
-        <br>
+          <div class="d-flex justify-content-center">
+            <div class="row col-md-4">
+              <b-button type="button" variant="dark" @click="showTimeInput">
+                Select hours
+              </b-button>
+            </div>
+          </div>
+        </div>
+        <br />
 
-        <input type="checkbox" id="7" value=" 13:00:00" v-model="hours">
-        <label for="7">13:00 - 13:30 |</label>
-        <input type="checkbox" id="8" value=" 13:30:00" v-model="hours">
-        <label for="8">13:30 - 14:00 |</label>
-        <br>
-
-        <input type="checkbox" id="9" value=" 14:00:00" v-model="hours">
-        <label for="9">14:00 - 14:30 |</label>
-        <input type="checkbox" id="10" value=" 14:30:00" v-model="hours">
-        <label for="10">14:30 - 15:00 |</label>
-        <br>
-
-        <input type="checkbox" id="11" value=" 15:00:00" v-model="hours">
-        <label for="11">15:00 - 15:30 |</label>
-        <input type="checkbox" id="12" value=" 15:30:00" v-model="hours">
-        <label for="12">15:30 - 16:00 |</label> 
-        </div> -->
-
-        <div>
+        <div v-if="selectHours">
           <label for="appt"
             ><strong>Choose a time for your meeting:</strong></label
           >
@@ -104,14 +127,12 @@
           <br />
           <hr />
           <div class="d-flex justify-content-center">
-            <b-button type="submit"> Submit </b-button>
+            <b-button type="submit" variant="primary"> Submit </b-button>
+            <b-button type="submit" @click="resetComponents"> Cancel </b-button>
           </div>
         </div>
-        <b-button type="button" variant="primary" @click="setMeFreeMorning"> Set me free for the morning </b-button>
-        <b-button type="button" variant="success" @click="setMeFreeAfternoon"> Set me free for the afternoon </b-button>
 
         <div id="button-back">
-          
           <b-button
             @click="backbutton"
             class="button button-close"
@@ -120,14 +141,13 @@
             >Back</b-button
           >
 
-          <b-button squared variant="danger" type="submit">Save</b-button>
+         
           <div id="button-alert">
             <alert></alert>
           </div>
         </div>
       </form>
     </div>
-   
   </div>
 </template>
 
@@ -156,24 +176,41 @@ export default {
       availabilityExists: false,
       dismissCountDown: 0,
       dismissSecs: 2,
+      dateSelected: false,
+      selectHours: false,
+      afternoonSet: false,
+      morningSet: false,
     };
   },
   methods: {
-    setMeFreeAfternoon () {
-      axios.post('/secretary/freeAfternoon', {
-        date: this.selectedDate,
-      })
-      .then(res => {
-        console.log(res.data);
-      })
+    resetComponents() {
+      this.dateSelected = false;
+      this.selectHours = false;
     },
-    setMeFreeMorning (){
-      axios.post('/secretary/freeMorning', {
-        date: this.selectedDate,
-      })
-      .then(res => {
-        console.log(res.data);
-      })
+    showTimeInput() {
+      this.selectHours = true;
+    },
+    setMeFreeAfternoon() {
+      axios
+        .post("/secretary/freeAfternoon", {
+          date: this.selectedDate,
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+      this.afternoonSet = true;
+      window.location.reload();
+    },
+    setMeFreeMorning() {
+      axios
+        .post("/secretary/freeMorning", {
+          date: this.selectedDate,
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+      this.morningSet = true;
+      window.location.reload();
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
@@ -200,7 +237,7 @@ export default {
               console.log(JSON.stringify(response.data) + " Done");
               if (response.data === 1) {
                 console.log("Availability added!");
-                
+
                 this.dismissCountDown = this.dismissSecs;
               } else if (response.data === 0) {
                 console.log("Availability already exists!");
@@ -215,21 +252,16 @@ export default {
           .catch((error) => console.log(error + " Failed"));
       }
     },
-    // insert all the available hours that are selected with the selected date
-    insertAvailabilities() {
-      axios
-        .post("/api/insertAvailabilities/", {
-          date: this.value,
-          hours: this.hours,
-        })
-        .then(
-          (response) => console.log(JSON.stringify(response.data) + " Done"),
-          window.location.reload()
-        )
-        .catch((error) => console.log(error + " Failed"));
-    },
     backbutton() {
       this.$router.push({ name: "dashboard" });
+    },
+  },
+  watch: {
+    selectedDate: function (newDate) {
+      //Set dateSelected boolean to true.
+      this.dateSelected = true;
+      //Assign newly selected date to local variable.
+      this.selectedDate = newDate;
     },
   },
 };
