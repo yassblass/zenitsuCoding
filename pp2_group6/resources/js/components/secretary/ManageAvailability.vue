@@ -8,6 +8,7 @@
         
           <table class="table table-stripped table-bordered">
    <tbody>
+            <div class="d-flex justify-content-center"><strong v-if="!availabilities.length && componentMounted">No Availabilities yet! </strong></div>
             <tr v-for="availability in availabilities" :key="availability.avId" >
               <th >{{ availability.date }} {{ availability.time }}</th>
               <th >{{ availability.status }}</th>
@@ -40,25 +41,28 @@ export default {
  data(){
 
     return{
-  
       title : "Manage Availabilities",
       availabilities: '',
-
-    
-      
+      componentMounted: false,
     }
   },
   mounted() {
     axios.get('/api/user').then((res)=>{
       this.user = res.data;
+      this.componentMounted = true;
     })
-     console.log('Component mounted.');
-    },
-  created(){
-    axios.get('/api/getAllAvailabilities')
-    .then(response => this.availabilities = response.data)
+     //console.log('Component mounted.');
+
+     axios.get('/api/getAllAvailabilities')
+    .then(response => {
+      this.availabilities = response.data;
+      })
     .catch(error => console.log(error))
+    
     },
+    
+  created(){},
+    
   methods : {
 
       backbutton(){

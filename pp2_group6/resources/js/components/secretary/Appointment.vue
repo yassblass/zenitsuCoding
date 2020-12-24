@@ -77,13 +77,15 @@ export default {
       id: "",
       cancelIsClicked: false,
       currentAppointmentId: "",
+      componentMounted: false,
     };
   },
   mounted() {
     axios.get("/api/user").then((res) => {
       this.user = res.data;
     });
-    console.log("Component mounted.");
+    //console.log("Component mounted.");
+    this.componentMounted = true;
   },
   created() {
     axios
