@@ -7,7 +7,7 @@
 
     <b-container style="text-align:left; position: absolute; top: 0; left:0; margin-top: 80px; margin-left: 25px;">
       <div>
-        <b-button @click="backbutton" class="button button-close" variant="outline-danger">Back</b-button>
+        <b-button @click="backbutton" class="button button-close" variant="danger">Back</b-button>
       </div>
     </b-container> 
 
