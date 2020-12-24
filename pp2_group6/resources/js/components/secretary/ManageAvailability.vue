@@ -1,5 +1,57 @@
 <template>
-<div id="template">
+<div class="text-center">
+    <navbar></navbar>
+    <br />
+    <br />
+    <h1>{{ title }}</h1>
+
+    <b-container style="text-align:left; position: absolute; top: 0; left:0; margin-top: 80px; margin-left: 25px;">
+      <div>
+        <b-button @click="backbutton" class="button button-close" variant="danger">Back</b-button>
+      </div>
+    </b-container> 
+
+    <b-container >
+      <div>
+        <table class="table" >
+          <thead>
+            <th scope="col">Date and time</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+          </thead>
+          <tbody>
+          <tr v-for="availability in availabilities" :key="availability.avId" >
+              <th >{{ availability.date }} {{ availability.time }}</th>
+              <th >{{ availability.status }}</th>
+              <th><b-button variant="danger" @click="cancelAvailability(availability.avId)">Cancel</b-button></th>
+          </tr>
+          </tbody>
+      
+          <!-- <pagination :data="appointments" @pagination-change-page="getResults"></pagination> -->
+        </table>
+      </div>
+    </b-container>
+
+
+
+    
+   
+
+    <b-container style="text-align:right; position: absolute; bottom: 0; right:0; margin-bottom: 80px; margin-right: 25px;">
+        <div>
+            <alert></alert>
+        </div>
+    </b-container>
+
+    <div class="text-center">
+        <footer style="height: 50px; background-color: #343a40; position: absolute; left: 0; right: 0; bottom: 0;">
+            <p style="padding-top: 13px; color: white">&copy; Copyright 2020 | PP2 - Group 6</p>
+        </footer>
+    </div>
+  </div>
+
+
+<!-- <div id="template">
    <navbar></navbar>
   <div id="titel">
     <h1>{{title}} </h1>
@@ -28,7 +80,7 @@
       <b-button @click="backbutton"  class="button button-close" squared variant="outline-danger">Back</b-button>
       </div>
             
-</div>
+</div> -->
 
 </template>
 
@@ -87,37 +139,6 @@ export default {
 
 </script>
 <style scoped>
-#template{
-  background-color: #bababa;
-}
-#table { 
-  height: 80%;
-  width: 75%;
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 12px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: auto; 
-  height:400px; 
-}
-#buttons{
- margin: 0;
-}
-#button-back{
-  text-align: center;
-  margin-left:60px;
-
-}
-#button-alert{
-  float: right;
-}
-h1{
-    text-align: center;
-    font-size:50px; 
-    font-family:Georgia;
-}
-
 </style>
 
 
