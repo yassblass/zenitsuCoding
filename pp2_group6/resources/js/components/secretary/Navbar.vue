@@ -1,12 +1,23 @@
 <template>
     <b-navbar  type="dark" variant="dark">
-      <b-navbar-brand href="#"> 
+      <b-navbar-brand href="#" class="mx-auto"> 
         <img
           src="/images/ehb_logo_white_horizontal.png"
           style="width: 100px; height: 25px"/>
       </b-navbar-brand>
 
-      <b-navbar-nav>
+      <b-navbar-nav v-if="user.user_id > 0">
+        <b-nav-item-dropdown right>
+          <b-dropdown-item v-if="user.user_id <= 0" to="/secretary/login">Login</b-dropdown-item>
+          <b-dropdown-item v-if="user.admin == true" to="/secretary/register">Register secretary</b-dropdown-item>
+          <b-dropdown-item v-if="user.user_id > 0" to="/secretary/avatar">Change profile picture</b-dropdown-item>
+          <b-dropdown-item v-if="user.user_id > 0" @click.prevent="logout"><span style="color:red;">Logout</span></b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+
+
+
+      <!-- <b-navbar-nav>
         <b-nav-item v-if="user.user_id <= 0" to="/secretary/login">
             Login
           </b-nav-item>
@@ -22,7 +33,7 @@
         <b-nav-item  right @click.prevent="logout">
           <span style="color:red;">Logout</span>
         </b-nav-item> 
-      </b-navbar-nav>   
+      </b-navbar-nav>    -->
     </b-navbar>
     <!-- <div class="collapse" id="navbarToggleExternalContent">
       <div class="bg-dark p-4">
