@@ -12,10 +12,23 @@
         <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
 
         <script src="{{ asset('js/app.js') }}"></script>
+
+        <!-- Styles -->
+        <style>
+            html {
+                height:100%;
+            }
+
+            body {
+                min-height:100%; 
+                position: relative; 
+                padding-bottom: 50px;
+            }
+        </style>
     </head>
 
     <body>
-        <div id="app" style="width:100%; height:100%">
+        <div id="app">
             @yield('content')
         
         </div>

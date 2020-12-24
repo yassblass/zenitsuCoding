@@ -42,7 +42,7 @@
         <br />
         <div class="d-flex justify-content-center">
           <pre id="dateMessage" v-if="dateNotGiven">
- <strong>Date is required! Please choose a date.</strong></pre>
+        <strong>Date is required! Please choose a date.</strong></pre>
         </div>
 
         <!-- <div id="time" >
@@ -126,6 +126,9 @@
           </div>
         </div>
       </form>
+    </div>
+    <div>
+      <foot></foot>
     </div>
   </div>
 </template>
@@ -239,12 +242,7 @@ export default {
   background-color: #bababa;
   /*height: 720px;*/
 }
-#calendar {
-  /* position: absolute;
-  left: 30%;
-  width: 20%;
-  margin-top: 80px; */
-}
+
 #button-back {
   text-align: center;
   margin-top: 35%;
