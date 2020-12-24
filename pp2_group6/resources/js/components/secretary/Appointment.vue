@@ -19,6 +19,7 @@
       </div>
 
       <table class="table table-stripped table-bordered">
+        <div class="d-flex justify-content-center"><strong v-if="!appointments.length && componentMounted">No Appointments yet! </strong></div>
         <tr
           v-for="appointment in appointments"
           :key="appointment.appointmentId"
@@ -63,13 +64,15 @@ export default {
       id: "",
       cancelIsClicked: false,
       currentAppointmentId: "",
+      componentMounted: false,
     };
   },
   mounted() {
     axios.get("/api/user").then((res) => {
       this.user = res.data;
     });
-    console.log("Component mounted.");
+    //console.log("Component mounted.");
+    this.componentMounted = true;
   },
   created() {
     axios
