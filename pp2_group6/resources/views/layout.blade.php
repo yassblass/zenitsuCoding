@@ -20,6 +20,7 @@
             }
 
             body {
+                background-color: #C0C0C0;
                 min-height:100%; 
                 position: relative; 
                 padding-bottom: 50px;

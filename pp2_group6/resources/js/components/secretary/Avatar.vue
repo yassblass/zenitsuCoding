@@ -1,7 +1,14 @@
 <template>
-    <div v-if="user">
+    <div v-if="user" class="text-center">
 
         <navbar></navbar>
+
+<b-container style="text-align:left; position: absolute; top: 0; left:0; margin-top: 80px; margin-left: 25px;">
+      <div>
+        <b-button @click="backbutton" class="button button-close" variant="danger">Back</b-button>
+      </div>
+    </b-container> 
+    <br/><br/>
         <form id="form" @submit.prevent="profileUpload" methode="POST">
 
             <div v-if="preview == null">
@@ -10,30 +17,31 @@
             <div v-if="preview">
                 <img id="img" class="center" :src="preview" style="width: 100px; height:100px; border-radius:50%; ">
             </div>
-
-            <div class="input-group" id="inputs">
+<br/>
+            <div style="width: 400px;" class="input-group mx-auto" id="inputs">
             <div class="custom-file">
                 <input type="file"  @change="imageSelected" name="fileToUpload" class="custom-file-input" id="inputGroupFile04">
                 <label class="custom-file-label" for="inputGroupFile05">Choose</label>
             </div>
             </div>
+            <br/>
                 <button class="btn btn-outline-secondary" id="upload" value="Upload Image" name="submit" type="submit">Upload</button>
+
+                <br/>
 
         </form>
 
-   <div id="button-alert">
-      <alert></alert>
-    </div>
-    <div id="button-back">
-      <b-button
-        @click="backbutton"
-        class="button button-close"
-        squared
-        variant="outline-danger"
-        >Back</b-button
-      >
-    </div>
+        <b-container style="text-align:right; position: absolute; bottom: 0; right:0; margin-bottom: 80px; margin-right: 25px;">
+            <div>
+                <alert></alert>
+            </div>
+        </b-container>
 
+        <div class="text-center">
+        <footer style="height: 50px; background-color: #343a40; position: absolute; left: 0; right: 0; bottom: 0;">
+            <p style="padding-top: 13px; color: white">&copy; Copyright 2020 | PP2 - Group 6</p>
+        </footer>
+    </div>
     </div>
 </template>
 
@@ -107,43 +115,5 @@ export default {
 </script>
 
 <style scoped>
-#form{
-    margin-top: 50px;
-    margin-left: auto; 
-    margin-right: auto; 
 
-}
-#button-back {
-
-    margin-left: 609px;
-    margin-top: 35px;
-
-
-
-}
-#button-alert {
-  float: right;
-    margin-top: 35px;
-
-}
-
-#inputGroupFile04{
-    width: 40%;
-}
-#inputs{
-    width: 150px;
-    margin-left: auto; 
-    margin-right: auto; 
-}
-#upload{
-    margin-left: 599px;
-    margin-top: 35px;
-
-    
-}
-#img{
-    margin-bottom: 50px;
-    margin-left: 585px; 
-    /* margin-right: auto; */
-}
 </style>

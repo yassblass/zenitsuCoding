@@ -1,23 +1,28 @@
 <template>
-  <div id="template">
+  <div class="text-center">
     <navbar></navbar>
 
-    <div class="d-flex justify-content-center">
+    <b-container style="text-align:left; position: absolute; top: 0; left:0; margin-top: 80px; margin-left: 25px;">
+      <div>
+        <b-button @click="backbutton" class="button button-close" variant="danger">Back</b-button>
+      </div>
+    </b-container> 
+
+
+    <div>
       <form @submit.prevent="submitTime">
+        <br />
         <h1>{{ title }}</h1>
         <br />
-        <hr />
-        <br />
-        <div class="d-flex justify-content-center">
-
+     
+        <div class="mx-auto" style="width:400px;">
           <!-- [ALERT] Availability inserted successfully! -->
           <transition name="slide-fade">
             <b-alert
               :show="dismissCountDown"
               variant="success"
               @dismissed="dismissCountDown = 0"
-              @dismiss-count-down="countDownChanged"
-            >
+              @dismiss-count-down="countDownChanged">
               Availability added successfully !
             </b-alert>
           </transition>
@@ -35,17 +40,16 @@
               You are now free for the afternoon on {{ selectedDate }}!
             </b-alert>
           </transition>
+
           <!-- [ALERT] Morning availability set successfully -->
           <transition name="slide-fade">
             <b-alert v-model="morningSet" variant="success" >
               You are now free for the morning on {{ selectedDate }}!
             </b-alert>
           </transition>
-
-         
         </div>
 
-        <div id="calendar" class="d-flex justify-content-center">
+        <div>
           <b-calendar
             :date-format-options="{
               day: 'numeric',
@@ -59,57 +63,55 @@
             required
           ></b-calendar>
         </div>
+
         <br />
 
-        <div class="d-flex justify-content-center">
-          <pre id="dateMessage" v-if="dateNotGiven">
-        <strong>Date is required! Please choose a date.</strong></pre>
+        <div>
+          <pre v-if="dateNotGiven"><strong>Date is required! Please choose a date.</strong></pre>
         </div>
 
-        <div v-if="dateSelected && !selectHours" class="container">
-          <div class="d-flex justify-content-center">
-            <strong>Set me free for </strong>
+
+
+
+        <div v-if="dateSelected && !selectHours">
+          <div>
+            <strong>Set me free for</strong>
           </div>
 
-          <div class="d-flex justify-content-center">
-            <div class="row col-md-4">
+          <div>
+            <div>
               <b-button
                 type="button"
                 variant="primary"
-                @click="setMeFreeMorning"
-              >
+                @click="setMeFreeMorning">
                 The morning
               </b-button>
+
               <b-button
                 type="button"
                 variant="danger"
-                @click="setMeFreeAfternoon"
-              >
+                @click="setMeFreeAfternoon">
                 The afternoon
               </b-button>
             </div>
-            <br />
-            <hr />
           </div>
 
-          <div class="d-flex justify-content-center">
-            <strong>OR </strong>
+          <div>
+            <strong>OR</strong>
           </div>
 
-          <div class="d-flex justify-content-center">
-            <div class="row col-md-4">
+          <div>
+            <div>
               <b-button type="button" variant="dark" @click="showTimeInput">
-                Select hours
+                Select hour
               </b-button>
             </div>
           </div>
         </div>
-        <br />
+
 
         <div v-if="selectHours">
-          <label for="appt"
-            ><strong>Choose a time for your meeting:</strong></label
-          >
+          <label for="appt"><strong>Choose a time for your meeting</strong></label>
 
           <input
             type="time"
@@ -120,33 +122,27 @@
             step="1800"
             value="09:00"
             v-model="chosenTime"
-            required
-          />
+            required/>
 
           <small>Office hours are 9AM to 6PM, (30 min)</small>
-          <br />
-          <hr />
-          <div class="d-flex justify-content-center">
+          <br /> <br /> 
+          <div>
             <b-button type="submit" variant="primary"> Submit </b-button>
             <b-button type="submit" @click="resetComponents"> Cancel </b-button>
           </div>
         </div>
-
-        <div id="button-back">
-          <b-button
-            @click="backbutton"
-            class="button button-close"
-            squared
-            variant="outline-danger"
-            >Back</b-button
-          >
-
-         
-          <div id="button-alert">
-            <alert></alert>
-          </div>
-        </div>
       </form>
+    </div>
+    <b-container style="text-align:right; position: absolute; bottom: 0; right:0; margin-bottom: 80px; margin-right: 25px;">
+        <div>
+            <alert></alert>
+        </div>
+    </b-container>
+
+    <div class="text-center">
+        <footer style="height: 50px; background-color: #343a40; position: absolute; left: 0; right: 0; bottom: 0;">
+            <p style="padding-top: 13px; color: white">&copy; Copyright 2020 | PP2 - Group 6</p>
+        </footer>
     </div>
   </div>
 </template>
@@ -268,28 +264,6 @@ export default {
 </script>
 
 <style scoped>
-#template {
-  background-color: #bababa;
-  /*height: 720px;*/
-}
-
-#button-back {
-  text-align: center;
-  margin-top: 35%;
-}
-#button-alert {
-  float: right;
-}
-
-#dateMessage {
-  color: red;
-}
-
-h1 {
-  text-align: center;
-  font-size: 50px;
-  font-family: Georgia;
-}
 .slide-fade-enter-active {
   transition: all 0.8s ease;
 }
